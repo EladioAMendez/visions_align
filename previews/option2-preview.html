@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeachingDream Hero - Option 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .accent {
+      color: #4ECDC4;
+    }
+    
+    .highlight {
+      background: linear-gradient(to right, rgba(78, 205, 196, 0.2), rgba(78, 205, 196, 0.05));
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    
+    .from-accent {
+      --tw-gradient-from: #4ECDC4;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    }
+    
+    .to-success {
+      --tw-gradient-to: #8BE0DB;
+    }
+    
+    .text-primary {
+      color: #1F2937;
+    }
+    
+    .text-secondary {
+      color: #4B5563;
+    }
+    
+    .text-accent {
+      color: #4ECDC4;
+    }
+    
+    .bg-accent {
+      background-color: #4ECDC4;
+    }
+    
+    .border-accent {
+      border-color: #4ECDC4;
+    }
+    
+    .text-success {
+      color: #8BE0DB;
+    }
+    
+    .bg-success {
+      background-color: #8BE0DB;
+    }
+    
+    .bg-white\/95 {
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .bg-white\/80 {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .bg-accent\/20 {
+      background-color: rgba(78, 205, 196, 0.2);
+    }
+    
+    .bg-success\/20 {
+      background-color: rgba(139, 224, 219, 0.2);
+    }
+    
+    .bg-gray-400\/20 {
+      background-color: rgba(156, 163, 175, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { motion } = Motion;
+    
+    const Highlight = ({ children }) => (
+      <span className="highlight">{children}</span>
+    );
+    
+    const Accent = ({ children }) => (
+      <span className="accent">{children}</span>
+    );
+    
+    const Option2Preview = () => {
+      const [showDemo, setShowDemo] = React.useState(true);
+      
+      return (
+        <section className="min-h-screen bg-gray-50 pt-28 pb-20 px-4 md:px-8 relative overflow-hidden">
+          <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+            {/* Left side content */}
+            <motion.div 
+              className="lg:w-1/2 space-y-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.h1 
+                className="text-4xl md:text-5xl lg:text-6xl font-medium text-primary leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                Stop Hitting the Study Wall. Start Teaching.
+              </motion.h1>
+              
+              <motion.p 
+                className="text-lg md:text-xl text-secondary leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <Highlight>Don't let one exam stand between you and your dream.</Highlight> Sage, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative overflow-hidden inline-block"
+                >
+                  <a 
+                    href="#"
+                    className="inline-block bg-gradient-to-r from-accent to-success text-white px-8 py-4 rounded-md font-medium text-lg shadow-md"
+                  >
+                    Start Your Free 7-Day Trial
+                  </a>
+                </motion.div>
+                <p className="text-sm text-secondary mt-2">No Credit Card Required</p>
+              </motion.div>
+            </motion.div>
+            
+            {/* Hero Image with interactive elements */}
+            <motion.div 
+              className="lg:w-1/2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative">
+                {/* Animated "anxiety cloud" that transforms */}
+                <motion.div 
+                  className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gray-400/20 blur-2xl z-0"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.2, 0.3],
+                  }}
+                  transition={{ duration: 8, repeat: Infinity }}
+                />
+                
+                {/* Success light that grows */}
+                <motion.div 
+                  className="absolute -bottom-10 left-10 w-40 h-40 rounded-full bg-success/20 blur-2xl z-0"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.2, 0.4, 0.2],
+                  }}
+                  transition={{ duration: 6, repeat: Infinity, repeatType: "reverse" }}
+                />
+                
+                {/* UI Frame */}
+                <motion.div 
+                  className="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-white"
+                  initial={{ y: 30 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
+                >
+                  {/* Interactive demo that visualizes the transformation */}
+                  <div className="aspect-[4/3] relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-success/10" />
+                    
+                    {/* Study Wall visual that breaks apart */}
+                    <motion.div
+                      className="absolute top-1/4 left-0 right-0 h-20 flex"
+                      initial={{ opacity: 1 }}
+                    >
+                      {[...Array(8)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="flex-1 bg-gray-300/50 mx-0.5 rounded-sm"
+                          animate={{ 
+                            height: ["100%", "20%", "100%"],
+                            opacity: [0.8, 0.3, 0.8],
+                            backgroundColor: i > 5 ? "rgb(78,205,196,0.3)" : undefined
+                          }}
+                          transition={{ 
+                            duration: 5,
+                            delay: i * 0.2, 
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          }}
+                        />
+                      ))}
+                    </motion.div>
+                    
+                    {/* Sage conversation interface */}
+                    <motion.div 
+                      className="absolute bottom-10 left-10 right-10 bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-accent/20"
+                      initial={{ y: 100, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.6, duration: 0.8, type: "spring" }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="relative">
+                          <motion.div 
+                            className="w-10 h-10 bg-gradient-to-r from-accent to-success rounded-full flex items-center justify-center text-white font-medium"
+                            animate={{ 
+                              boxShadow: ["0 0 0 rgba(78,205,196,0)", "0 0 15px rgba(78,205,196,0.7)", "0 0 0 rgba(78,205,196,0)"] 
+                            }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            S
+                          </motion.div>
+                          <motion.div 
+                            className="absolute -right-1 -bottom-1 w-4 h-4 bg-success rounded-full"
+                            animate={{ scale: [1, 1.3, 1] }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 1.5, delay: 1 }}
+                          >
+                            <div className="h-2 bg-accent/30 rounded-full w-full overflow-hidden">
+                              <motion.div 
+                                className="h-full bg-accent" 
+                                initial={{ width: "0%" }}
+                                animate={{ width: "75%" }}
+                                transition={{ duration: 1, delay: 1.2 }}
+                              />
+                            </div>
+                          </motion.div>
+                          <motion.p 
+                            className="text-sm text-primary mt-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.5 }}
+                          >
+                            Let me break that down step by step...
+                          </motion.p>
+                          <motion.div
+                            className="flex gap-2 mt-3"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 2 }}
+                          >
+                            {["Finally", "understand", "it"].map((word, i) => (
+                              <motion.span
+                                key={i}
+                                className="px-2 py-1 bg-success/10 rounded text-xs text-success"
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 2 + (i * 0.2) }}
+                              >
+                                {word}
+                              </motion.span>
+                            ))}
+                          </motion.div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      );
+    };
+    
+    ReactDOM.render(<Option2Preview />, document.getElementById('root'));
+  </script>
+</body>
+</html>

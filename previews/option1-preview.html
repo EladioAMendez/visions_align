@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeachingDream Hero - Option 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .accent {
+      color: #4ECDC4;
+    }
+    
+    .highlight {
+      background: linear-gradient(to right, rgba(78, 205, 196, 0.2), rgba(78, 205, 196, 0.05));
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    
+    .from-accent {
+      --tw-gradient-from: #4ECDC4;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    }
+    
+    .to-success {
+      --tw-gradient-to: #8BE0DB;
+    }
+    
+    .text-primary {
+      color: #1F2937;
+    }
+    
+    .text-secondary {
+      color: #4B5563;
+    }
+    
+    .text-accent {
+      color: #4ECDC4;
+    }
+    
+    .bg-accent {
+      background-color: #4ECDC4;
+    }
+    
+    .border-accent {
+      border-color: #4ECDC4;
+    }
+    
+    .text-success {
+      color: #8BE0DB;
+    }
+    
+    .bg-success {
+      background-color: #8BE0DB;
+    }
+    
+    .bg-white\/95 {
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .bg-white\/80 {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { motion } = Motion;
+    
+    const Highlight = ({ children }) => (
+      <span className="highlight">{children}</span>
+    );
+    
+    const Accent = ({ children }) => (
+      <span className="accent">{children}</span>
+    );
+    
+    const Option1Preview = () => {
+      return (
+        <section className="min-h-screen bg-gray-50 pt-28 pb-20 px-4 md:px-8 relative overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-accent opacity-10 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-success opacity-10 blur-3xl" />
+          
+          <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+            {/* Hero Content Animation */}
+            <motion.div 
+              className="lg:w-1/2 space-y-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.h1 
+                className="text-4xl md:text-5xl lg:text-6xl font-medium text-primary leading-tight"
+                initial={{ opacity: 0, filter: "blur(5px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 1 }}
+              >
+                Stop Hitting the Study Wall. Start Teaching.
+              </motion.h1>
+              
+              <motion.div className="relative">
+                {/* Animated dots that transform into a smooth path */}
+                <motion.div 
+                  className="absolute -left-10 top-1/2 transform -translate-y-1/2 h-1 w-5 bg-accent rounded-full"
+                  animate={{ 
+                    width: [5, 80, 5],
+                    x: [0, 40, 0],
+                    opacity: [0.5, 1, 0.5]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+                />
+                
+                <motion.p 
+                  className="text-lg md:text-xl text-secondary leading-relaxed"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  <Highlight>Don't let one exam stand between you and your dream.</Highlight> Sage, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
+                </motion.p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative overflow-hidden inline-block"
+                >
+                  <a 
+                    href="#"
+                    className="inline-block bg-gradient-to-r from-accent to-success text-white px-8 py-4 rounded-md font-medium text-lg shadow-md"
+                  >
+                    Start Your Free 7-Day Trial
+                  </a>
+                  <motion.div 
+                    className="absolute inset-0 bg-white opacity-20" 
+                    animate={{ 
+                      x: ["-100%", "100%"],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      repeatDelay: 3 
+                    }}
+                  />
+                </motion.div>
+                <p className="text-sm text-secondary mt-2">No Credit Card Required</p>
+              </motion.div>
+            </motion.div>
+            
+            {/* Right side placeholder for image/UI */}
+            <div className="lg:w-1/2 bg-white rounded-xl shadow-lg p-8 h-80 flex items-center justify-center">
+              <p className="text-center text-secondary">UI Demo Area<br />(See complete code for full implementation)</p>
+            </div>
+          </div>
+        </section>
+      );
+    };
+    
+    ReactDOM.render(<Option1Preview />, document.getElementById('root'));
+  </script>
+</body>
+</html>
