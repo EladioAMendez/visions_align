@@ -96,7 +96,7 @@ export default function HeroSection() {
             >
               Don't let one exam stand between you and your dream.
             </motion.span> 
-            Sage, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
+            <Accent>Sage</Accent>, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. <br />Get certified. <Accent>Your dream classroom awaits.</Accent>
           </motion.p>
           
           <motion.div

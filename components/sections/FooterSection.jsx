@@ -51,7 +51,7 @@ export default function FooterSection() {
             >
               <Link href="/" className="inline-block mb-6 group">
                 <h3 className="text-3xl font-bold text-primary group-hover:scale-105 transition-transform">
-                  Teaching<Accent>Dream</Accent>
+                   <Highlight><strong>TeachingDream</strong></Highlight>
                 </h3>
                 <div className="h-1 w-12 bg-gradient-to-r from-accent to-success mt-2 group-hover:w-full transition-all duration-300"></div>
               </Link>
@@ -223,7 +223,7 @@ export default function FooterSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            &copy; {new Date().getFullYear()} <Accent>TeachingDream</Accent>, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()}  <Highlight><strong>TeachingDream</strong></Highlight>, Inc. All rights reserved.
           </motion.p>
           <motion.div 
             className="flex flex-wrap justify-center gap-x-6 gap-y-2"

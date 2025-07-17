@@ -7,13 +7,19 @@ const ThemeContext = createContext();
 
 // Theme provider component
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('teachingdream'); // Default to our custom theme
+  const [theme, setTheme] = useState('light'); // Default to light mode
 
   // Apply the theme to the document
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    // Force light mode by default
+    document.documentElement.setAttribute('data-theme', 'light');
+    // Also add a class to ensure light mode styles are applied
+    document.documentElement.classList.add('light');
+    document.documentElement.classList.remove('dark');
+    
     return () => {
       document.documentElement.removeAttribute('data-theme');
+      document.documentElement.classList.remove('light');
     };
   }, [theme]);
 

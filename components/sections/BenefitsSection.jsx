@@ -108,7 +108,7 @@ export default function BenefitsSection() {
         >
           {/* Enhanced section heading with highlight */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-primary mb-6">
-            Unlock Your <Accent>TeachingDream</Accent>.
+            Unlock Your  <Highlight><strong>TeachingDream</strong></Highlight>.
           </h2>
           
           <p className="text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
@@ -138,7 +138,7 @@ export default function BenefitsSection() {
           transition={{ delay: 0.8, duration: 0.6 }}
         >
           <p className="text-primary mb-6 text-lg">
-            Join thousands of aspiring teachers who've found confidence with <Accent>TeachingDream</Accent>
+            Join thousands of aspiring teachers who've found confidence with <Highlight><strong>TeachingDream</strong></Highlight>
           </p>
           <motion.a 
             href="#pricing"

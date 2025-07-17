@@ -48,17 +48,6 @@ const PerformanceMonitor = dynamic(
   { ssr: false }
 );
 
-// Import development tools only in dev mode
-const DevChecklist = dynamic(
-  () => import('./ui/DevChecklist'),
-  { ssr: false }
-);
-
-const AccessibilityChecker = dynamic(
-  () => import('./ui/AccessibilityChecker'),
-  { ssr: false }
-);
-
 // Custom hooks
 import useResponsive from '@/hooks/useResponsive';
 
@@ -77,10 +66,6 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background font-sans">
       {/* Performance monitoring */}
       <PerformanceMonitor />
-      
-      {/* Development tools */}
-      <DevChecklist />
-      <AccessibilityChecker />
       
       {/* Fixed Navbar */}
       <Navbar />
