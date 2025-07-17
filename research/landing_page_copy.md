@@ -24,7 +24,7 @@ Visual Style:
 
 **Headline:** Stop Hitting the Study Wall. Start Teaching.
 
-**Subtext:** That knot of anxiety? The endless rereading? Sage, your AI study partner from TeachingDream.com, dissolves it all by familiarizing you with question types and walking you through content conversationally. Get certified. Confidently. Your dream classroom awaits.
+**Subtext:** <Highlight>Don't let one exam stand between you and your dream.</Highlight> Sage, your AI study partner who dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
 
 **Imagery:** A vibrant, calming image of Jessica Miller (our avatar) with a serene expression, confidently interacting with a tablet or phone displaying a clean, conversational AI interface. The background subtly features elements of a classroom or a graduation cap. Microinteraction: The CTA button pulses gently (React Bits `pulse` effect), while Sage's responses in the AI interface appear with a subtle shimmer (MagicUI `shimmer` effect) as if materializing with clarity.
 

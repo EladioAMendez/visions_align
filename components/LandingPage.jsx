@@ -6,7 +6,10 @@ import dynamic from 'next/dynamic';
 
 // Layout Components
 import Navbar from './layout/Navbar';
-import Footer from './layout/Footer';
+// Dynamic import for Footer section
+const FooterSection = dynamic(() => import('./sections/FooterSection'), {
+  ssr: true
+});
 
 // Section Components
 import HeroSection from './sections/HeroSection';
@@ -35,7 +38,7 @@ const CtaSection = dynamic(() => import('./sections/CtaSection'), {
   ssr: true
 });
 
-const SignupSection = dynamic(() => import('./sections/SignupSection'), {
+const PricingSection = dynamic(() => import('./sections/PricingSection'), {
   ssr: true
 });
 
@@ -119,14 +122,14 @@ export default function LandingPage() {
         </Suspense>
         
         <Suspense fallback={<div className="h-72 w-full bg-base-200 animate-pulse rounded-lg"></div>}>
-          <section data-section="signup">
-            <SignupSection />
+          <section data-section="pricing">
+            <PricingSection />
           </section>
         </Suspense>
       </main>
 
       {/* Footer */}
-      <Footer />
+      <FooterSection />
       
       {/* Display device size indicator during development */}
       {process.env.NODE_ENV !== 'production' && (

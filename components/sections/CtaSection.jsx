@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
+import { Highlight, Accent } from '../ui/TextHighlight';
 
 export default function CtaSection() {
   const [ref, inView] = useInView({
@@ -22,11 +23,11 @@ export default function CtaSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-medium text-primary mb-4">
-            Ready to transform your study experience and step into your teaching career with confidence?
+            Ready to <Highlight>transform</Highlight> your study experience and step into your teaching career with <Highlight>confidence</Highlight>?
           </h2>
           <p className="text-lg text-secondary mb-8">
-            Join thousands of aspiring educators finding clarity and success with Sage. 
-            Our tiered plans fit your needs: $10/month for text access or $19/month for voice capabilities.
+            Join thousands of aspiring educators finding clarity and success with <Accent>Sage</Accent>. 
+            Our tiered plans fit your needs: <span className="font-medium">$10/month</span> for text access or <span className="font-medium">$19/month</span> for voice capabilities.
           </p>
           
           <motion.div

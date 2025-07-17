@@ -5,6 +5,7 @@
 html,
 body {
   scroll-behavior: smooth !important;
+  @apply bg-background text-primary;
 }
 
 /* It makes the HTML progress bar filling smooth when value change. */
@@ -13,10 +14,64 @@ progress::-webkit-progress-value {
 }
 
 @layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium leading-tight;
+  }
+  p {
+    @apply font-normal leading-relaxed;
+  }
+}
+
+@layer components {
   .btn-gradient {
-    @apply !bg-gradient !bg-[length:300%_300%] hover:saturate-[1.2] shadow duration-100 !border-0 !border-transparent !bg-transparent animate-shimmer disabled:!bg-none disabled:!bg-gray-500/30  !text-white;
+    @apply !bg-gradient !bg-[length:300%_300%] hover:saturate-[1.2] shadow duration-100 !border-0 !border-transparent !bg-transparent animate-shimmer disabled:!bg-none disabled:!bg-gray-500/30 !text-white;
   }
   .btn {
     @apply !capitalize;
+  }
+  
+  /* Card styles */
+  .td-card {
+    @apply bg-card rounded-card shadow-sm border border-border p-card-inner transition-all;
+  }
+  
+  .td-card-hover {
+    @apply td-card hover:shadow-md hover:-translate-y-1 duration-300;
+  }
+  
+  /* Gradient backgrounds */
+  .gradient-primary {
+    @apply bg-gradient-to-br from-accent to-success/80;
+  }
+  
+  .gradient-overlay {
+    @apply bg-gradient-to-b from-transparent to-background/90;
+  }
+  
+  /* Section styles */
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24 px-card-outer;
+  }
+  
+  /* Text highlight effects */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient;
+  }
+  
+  /* Animation classes */
+  .fade-in {
+    @apply animate-fadeInUp;
+  }
+  
+  .hover-grow {
+    @apply transition-transform hover:scale-105;
+  }
+  
+  /* Grid pattern background for visual texture */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(100, 116, 139, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(100, 116, 139, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 
 const LandingPage = () => {
+  const Highlight = ({ children }) => <span className="highlight-text">{children}</span>;
+  const Accent = ({ children }) => <span className="accent-text">{children}</span>;
+
   return (
     <div className="landing-page">
       {/* Navigation Bar */}
@@ -23,8 +26,8 @@ const LandingPage = () => {
         {/* Prominent feature area with a headline, subheadline, and call-to-action button. */}
         <h1>Stop Hitting the Study Wall. Start Teaching.</h1>
         <p className="hero-subtext">
-          That knot of anxiety? The endless rereading? Sage, your AI study partner from TeachingDream.com, dissolves it all by familiarizing you with question types and walking you through content conversationally.
-          Get certified. Confidently. Your dream classroom awaits.
+          That <Highlight>knot of anxiety</Highlight>? The <Highlight>endless rereading</Highlight>? Sage, your AI study partner from Teaching<Accent>Dream</Accent>, dissolves it all.
+          Get certified. <Highlight>Confidently</Highlight>. Your dream classroom awaits.
         </p>
         {/* Imagery: A vibrant, yet calming image of a student (Jessica Miller type) with a serene expression, confidently interacting with a tablet or phone displaying a clean, conversational AI interface. The background subtly features elements of a classroom or a graduation cap, symbolizing her future. */}
         <div className="hero-image-placeholder ai-response shimmer"></div>

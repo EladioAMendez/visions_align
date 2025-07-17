@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Highlight, Accent } from '../ui/TextHighlight';
 
 const FaqItem = ({ question, answer, isOpen, onClick, index }) => {
   const [ref, inView] = useInView({
@@ -92,10 +93,10 @@ export default function FaqSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-medium text-primary mb-4">
-            Your Questions, Answered. Your Doubts Dissolved.
+            Your Questions, <Highlight>Answered</Highlight>. Your Doubts <Highlight>Dissolved</Highlight>.
           </h2>
           <p className="text-lg text-secondary max-w-2xl mx-auto">
-            We know you have questions. We're here to provide clear, reassuring answers. Here are common queries about Sage and how it will help you succeed.
+            We know you have questions. We're here to provide clear, reassuring answers. Here are common queries about <Accent>Sage</Accent> and how it will help you succeed.
           </p>
         </motion.div>
 
