@@ -33,7 +33,7 @@ export default function Navbar() {
     >
       <nav className="container mx-auto px-card-outer py-4 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-primary">
-          Teaching<Accent>Dream</Accent>
+          <Accent>TeachingDream</Accent>
         </Link>
         
         {/* Desktop Menu */}
