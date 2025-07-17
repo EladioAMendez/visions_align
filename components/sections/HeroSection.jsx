@@ -94,7 +94,7 @@ export default function HeroSection() {
               animate={{ backgroundSize: "100% 100%" }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Don't let one exam stand between you and your dream.
+              Don't let the <strong>FTCE</strong> stand between you and your dream.
             </motion.span> 
             <Accent>Sage</Accent>, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. <br />Get certified. <Accent>Your dream classroom awaits.</Accent>
           </motion.p>
