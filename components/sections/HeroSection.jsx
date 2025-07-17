@@ -30,7 +30,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Highlight>Don't let one exam stand between you and your dream.</Highlight> Sage, your AI study partner who dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
+            <Highlight>Don't let one exam stand between you and your dream.</Highlight> Sage, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. Get certified. <Accent>Your dream classroom awaits.</Accent>
           </motion.p>
           
           <motion.div
