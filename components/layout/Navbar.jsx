@@ -33,7 +33,7 @@ export default function Navbar() {
     >
       <nav className="container mx-auto px-card-outer py-4 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-primary">
-          <Highlight><strong>TeachingDream</strong></Highlight>
+          <Highlight><strong>VisionsAlign</strong></Highlight>
         </Link>
         
         {/* Desktop Menu */}
@@ -61,7 +61,7 @@ export default function Navbar() {
               href="#trial" 
               className="bg-accent text-white px-4 py-2 rounded-card font-medium hover:bg-opacity-90 transition-all"
             >
-              Start Free Trial
+              Get Your Free Playbook
             </Link>
           </motion.div>
         </div>
@@ -132,7 +132,7 @@ export default function Navbar() {
                 className="bg-accent text-white px-6 py-3 rounded-card font-medium text-xl"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Start Free Trial
+                Get Your Free Playbook
               </Link>
             </div>
           </motion.div>

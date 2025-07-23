@@ -42,12 +42,12 @@ export default function SignupSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-medium text-primary mb-4">
-            Your Dream Classroom Awaits. Take the First Step.
+            Your Leadership Journey Begins. Take the Next Step.
           </h2>
           <p className="text-lg text-secondary mb-8">
-            You've worked tirelessly. Don't let one test stand between you and your dream career. 
-            With Sage, you'll gain the understanding, the confidence, and the certification you deserve. 
-            Stop worrying. Start teaching.
+            You've built your expertise. Don't let misaligned leadership interactions derail your career trajectory. 
+            With VisionsAlign, you'll gain the insights, the confidence, and the executive presence you deserve. 
+            Stop second-guessing. Start advancing.
           </p>
           
           {/* Confetti effect when form is successfully submitted */}
@@ -82,7 +82,7 @@ export default function SignupSection() {
                 </motion.button>
               </div>
               <p className="mt-2 text-sm text-secondary">
-                No credit card required. Start your 7-day free trial today.
+                No credit card required. Start your 14-day free trial today.
               </p>
             </form>
           ) : (
@@ -93,11 +93,11 @@ export default function SignupSection() {
             >
               <div className="text-3xl mb-2">🎉</div>
               <h3 className="text-xl font-medium text-success mb-2">
-                Welcome to TeachingDream!
+                Welcome to VisionsAlign!
               </h3>
               <p className="text-secondary">
-                Check your email to activate your 7-day free trial of Sage.
-                Your journey to certification success starts now!
+                Check your email to activate your 14-day free trial of VisionsAlign.
+                Your journey to leadership excellence starts now!
               </p>
             </motion.div>
           )}
@@ -114,7 +114,7 @@ export default function SignupSection() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1.581.814L12 14.814l-2.419 1.419A1 1 0 019 16V4a1 1 0 00-1-1H5a1 1 0 00-1 1v10.5a.5.5 0 01-1 0V4z" clipRule="evenodd" />
               </svg>
-              <span>Trusted by 2,000+ Teachers</span>
+              <span>Trusted by 5,000+ Leaders</span>
             </div>
             <div className="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">

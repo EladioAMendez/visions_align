@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Highlight, Accent } from '../ui/TextHighlight';
+import AlignPulse from '../animations/alignPulse';
+import InsightFadeIn from '../animations/insightFadeIn';
 
 export default function HeroSection() {
-  // Animation state for FTCE Question Journey
-  const [journeyStage, setJourneyStage] = useState(0); // 0: question, 1: thinking, 2: answer+explanation
+  // Animation state for leadership visualization journey
+  const [journeyStage, setJourneyStage] = useState(0); // 0: initial, 1: analyzing, 2: insights
   const [interactionCount, setInteractionCount] = useState(0);
   const prefersReducedMotion = useReducedMotion(); // For accessibility
+  const [showConfirmation, setShowConfirmation] = useState(false);
   
   // Auto advance the journey stages for demo purposes
   useEffect(() => {
@@ -70,9 +73,9 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1 }}
           >
-            Study <Accent>Smarter.</Accent>
+            Unlock Your <Accent>Executive Influence.</Accent>
             <br />
-            Teach <Accent>Sooner.</Accent>
+            Master <Accent>Every Meeting.</Accent>
           </motion.h1>
           
           <motion.div 
@@ -94,9 +97,9 @@ export default function HeroSection() {
               animate={{ backgroundSize: "100% 100%" }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Don't let the <strong>FTCE</strong> stand between you and your dream.
+              Transform anxiety into strategic advantage.
             </motion.span> 
-            <Accent>Sage</Accent>, your AI study partner, dissolves anxiety, clarifies concepts, and builds your confidence. <br />Get certified. <Accent>Your dream classroom awaits.</Accent>
+            <Accent> VisionsAlign</Accent> decodes leadership styles and crafts personalized playbooks, so you walk into every VP conversation with calm confidence and a clear path to promotion.
           </motion.p>
           
           <motion.div
@@ -110,12 +113,36 @@ export default function HeroSection() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Link href="/signup" className="btn-primary relative z-10 flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-accent to-success text-white font-medium shadow-md">
-                <span>Try Free for 7 Days</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+              <AlignPulse intensity={1.05} duration={2} continuous={true}>
+                <Link 
+                  href="/signup" 
+                  className="btn-primary relative z-10 flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-accent to-success text-white font-medium shadow-md"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    setShowConfirmation(true);
+                    setTimeout(() => setShowConfirmation(false), 3000);
+                  }}
+                >
+                  <span>Get Your Free Playbook Today!</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </AlignPulse>
+              
+              {/* Confirmation text that appears on click */}
+              <AnimatePresence>
+                {showConfirmation && (
+                  <InsightFadeIn delay={0.1} duration={0.5}>
+                    <motion.p 
+                      className="text-sm text-accent mt-2"
+                      exit={{ opacity: 0 }}
+                    >
+                      No credit card required. Start your journey to influence now!
+                    </motion.p>
+                  </InsightFadeIn>
+                )}
+              </AnimatePresence>
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                 initial={{ x: "-100%" }}
@@ -144,13 +171,13 @@ export default function HeroSection() {
                 <div className="bg-white p-3 border-b flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white">
-                      <span>S</span>
+                      <span>VA</span>
                     </div>
                     <div>
-                      <p className="font-medium text-primary text-sm">Sage</p>
+                      <p className="font-medium text-primary text-sm">VisionsAlign</p>
                       <p className="text-success text-xs flex items-center gap-1">
                         <span className="inline-block w-2 h-2 bg-success rounded-full"></span>
-                        Online • Ready to help
+                        Online • Ready to analyze
                       </p>
                     </div>
                   </div>
@@ -178,7 +205,7 @@ export default function HeroSection() {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1 }}
                       >
-                        {/* Sage message - FTCE question */}
+                        {/* VisionsAlign message - Leadership analysis */}
                         <motion.div 
                           className="flex items-start gap-2 max-w-[85%]"
                           initial={{ opacity: 0, y: 10 }}
@@ -186,21 +213,21 @@ export default function HeroSection() {
                           transition={{ duration: 1 }}
                         >
                           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white text-xs flex-shrink-0 mt-1">
-                            S
+                            VA
                           </div>
                           <div>
                             <div className="bg-white rounded-tl-sm rounded-tr-xl rounded-br-xl rounded-bl-xl p-3 shadow-sm">
                               <div className="mb-1">
-                                <span className="text-primary font-medium text-xs">FTCE Practice Question</span>
-                                <span className="text-secondary text-[10px] ml-1">• Grammar</span>
+                                <span className="text-primary font-medium text-xs">Leadership Meeting Prep</span>
+                                <span className="text-secondary text-[10px] ml-1">• VP Analysis</span>
                               </div>
-                              <p className="text-primary text-sm">Which sentence contains a <span className="text-accent font-medium">subject-verb agreement</span> error?</p>
+                              <p className="text-primary text-sm">Analyzing VP Sarah's <span className="text-accent font-medium">communication preferences</span> and leadership style...</p>
                             </div>
                             <span className="text-xs text-gray-400 ml-2">10:42 AM</span>
                           </div>
                         </motion.div>
 
-                        {/* Sage message - Answer options */}
+                        {/* VisionsAlign message - Leadership style options */}
                         <motion.div 
                           className="flex items-start gap-2 max-w-[85%] pl-8"
                           initial={{ opacity: 0, y: 10 }}
@@ -210,10 +237,10 @@ export default function HeroSection() {
                           <div className="bg-white rounded-xl p-3 shadow-sm w-full">
                             <div className="space-y-2">
                               {[
-                                "A) The committee of doctors agrees on the diagnosis.",
-                                "B) Each of the students have completed their assignments.",
-                                "C) Neither the teacher nor the students were prepared for the drill.",
-                                "D) The data shows an increase in literacy rates."
+                                "Visual communicator - responds to diagrams and charts",
+                                "Direct communication style - values brevity",
+                                "Data-driven decision maker - prioritizes metrics",
+                                "Values preparation and structured agendas"
                               ].map((option, i) => (
                                 <motion.div 
                                   key={i}
@@ -242,18 +269,18 @@ export default function HeroSection() {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1 }}
                       >
-                        {/* Sage's question (kept from previous stage) */}
+                        {/* VisionsAlign's question (kept from previous stage) */}
                         <div className="flex items-start gap-2 max-w-[85%]">
                           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white text-xs flex-shrink-0 mt-1">
-                            S
+                            VA
                           </div>
                           <div>
                             <div className="bg-white rounded-tl-sm rounded-tr-xl rounded-br-xl rounded-bl-xl p-3 shadow-sm">
                               <div className="mb-1">
-                                <span className="text-primary font-medium text-xs">FTCE Practice Question</span>
-                                <span className="text-secondary text-[10px] ml-1">• Grammar</span>
+                                <span className="text-primary font-medium text-xs">Leadership Meeting Prep</span>
+                                <span className="text-secondary text-[10px] ml-1">• VP Analysis</span>
                               </div>
-                              <p className="text-primary text-sm">Which sentence contains a <span className="text-accent font-medium">subject-verb agreement</span> error?</p>
+                              <p className="text-primary text-sm">Analyzing VP Sarah's <span className="text-accent font-medium">communication preferences</span> and leadership style...</p>
                             </div>
                             <span className="text-xs text-gray-400 ml-2">10:42 AM</span>
                           </div>
@@ -268,7 +295,7 @@ export default function HeroSection() {
                         >
                           <div>
                             <div className="bg-accent text-white rounded-tl-xl rounded-tr-sm rounded-br-sm rounded-bl-xl p-3 shadow-sm">
-                              <p>I think it's C</p>
+                              <p>I have a meeting with her tomorrow morning</p>
                             </div>
                             <div className="flex justify-end">
                               <span className="text-xs text-gray-400 mr-2">10:43 AM</span>
@@ -276,7 +303,7 @@ export default function HeroSection() {
                           </div>
                         </motion.div>
 
-                        {/* Sage thinking */}
+                        {/* VisionsAlign thinking */}
                         <motion.div 
                           className="flex items-start gap-2 max-w-[85%]"
                           initial={{ opacity: 0, y: 10 }}
@@ -284,7 +311,7 @@ export default function HeroSection() {
                           transition={{ duration: 0.8, delay: 0.5 }}
                         >
                           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white text-xs flex-shrink-0 mt-1">
-                            S
+                            VA
                           </div>
                           <div className="bg-white rounded-xl px-3 py-2 w-16">
                             <div className="flex space-x-1">
@@ -306,48 +333,8 @@ export default function HeroSection() {
                             </div>
                           </div>
                         </motion.div>
-                      </motion.div>
-                    )}
-                    
-                    {journeyStage === 2 && (
-                      <motion.div 
-                        key="explanation"
-                        className="flex flex-col space-y-3"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        {/* Sage's question (kept from previous stages) */}
-                        <div className="flex items-start gap-2 max-w-[85%]">
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white text-xs flex-shrink-0 mt-1">
-                            S
-                          </div>
-                          <div>
-                            <div className="bg-white rounded-tl-sm rounded-tr-xl rounded-br-xl rounded-bl-xl p-3 shadow-sm">
-                              <div className="mb-1">
-                                <span className="text-primary font-medium text-xs">FTCE Practice Question</span>
-                                <span className="text-secondary text-[10px] ml-1">• Grammar</span>
-                              </div>
-                              <p className="text-primary text-sm">Which sentence contains a <span className="text-accent font-medium">subject-verb agreement</span> error?</p>
-                            </div>
-                            <span className="text-xs text-gray-400 ml-2">10:42 AM</span>
-                          </div>
-                        </div>
 
-                        {/* User response (kept from previous stage) */}
-                        <div className="flex justify-end">
-                          <div>
-                            <div className="bg-accent text-white rounded-tl-xl rounded-tr-sm rounded-br-sm rounded-bl-xl p-3 shadow-sm">
-                              <p>I think it's C</p>
-                            </div>
-                            <div className="flex justify-end">
-                              <span className="text-xs text-gray-400 mr-2">10:43 AM</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Sage answer */}
+                        {/* VisionsAlign answer */}
                         <motion.div 
                           className="flex items-start gap-2 max-w-[85%]"
                           initial={{ opacity: 0, y: 10 }}
@@ -355,19 +342,19 @@ export default function HeroSection() {
                           transition={{ duration: 0.4 }}
                         >
                           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-accent to-success flex items-center justify-center text-white text-xs flex-shrink-0 mt-1">
-                            S
+                            VA
                           </div>
                           <div>
                             <div className="bg-white rounded-tl-sm rounded-tr-xl rounded-br-xl rounded-bl-xl p-3 shadow-sm">
                               <p className="text-primary text-sm">
-                                <span className="inline-block mb-2 text-error font-medium">Not quite.</span> The correct answer is B: "Each of the students <span className="bg-error/20 px-1 rounded">have</span> completed their assignments."
+                                <span className="inline-block mb-2 text-success font-medium">Analysis complete.</span> Here's your personalized <span className="bg-success/20 px-1 rounded">meeting playbook</span> for VP Sarah.
                               </p>
                             </div>
                             <span className="text-xs text-gray-400 ml-2">10:44 AM</span>
                           </div>
                         </motion.div>
 
-                        {/* Sage explanation */}
+                        {/* VisionsAlign explanation */}
                         <motion.div 
                           className="flex items-start gap-2 max-w-[85%] pl-8"
                           initial={{ opacity: 0, y: 10 }}
@@ -376,7 +363,7 @@ export default function HeroSection() {
                         >
                           <div className="bg-white rounded-tl-sm rounded-tr-xl rounded-br-xl rounded-bl-xl p-3 shadow-sm">
                             <p className="text-primary text-sm">
-                              "Each" is a singular subject that requires the singular verb form "has" instead of the plural "have" - don't worry, this is a common error that many people miss!
+                              <strong>Meeting Strategy:</strong> Prepare a 5-min Miro board visual to present your key points. Lead with metrics and ROI. Use direct, concise language. Send a structured agenda 24 hours before meeting to build credibility and rapport.
                             </p>
                           </div>
                           <span className="invisible text-xs text-gray-400">10:44 AM</span>
@@ -388,7 +375,7 @@ export default function HeroSection() {
                   {/* Chat input area */}
                   <div className="absolute bottom-0 left-0 right-0 bg-white border-t p-3 flex items-center gap-2">
                     <div className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm text-gray-400">
-                      Type your question here...
+                      Enter executive's LinkedIn profile...
                     </div>
                     <motion.div 
                       className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white cursor-pointer"

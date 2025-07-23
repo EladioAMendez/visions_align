@@ -4,25 +4,29 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Highlight, Accent } from '../ui/TextHighlight';
+import InsightFadeIn from '../animations/insightFadeIn';
 
 const testimonials = [
   {
-    quote: "Before TeachingDream.com, I was drowning in textbooks and self-doubt. Now, I actually <em>understand</em> the material, and I'm walking into my FTCE exam with a quiet confidence I never thought possible. This app changed everything!",
-    author: "Sarah L.",
-    title: "Aspiring Elementary Teacher",
+    quote: "Before using VisionsAlign, I'd spend hours rehearsing conversations with executives in my head. Now, I receive a personalized leadership style breakdown and <em>actionable meeting playbook</em> in minutes. I just landed a VP role I've been pursuing for two years!",
+    author: "Alexandra K.",
+    title: "Senior Product Manager, Fortune 500 Tech Company",
     rating: 5,
+    avatar: "/images/avatars/alexandra.jpg",
   },
   {
-    quote: "I used to hit a wall every time I tried to study math. Sage broke it down for me in a way that finally clicked. It's like having a personal tutor available 24/7, without the judgment or the crazy price tag.",
-    author: "Michael P.",
-    title: "Student Teacher",
+    quote: "When I was passed over for promotion three times, I knew something had to change. VisionsAlign helped me understand my communication blindspots and adapt my approach for each executive. Six months later, I'm leading my own team and have direct impact on company strategy.",
+    author: "David T.",
+    title: "Director of Operations, E-Commerce",
     rating: 5,
+    avatar: "/images/avatars/david.jpg",
   },
   {
-    quote: "The best part? No more feeling alone. Sage is always there to help, even at 2 AM when I'm panicking about a concept. It's truly a dream come true for busy students like me.",
-    author: "Jessica M.",
-    title: "Future Educator",
+    quote: "As an introvert navigating a corporate landscape of extroverts, I struggled to get my ideas recognized. VisionsAlign gave me the <em>strategic playbook</em> I needed for each meeting, helping me build rapport with decision-makers on their terms. Game-changing for my career.",
+    author: "Min-Ji P.",
+    title: "Strategy Consultant, Rising to Partner",
     rating: 5,
+    avatar: "/images/avatars/minji.jpg",
   },
 ];
 
@@ -63,23 +67,36 @@ const TestimonialCard = ({ testimonial, isActive }) => {
       </div>
       
       {/* Testimonial content */}
-      <div className="relative">
-        <p 
-          className="text-secondary text-lg leading-relaxed mb-6" 
-          dangerouslySetInnerHTML={{ __html: `"${testimonial.quote}"` }}
-        ></p>
-        
-        {/* Author info with avatar */}
-        <div className="flex items-center mt-6">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-success/20 flex items-center justify-center text-primary font-medium mr-4">
-            {testimonial.author.charAt(0)}
-          </div>
-          <div>
-            <p className="text-primary font-medium">{testimonial.author}</p>
-            <p className="text-secondary text-sm">{testimonial.title}</p>
+      <InsightFadeIn delay={0.3}>
+        <div className="relative">
+          <p 
+            className="text-secondary text-lg leading-relaxed mb-6" 
+            dangerouslySetInnerHTML={{ __html: `"${testimonial.quote}"` }}
+          ></p>
+          
+          {/* Author info with avatar */}
+          <div className="flex items-center mt-6">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-success/20 flex items-center justify-center text-primary font-medium mr-4 overflow-hidden">
+              {testimonial.avatar ? (
+                <img 
+                  src={testimonial.avatar} 
+                  alt={testimonial.author} 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.style.display = 'none';
+                    e.target.parentNode.textContent = testimonial.author.charAt(0);
+                  }}
+                />
+              ) : testimonial.author.charAt(0)}
+            </div>
+            <div>
+              <p className="text-primary font-medium">{testimonial.author}</p>
+              <p className="text-secondary text-sm">{testimonial.title}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </InsightFadeIn>
     </motion.div>
   );
 };
@@ -107,10 +124,11 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-primary mb-6">
-            Real Teachers. <Highlight>Real Confidence.</Highlight> Real Stories.
+            <Highlight><strong>Career-Defining</strong></Highlight> Results
           </h2>
+          
           <p className="text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
-            Hear from aspiring educators who transformed their study experience with <Accent>Sage</Accent>.
+            Professionals across industries are transforming their executive influence with <Accent>VisionsAlign</Accent>.
           </p>
           
           {/* Decorative accent line */}
@@ -199,7 +217,7 @@ export default function TestimonialsSection() {
                 </motion.span>
               ))}
             </div>
-            <span className="text-primary font-medium">4.9 on App Store</span>
+            <span className="text-primary font-medium">4.9 on Capterra</span>
           </motion.div>
           
           <motion.div 
@@ -207,7 +225,7 @@ export default function TestimonialsSection() {
             whileHover={{ scale: 1.05 }}
           >
             <span className="text-success mr-2">★</span>
-            "Featured in <Accent>Top EdTech Innovations for 2025</Accent>"
+            "Featured in <Accent>Top HR Tech Solutions of 2025</Accent>"
           </motion.div>
         </motion.div>
       </div>

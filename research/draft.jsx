@@ -1,178 +1,233 @@
-import React from 'react';
 
-const LandingPage = () => {
-  const Highlight = ({ children }) => <span className="highlight-text">{children}</span>;
-  const Accent = ({ children }) => <span className="accent-text">{children}</span>;
+import React, { useState } from 'react';
+import './App.css'; // Assuming App.css will contain the styles
+
+// Utility component for icons (replace with actual icon library like Font Awesome or React Icons)
+const Icon = ({ name, className }) => <span className={`icon ${className}`}>{name}</span>;
+
+const App = () => {
+  const [activeFaq, setActiveFaq] = useState(null);
+
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
 
   return (
     <div className="landing-page">
       {/* Navigation Bar */}
       <nav className="navbar">
-        {/* Global navigation for product sections; includes links to Features, Benefits, Testimonials, Product Showcase, FAQs, Pricing, and Contact. */}
-        {/* Microinteraction: Consider a subtle fade-in or slide-down animation on load. */}
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#benefits">Benefits</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="#product-showcase">Product Showcase</a></li>
-          <li><a href="#faqs">FAQs</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div className="container">
+          <div className="logo">VisionsAlign</div>
+          <ul className="nav-links">
+            <li><a href="#features" className="nav-link">Features</a></li>
+            <li><a href="#pricing" className="nav-link">Pricing</a></li>
+            <li><a href="#contact" className="nav-link">Contact</a></li>
+          </ul>
+        </div>
       </nav>
+
+      {/* Persistent CTA (Sticky Header) */}
+      <div className="sticky-cta-bar">
+        <div className="container">
+          <button className="btn btn-primary sticky-cta-btn">Start Free Trial</button>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="hero-section">
-        {/* Prominent feature area with a headline, subheadline, and call-to-action button. */}
-        <h1>Stop Hitting the Study Wall. Start Teaching.</h1>
-        <p className="hero-subtext">
-          That <Highlight>knot of anxiety</Highlight>? The <Highlight>endless rereading</Highlight>? Sage, your AI study partner from Teaching<Accent>Dream</Accent>, dissolves it all.
-          Get certified. <Highlight>Confidently</Highlight>. Your dream classroom awaits.
-        </p>
-        {/* Imagery: A vibrant, yet calming image of a student (Jessica Miller type) with a serene expression, confidently interacting with a tablet or phone displaying a clean, conversational AI interface. The background subtly features elements of a classroom or a graduation cap, symbolizing her future. */}
-        <div className="hero-image-placeholder ai-response shimmer"></div>
-        {/* Microinteraction: The CTA button pulses gently (React Bits `pulse` effect), while Sage's responses in the AI interface appear with a subtle shimmer (MagicUI `shimmer` effect) as if materializing with clarity. */}
-        <button className="cta-button pulse">Start Your Free 7-Day Trial (No Credit Card Required)</button>
+        <div className="container">
+          <div className="hero-content">
+            <h1 className="hero-headline">Unlock Your Executive Influence. Master Every Meeting.</h1>
+            <p className="hero-subtext">
+              Transform anxiety into strategic advantage. VisionsAlign decodes leadership styles and crafts personalized playbooks, so you walk into every VP conversation with calm confidence and a clear path to promotion.
+            </p>
+            <button className="btn btn-primary hero-cta-btn">
+              Get Your Free Playbook Today!
+            </button>
+            {/* Microinteraction text - dynamically shown/hidden via CSS/JS */}
+            <p className="hero-cta-info">No credit card required. Start your journey to influence now!</p>
+          </div>
+          <div className="hero-image">
+            {/* Replace with actual image paths */}
+            <img src="/images/maya-stressed.png" alt="Stressed professional" className="image-before" />
+            <img src="/images/maya-confident.png" alt="Confident professional" className="image-after" />
+          </div>
+        </div>
+      </section>
+
+      {/* Urgency/Special Offer (Optional) */}
+      <section className="urgency-offer-section">
+        <div className="container">
+          <h2 className="section-headline">Don't Miss Your Moment to Lead.</h2>
+          <p className="offer-text">
+            Unlock your first month of VisionsAlign Premium for <strong>20% off</strong> when you sign up <strong>today!</strong> This exclusive offer is for the next 48 hours only to help you prepare for your next critical executive meeting.
+          </p>
+          <div className="countdown-timer">48:00:00</div>
+          <p className="fomo-text">Join thousands of leaders like you who are already transforming their careers. Don't get left behind!</p>
+          <button className="btn btn-success offer-cta-btn">Claim Your Discount Now</button>
+        </div>
       </section>
 
       {/* Value Proposition / Benefits Snapshot */}
-      <section className="value-proposition-section">
-        <h2>Finally, Understanding Clicks.</h2>
-        <div className="benefits-grid">
-          {/* Microinteraction: Each benefit card appears with a smooth `fade-in-up` animation (MagicUI/React Bits) as the user scrolls, emphasizing clarity and progress. */}
-          <div className="benefit-item">
-            <h3>Break Through the Study Wall</h3>
-            <p>No more vague explanations. Sage delivers instant, personalized answers that <em>click</em>. We'll guide you, step-by-step, until you truly understand.</p>
-          </div>
-          <div className="benefit-item">
-            <h3>Reclaim Your Time & Sanity</h3>
-            <p>Juggling life is hard. Sage fits into <em>your</em> schedule, turning wasted moments into powerful study sessions. Five minutes waiting for coffee? That's a productive learning session. No guilt. Just progress.</p>
-          </div>
-          <div className="benefit-item">
-            <h3>End the Isolation, Find Your Confidence</h3>
-            <p>Studying alone is lonely. Sage is your infinitely patient, judgment-free study partner, available 24/7. Ask anything, anytime. Transform that imposter syndrome into unshakeable self-belief.</p>
-          </div>
-          <div className="benefit-item">
-            <h3>Pass with Peace of Mind</h3>
-            <p>Stop dreading exam day. Our adaptive system targets <em>your</em> weak spots, ensuring you walk into the testing center feeling prepared, capable, and deserving of success.</p>
+      <section className="benefits-section">
+        <div className="container">
+          <h2 className="section-headline">Your Strategic Advantage, Delivered in Minutes.</h2>
+          <div className="benefits-grid">
+            <div className="benefit-item">
+              <Icon name="brain-lightning" className="benefit-icon" />
+              <h3>Decode Leadership Styles Instantly.</h3>
+              <p>Uncover the communication preferences, values, and decision triggers of any stakeholder from their LinkedIn profile. No more guesswork.</p>
+            </div>
+            <div className="benefit-item">
+              <Icon name="playbook" className="benefit-icon" />
+              <h3>Generate Bespoke Meeting Playbooks.</h3>
+              <p>Walk into every conversation with a custom-tailored agenda, talking points, and rapport-building strategies. Feel prepared, not panicked.</p>
+            </div>
+            <div className="benefit-item">
+              <Icon name="heart-arrow" className="benefit-icon" />
+              <h3>Boost Your Confidence & Influence.</h3>
+              <p>Transform pre-meeting anxiety into calm confidence. Build stronger relationships and accelerate your career with every interaction.</p>
+            </div>
+            <div className="benefit-item">
+              <Icon name="clock-fast" className="benefit-icon" />
+              <h3>Save Hours of Prep Time.</h3>
+              <p>Stop the late-night rehearsals and endless second-guessing. Get actionable insights in minutes, so you can focus on what matters most.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Social Proof (Customer Testimonials or Ratings) */}
+      {/* Social Proof */}
       <section className="social-proof-section">
-        <h2>Real Teachers. Real Confidence. Real Stories.</h2>
-        <div className="testimonials-carousel">
-          {/* Microinteraction: Testimonials cycle smoothly in a carousel (React Bits `Carousel` component), with star ratings subtly pulsing (React Bits `pulse` effect) to draw attention to the overwhelming positive feedback. */}
-          <div className="testimonial-item">
-            <p>"Before TeachingDream.com, I was drowning in textbooks and self-doubt. Now, I actually <em>understand</em> the material, and I'm walking into my FTCE exam with a quiet confidence I never thought possible. This app changed everything!"</p>
-            <p className="author">- Sarah L., Aspiring Elementary Teacher</p>
+        <div className="container">
+          <h2 className="section-headline">Real Stories. Real Impact. Real Confidence.</h2>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <p className="quote">
+                "Before VisionsAlign, I was stuck in a cycle of anxiety before every VP meeting. Now, I walk in with a clear agenda and genuine confidence. It's not just a tool; it's my secret weapon for career momentum."
+              </p>
+              <p className="author">- Maya C., Senior Product Manager, Fortune 500 Tech</p>
+            </div>
+            <div className="testimonial-card">
+              <p className="quote">
+                "This app changed how I approach leadership. The insights are uncanny, and the playbooks are gold. I feel so much more in control of my career trajectory."
+              </p>
+              <p className="author">- Sarah L., Director of Engineering, Tech Startup</p>
+            </div>
           </div>
-          <div className="testimonial-item">
-            <p>"I used to hit a wall every time I tried to study math. Sage broke it down for me in a way that finally clicked. It's like having a personal tutor available 24/7, without the judgment or the crazy price tag."</p>
-            <p className="author">- Michael P., Student Teacher</p>
+          <p className="credibility-text">Trusted by ambitious professionals at leading companies worldwide.</p>
+          <div className="company-logos">
+            {/* Replace with actual company logos */}
+            <img src="/images/company-logo-1.png" alt="Company Logo 1" />
+            <img src="/images/company-logo-2.png" alt="Company Logo 2" />
+            <img src="/images/company-logo-3.png" alt="Company Logo 3" />
           </div>
-          <div className="testimonial-item">
-            <p>"The best part? No more feeling alone. Sage is always there to help, even at 2 AM when I'm panicking about a concept. It's truly a dream come true for busy students like me."</p>
-            <p className="author">- Jessica M., Future Educator</p>
-          </div>
-        </div>
-        <div className="ratings-mentions">
-          <p>★★★★★ on App Store</p>
-          <p>"Featured in 'Top EdTech Innovations for 2025'" - <em>TeachingDream.com</em></p>
         </div>
       </section>
 
-      {/* Product Showcase (Visual or Video) */}
+      {/* Product Showcase */}
       <section className="product-showcase-section">
-        <h2>See Understanding Happen.</h2>
-        <p>
-          Watch Sage in action. Our interactive demo reveals how effortless and effective personalized learning can be.
-          See complex concepts clarify, and your confidence grow with every question answered.
-        </p>
-        {/* Visual/Video Suggestion: A short (1-2 minute) animated video or interactive GIF carousel. It starts with a frustrated Jessica, then transitions to her confidently interacting with Sage on her phone during a short break. Highlight: */}
-        {/* The "Ask Anything" Moment": A quick shot of typing a confusing question (e.g., "distributive property") into the chat. (Microinteraction: Text input with a subtle `typing` animation from 21st.dev.) */}
-        {/* The Conversational Explanation: Show Sage's multi-turn, Socratic dialogue, with text appearing smoothly (MagicUI `fadeInUp` animation). */}
-        {/* The "Click" Moment: A visual representation of understanding – perhaps a lightbulb icon or a subtle `pulseOnCorrect` animation (from the brand's proposed animations) on the screen when a concept is grasped. */}
-        {/* Progress Tracking: A brief glimpse of a clean dashboard (using `shadcn/ui` components) showing progress and identified weak spots. */}
-        {/* Anytime, Anywhere: Show the app being used seamlessly on a mobile device in different contexts. */}
-        <div className="video-placeholder"></div>
+        <div className="container">
+          <h2 className="section-headline">See VisionsAlign in Action. Your Path to Influence.</h2>
+          <div className="video-placeholder">
+            {/* Replace with actual video embed or player component */}
+            <p>Video showcasing VisionsAlign in action (Before/After transformation)</p>
+          </div>
+          <p className="video-summary">
+            Experience the power of VisionsAlign.com. Our intuitive platform analyzes key stakeholder profiles, revealing their communication preferences and decision-making styles. We then generate custom meeting playbooks, equipping you with actionable insights and personalized strategies for every executive interaction. Transform your approach, build stronger relationships, and accelerate your career with confidence. See how VisionsAlign turns guesswork into strategic success, helping you achieve your professional goals with ease. From understanding a leader's visual preferences to crafting the perfect opening line, VisionsAlign provides the clarity and confidence you need to excel.
+          </p>
+        </div>
       </section>
 
-      {/* Call-to-Action (Mid-page and Persistent) */}
+      {/* Mid-page CTA */}
       <section className="mid-page-cta-section">
-        <p>
-          Ready to transform your study experience and step into your teaching career with confidence?
-          Join thousands of aspiring educators who are already finding clarity and success with Sage.
-        </p>
-        {/* Microinteraction: A persistent, sticky CTA button at the bottom of the screen (React Bits `StickyButton` component) remains visible as the user scrolls, ensuring constant accessibility. The button itself pulses gently (React Bits `pulse` effect) to draw attention without distraction. */}
-        <button className="cta-button">Start Your Free 7-Day Trial Today!</button>
-      </section>
-
-      {/* Urgency or Special Offer (Optional) */}
-      <section className="urgency-offer-section">
-        <p>
-          Don't let test anxiety hold you back. Your dream classroom is waiting.
-          For a limited time, unlock an exclusive bonus study guide when you start your free trial today!
-        </p>
-        {/* Microinteraction: A subtle, non-intrusive banner at the top of the page or integrated into the CTA section, perhaps with a gentle `shimmer` effect (MagicUI) to highlight the limited-time offer. The text "Today Only" or "Limited Time" could have a slight `pulse` (React Bits) to emphasize urgency. */}
+        <div className="container">
+          <button className="btn btn-primary mid-page-cta-btn">Ready for Your Strategic Advantage? Get Started Free!</button>
+        </div>
       </section>
 
       {/* Frequently Asked Questions */}
       <section className="faq-section">
-        <h2>Your Questions, Answered. Your Doubts Dissolved.</h2>
-        <p>
-          We know you have questions. We're here to provide clear, reassuring answers.
-          Here are common queries about Sage and how it will help you succeed.
-        </p>
-        {/* Microinteraction: An accordion-style FAQ section (shadcn/ui `Accordion` component) where clicking a question expands to reveal the answer with a smooth animation. The question text could subtly `pulse` (React Bits) when hovered over. */}
-        <div className="faq-item">
-          <h3>Q: Will I be charged after the free trial?</h3>
-          <p>A: No. Your 7-day free trial gives you full access to Sage. Continue on our flexible monthly plan or choose not to subscribe – no automatic charges, no hidden fees. Your peace of mind is our priority.</p>
-        </div>
-        <div className="faq-item">
-          <h3>Q: Is Sage just another practice test?</h3>
-          <p>A: Far from it! Sage goes beyond right/wrong. It's a conversational AI that explains <em>why</em> answers are correct, guides you through concepts you struggle with, and adapts to <em>your</em> learning style. It's a teacher, not just a verdict.</p>
-        </div>
-        <div className="faq-item">
-          <h3>Q: Can I use Sage on my phone?</h3>
-          <p>A: Absolutely! Sage is designed for seamless use on any device – phone, tablet, computer. Study whenever, wherever. Turn short breaks into productive learning sessions.</p>
-        </div>
-        <div className="faq-item">
-          <h3>Q: How is Sage different from my textbook?</h3>
-          <p>A: Think of Sage as the interactive, patient tutor your textbook wishes it could be. Instead of rereading confusing paragraphs, ask Sage to explain concepts differently, provide examples, or break down complex problems. It's active learning, not passive reading.</p>
+        <div className="container">
+          <h2 className="section-headline">Your Questions, Answered.</h2>
+          <div className="faq-list">
+            <div className="faq-item">
+              <div className="faq-question" onClick={() => toggleFaq(0)}>
+                Q: Is my data private and secure?
+                <span className={`faq-arrow ${activeFaq === 0 ? 'expanded' : ''}`}>&#9660;</span>
+              </div>
+              <div className={`faq-answer ${activeFaq === 0 ? 'show' : ''}`}>
+                <p>A: Absolutely. We prioritize your privacy and data security. All LinkedIn profile data is processed with the highest encryption standards and is never shared with third parties. Your insights are yours alone.</p>
+              </div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-question" onClick={() => toggleFaq(1)}>
+                Q: Will I be charged after the free trial?
+                <span className={`faq-arrow ${activeFaq === 1 ? 'expanded' : ''}`}>&#9660;</span>
+              </div>
+              <div className={`faq-answer ${activeFaq === 1 ? 'show' : ''}`}>
+                <p>A: No, you will not be automatically charged. Our free trial is genuinely free, no credit card required. You can continue on our free plan with limited features, or choose to upgrade to a premium subscription when you’re ready to unlock full power.</p>
+              </div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-question" onClick={() => toggleFaq(2)}>
+                Q: How quickly can I get insights for my next meeting?
+                <span className={`faq-arrow ${activeFaq === 2 ? 'expanded' : ''}`}>&#9660;</span>
+              </div>
+              <div className={`faq-answer ${activeFaq === 2 ? 'show' : ''}`}>
+                <p>A: VisionsAlign is designed for speed. You can typically generate a comprehensive meeting playbook within minutes of inputting a LinkedIn profile. Get actionable guidance exactly when you need it.</p>
+              </div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-question" onClick={() => toggleFaq(3)}>
+                Q: Can VisionsAlign help me with internal team communication too?
+                <span className={`faq-arrow ${activeFaq === 3 ? 'expanded' : ''}`}>&#9660;</span>
+              </div>
+              <div className={`faq-answer ${activeFaq === 3 ? 'show' : ''}`}>
+                <p>A: While primarily focused on external executive interactions, the principles of understanding communication styles can absolutely be applied to internal team dynamics. Many users find our insights valuable for improving cross-functional collaboration and building stronger internal relationships.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Final CTA / Sign-Up Section */}
       <section className="final-cta-section">
-        <h2>Your Dream Classroom Awaits. Take the First Step.</h2>
-        <p>
-          You've worked tirelessly. Don't let one test stand between you and your dream career.
-          With Sage, you'll gain the understanding, the confidence, and the certification you deserve. Stop worrying. Start teaching.
-        </p>
-        {/* Microinteraction: A visually clean background for this section, with a subtle `retro-grid` or `particles` background effect (Vanta.js) to create a modern, engaging feel without distracting from the CTA. The CTA button should be brightly colored and use a `confetti` effect (React Bits `ConfettiButton` component) upon successful submission, providing positive reinforcement. */}
-        <button className="cta-button">Get Started with Your Free Trial Now!</button>
-        {/* Sign-Up Form (Optional): A simple email input field with a prominent "Get Started" button. */}
-        <div className="signup-form-placeholder">
-          <input type="email" placeholder="Your Email Address" />
-          <button>Get Started</button>
+        <div className="container">
+          <h2 className="section-headline">Ready to Align Your Vision with Influence?</h2>
+          <p className="encouraging-text">
+            Stop rehearsing at 2 a.m. and start leading with confidence. VisionsAlign is your system for predictable career momentum and authentic influence. Your next breakthrough is just a click away.
+          </p>
+          <div className="signup-form">
+            <input type="email" placeholder="Email Address" className="email-input" />
+            <button className="btn btn-success signup-btn">Get Your Free Playbook Now!</button>
+          </div>
+          <p className="reiterate-offer">No credit card required. Start your journey to influence today!</p>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="footer">
-        {/* Additional links, contact information, and social media icons. */}
-        <p>&copy; {new Date().getFullYear()} TeachingDream.com. All rights reserved.</p>
-        <ul>
-          <li><a href="#privacy">Privacy Policy</a></li>
-          <li><a href="#terms">Terms of Service</a></li>
-        </ul>
+        <div className="container">
+          <div className="footer-links">
+            <a href="#" className="footer-link">Home</a>
+            <a href="#" className="footer-link">Features</a>
+            <a href="#" className="footer-link">Pricing</a>
+            <a href="#" className="footer-link">Contact</a>
+            <a href="#" className="footer-link">Privacy Policy</a>
+            <a href="#" className="footer-link">Terms of Service</a>
+          </div>
+          <div className="social-icons">
+            {/* Replace with actual social media icons */}
+            <a href="#" className="social-icon">LinkedIn</a>
+            <a href="#" className="social-icon">X (Twitter)</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
 };
 
-export default LandingPage;
+export default App;
 
 

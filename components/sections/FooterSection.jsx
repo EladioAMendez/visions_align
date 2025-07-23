@@ -20,8 +20,8 @@ export default function FooterSection() {
       { name: 'Contact', href: '/contact' },
     ],
     resources: [
-      { name: 'FTCE Resources', href: '/resources' },
-      { name: 'Study Tips', href: '/blog/study-tips' },
+      { name: 'Leadership Guides', href: '/resources' },
+      { name: 'Executive Insights', href: '/blog/insights' },
       { name: 'Success Stories', href: '/success-stories' },
       { name: 'Support Center', href: '/support' },
     ],
@@ -51,17 +51,17 @@ export default function FooterSection() {
             >
               <Link href="/" className="inline-block mb-6 group">
                 <h3 className="text-3xl font-bold text-primary group-hover:scale-105 transition-transform">
-                   <Highlight><strong>TeachingDream</strong></Highlight>
+                   <Highlight><strong>VisionsAlign</strong></Highlight>
                 </h3>
                 <div className="h-1 w-12 bg-gradient-to-r from-accent to-success mt-2 group-hover:w-full transition-all duration-300"></div>
               </Link>
               <p className="text-secondary mb-6 leading-relaxed">
-                Empowering future educators with conversational AI to master certification exams with confidence.
+                Empowering career-focused professionals with AI insights to master leadership interactions and advance with confidence.
               </p>
               
               {/* Newsletter signup */}
               <div className="mb-6">
-                <p className="text-primary font-medium mb-3">Get study tips & updates:</p>
+                <p className="text-primary font-medium mb-3">Get leadership tips & updates:</p>
                 <div className="flex">
                   <input 
                     type="email" 
@@ -82,7 +82,7 @@ export default function FooterSection() {
               <div className="flex space-x-4">
                 {/* Twitter */}
                 <motion.a 
-                  href="https://twitter.com/teachingdream" 
+                  href="https://twitter.com/visionsalign" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-colors"
@@ -190,7 +190,7 @@ export default function FooterSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <h3 className="text-lg font-medium text-primary mb-6 border-l-2 border-success pl-3">Resources</h3>
+              <h3 className="text-lg font-medium text-primary mb-6 border-l-2 border-success pl-3">Leadership Resources</h3>
               <ul className="space-y-3">
                 {footerLinks.resources.map((link, i) => (
                   <motion.li 
@@ -223,7 +223,7 @@ export default function FooterSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            &copy; {new Date().getFullYear()}  <Highlight><strong>TeachingDream</strong></Highlight>, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()}  <Highlight><strong>VisionsAlign</strong></Highlight>, Inc. All rights reserved.
           </motion.p>
           <motion.div 
             className="flex flex-wrap justify-center gap-x-6 gap-y-2"

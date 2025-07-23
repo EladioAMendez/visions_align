@@ -23,11 +23,11 @@ export default function CtaSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-medium text-primary mb-4">
-            Ready to <Highlight>transform</Highlight> your study experience and step into your teaching career with <Highlight>confidence</Highlight>?
+            Ready to <Highlight>transform</Highlight> your leadership trajectory and advance your career with <Highlight>confidence</Highlight>?
           </h2>
           <p className="text-lg text-secondary mb-8">
-            Join thousands of aspiring educators finding clarity and success with <Accent>Sage</Accent>. 
-            Our tiered plans fit your needs: <span className="font-medium">$10/month</span> for text access or <span className="font-medium">$19/month</span> for voice capabilities.
+            Join forward-thinking professionals maximizing their potential with <Accent>VisionsAlign</Accent>. 
+            Our tiered plans fit your needs: <span className="font-medium">$39/month</span> for Essentials or <span className="font-medium">$99/month</span> for Leadership Premium.
           </p>
           
           <motion.div
@@ -39,7 +39,7 @@ export default function CtaSection() {
               href="#signup"
               className="inline-block bg-accent text-white px-6 py-3 rounded-card font-medium text-lg hover:bg-opacity-90 transition-all animate-pulse"
             >
-              Start Your Free 7-Day Trial Today!
+              Start Your Free 14-Day Trial Today!
             </Link>
             <Link 
               href="#pricing"
@@ -56,7 +56,7 @@ export default function CtaSection() {
             transition={{ duration: 2, repeat: Infinity }}
           >
             <p className="text-primary font-medium">
-              <span className="text-accent">Limited Time:</span> Unlock an exclusive bonus study guide when you start your free trial today!
+              <span className="text-accent">Limited Time:</span> Unlock an exclusive leadership style guide when you start your free trial today!
             </p>
           </motion.div>
         </motion.div>
@@ -73,7 +73,7 @@ export default function CtaSection() {
           href="#trial"
           className="bg-accent text-white px-5 py-3 rounded-full shadow-lg font-medium flex items-center animate-pulse hover:bg-accent/90 transition-all"
         >
-          <span>Start Free Trial</span>
+          <span>Advance Your Career</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>

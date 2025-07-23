@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
 import { Highlight, Accent } from '../ui/TextHighlight';
+import DataShimmer from '../animations/dataShimmer';
+import PathSlideUp from '../animations/pathSlideUp';
+import ConnectExpand from '../animations/connectExpand';
 
 export default function ProductShowcaseSection() {
   const [conversationStep, setConversationStep] = useState(0);
@@ -13,10 +16,11 @@ export default function ProductShowcaseSection() {
   const [typingComplete, setTypingComplete] = useState({});
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [activeFeature, setActiveFeature] = useState('playbook'); // 'playbook', 'insights', 'prep'
   
   const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
+    triggerOnce: false,
+    threshold: 0.2,
   });
   
   // Reference for the conversation container
@@ -40,23 +44,23 @@ export default function ProductShowcaseSection() {
     return () => clearTimeout(timer);
   }, [isAutoPlaying, conversationStep, isTyping]);
 
-  // Demo conversation between user and Sage
+  // Demo conversation between user and VisionsAlign
   const conversation = [
     {
-      user: "I'm confused about the distributive property in algebra. Can you explain it?",
-      sage: "Sure! The distributive property is a fundamental concept in algebra. It allows you to multiply a number by a sum by multiplying each term separately and then adding the products. Let me show you how it works.",
+      user: "I have a meeting with my VP next week to discuss my promotion. How should I prepare?",
+      ai: "I'll analyze your VP's leadership style based on their LinkedIn profile and company data. Based on my analysis, your VP is a **Decisive Strategist** who values data-driven discussion and clear outcomes. Let me create your meeting playbook.",
     },
     {
-      user: "Can you give me an example?",
-      sage: "Absolutely! Let's take the expression 3(x + 5). Using the distributive property, this equals 3x + 15. I multiplied both terms inside the parentheses (x and 5) by 3. Would you like to try one?",
+      user: "What key points should I emphasize in the meeting?",
+      ai: "For your VP's leadership style, focus on these 3 areas:\n\n1. **Quantify Your Impact** - Lead with specific metrics showing your contributions\n2. **Strategic Vision** - Outline your 12-month plan for your new role\n3. **Direct Communication** - Be concise and solutions-oriented\n\nI've prepared talking points for each area in your playbook.",
     },
     {
-      user: "Yes, how about 4(2x - 7)?",
-      sage: "Great example! Let's solve 4(2x - 7) step by step:\n\n1. Multiply 4 by the first term: 4 × 2x = 8x\n2. Multiply 4 by the second term: 4 × (-7) = -28\n3. Combine the results: 8x - 28\n\nSo 4(2x - 7) = 8x - 28. Does that make sense?",
+      user: "How should I handle objections about my technical experience?",
+      ai: "With a Decisive Strategist like your VP, address objections with this approach:\n\n• Acknowledge the concern directly\n• Provide concrete examples of relevant technical wins\n• Present your learning plan with specific milestones\n• End with a confident statement of your capability\n\nI've added specific language to your playbook for this scenario.",
     },
     {
-      user: "Yes! I think I understand now. So the distributive property just means I multiply what's outside the parentheses by each term inside?",
-      sage: "Exactly! You've got it. That's precisely what the distributive property means: a(b + c) = ab + ac. It works for any combination of numbers and variables. It's a powerful tool that you'll use throughout algebra and beyond.",
+      user: "What meeting structure would work best with my VP?",
+      ai: "Based on your VP's communication preferences, here's your optimal meeting structure:\n\n1. **Opening (2 min)**: Thank them, state meeting purpose\n2. **Achievement Brief (5 min)**: Key metrics and wins\n3. **Growth Vision (8 min)**: Your promotion plan and goals\n4. **Q&A (10 min)**: Prepared responses for likely questions\n5. **Next Steps (5 min)**: Specific action items and timeline\n\nThis structure aligns with their preferred decision-making approach.",
     },
   ];
 
@@ -88,6 +92,11 @@ export default function ProductShowcaseSection() {
       // We don't need to simulate typing when going back
       setTypingComplete(prev => ({ ...prev, [prevStep]: true }));
     }
+  };
+  
+  // Switch between product features
+  const handleFeatureChange = (feature) => {
+    setActiveFeature(feature);
   };
   
   // Toggle auto-play functionality
@@ -131,49 +140,93 @@ export default function ProductShowcaseSection() {
   };
   
   // Check if we should show the typing indicator
-  const showTypingIndicator = (step) => isTyping && step === conversationStep;
-  
+  const showTypingIndicator = (step) => {
+    return conversationStep === step && !typingComplete[step] && isTyping;
+  };
+
   // Function to render typing dots animation
-  const renderTypingIndicator = () => (
-    <div className="flex space-x-1 h-6 items-center ml-2">
-      <motion.div
-        className="h-2 w-2 bg-accent rounded-full"
-        animate={{ scale: [1, 1.5, 1] }}
-        transition={{ duration: 0.6, repeat: Infinity, repeatType: 'loop', repeatDelay: 0.1 }}
-      />
-      <motion.div
-        className="h-2 w-2 bg-accent rounded-full"
-        animate={{ scale: [1, 1.5, 1] }}
-        transition={{ duration: 0.6, repeat: Infinity, repeatType: 'loop', delay: 0.2, repeatDelay: 0.1 }}
-      />
-      <motion.div
-        className="h-2 w-2 bg-accent rounded-full"
-        animate={{ scale: [1, 1.5, 1] }}
-        transition={{ duration: 0.6, repeat: Infinity, repeatType: 'loop', delay: 0.4, repeatDelay: 0.1 }}
-      />
-    </div>
-  );
+  const renderTypingIndicator = () => {
+    return (
+      <div className="flex space-x-1 mt-1 mb-2 items-center h-6">
+        <motion.div 
+          className="w-2 h-2 rounded-full bg-accent" 
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'loop', delay: 0 }}
+        />
+        <motion.div 
+          className="w-2 h-2 rounded-full bg-accent" 
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'loop', delay: 0.15 }}
+        />
+        <motion.div 
+          className="w-2 h-2 rounded-full bg-accent" 
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: 'loop', delay: 0.3 }}
+        />
+      </div>
+    );
+  };
   
+  // Feature content based on active feature
+  const featureContent = {
+    playbook: {
+      title: "Leadership Playbooks",
+      description: "Personalized strategies for every stakeholder meeting",
+      image: "/images/playbook-preview.png",
+      stats: [
+        { label: "Meeting Success Rate", value: "94%" },
+        { label: "Time Saved per Meeting", value: "2.5 hrs" }
+      ]
+    },
+    insights: {
+      title: "Leadership Style Insights",
+      description: "Deep analysis of communication and decision patterns",
+      image: "/images/insights-preview.png",
+      stats: [
+        { label: "Accuracy Rating", value: "96%" },
+        { label: "Leadership Types", value: "16" }
+      ]
+    },
+    prep: {
+      title: "Meeting Prep Assistant",
+      description: "AI-guided preparation for high-stakes interactions",
+      image: "/images/prep-preview.png",
+      stats: [
+        { label: "Promotion Rate", value: "3.5×" },
+        { label: "Confidence Boost", value: "87%" }
+      ]
+    }
+  };
+
   return (
     <section className="py-24 relative overflow-hidden" id="product" ref={ref}>
       {/* Decorative background elements */}
-      <div className="absolute top-40 right-20 w-72 h-72 bg-accent/10 rounded-full filter blur-3xl opacity-50 animate-pulse" />
-      <div className="absolute bottom-20 left-10 w-60 h-60 bg-success/10 rounded-full filter blur-3xl opacity-50" />
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-accent/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-success/5 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+      </div>
       
-      <div className="container mx-auto px-4">
-        {/* Section header */}
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-medium text-primary mb-6">
-            Meet <Accent>Sage</Accent>, Your AI Study Partner
+          <h2 className="text-3xl md:text-4xl font-medium text-primary mb-4">
+            <span className="relative inline-block">
+              <span className="relative z-10">Transform</span>
+              <motion.span 
+                className="absolute bottom-1 left-0 w-full h-3 bg-accent/20 rounded"
+                initial={{ width: 0 }}
+                animate={inView ? { width: '100%' } : { width: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              />
+            </span>
+            {' '} Your <Accent>Career Trajectory</Accent>
           </h2>
-          <p className="text-secondary max-w-2xl mx-auto">
-            <Highlight>Available 24/7</Highlight>, Sage uses conversational learning to explain complex concepts, 
-            provide practice problems, and give you immediate feedback to strengthen your understanding.
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            See how VisionsAlign helps you navigate critical leadership interactions with personalized executive insights.
           </p>
         </motion.div>
         
@@ -182,14 +235,14 @@ export default function ProductShowcaseSection() {
           {/* Demo Header */}
           <div className="bg-primary p-4 flex justify-between items-center border-b border-border">
             <div className="flex items-center">
-              <motion.div 
-                className="w-8 h-8 bg-gradient-to-r from-accent to-success rounded-full flex items-center justify-center text-white font-medium mr-3"
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, repeatType: 'reverse' }}
-              >
-                S
-              </motion.div>
-              <h3 className="text-white font-medium">Sage</h3>
+               <motion.div 
+                    className="w-8 h-8 bg-gradient-to-r from-accent to-success rounded-full flex items-center justify-center text-white font-medium mr-3"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, repeatType: 'reverse' }}
+                  >
+                    V
+                  </motion.div>
+                  <h3 className="text-white font-medium">VisionsAlign</h3>
             </div>
             
             {/* Control buttons */}
@@ -277,7 +330,7 @@ export default function ProductShowcaseSection() {
                   >
                     {/* User avatar */}
                     <div className="absolute -left-2 -top-2 w-6 h-6 bg-primary/90 rounded-full flex items-center justify-center text-white text-xs font-medium">
-                      U
+                      E
                     </div>
                     <p className="text-primary">{exchange.user}</p>
                   </motion.div>
@@ -292,7 +345,7 @@ export default function ProductShowcaseSection() {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    S
+                    V
                   </motion.div>
                   
                   <div className="flex-grow">
@@ -317,7 +370,7 @@ export default function ProductShowcaseSection() {
                           transition={{ type: "spring", stiffness: 500, damping: 30 }}
                           whileHover={{ scale: 1.01 }}
                         >
-                          <p className="text-primary whitespace-pre-line">{exchange.sage}</p>
+                          <p className="text-primary whitespace-pre-line">{exchange.ai}</p>
                           
                           {/* Understanding click badge - animated entry */}
                           {index === 2 && typingComplete[index] && (
@@ -362,8 +415,8 @@ export default function ProductShowcaseSection() {
                                   🎉
                                 </motion.span>
                                 <div>
-                                  <div className="text-sm font-medium">Understanding Click!</div>
-                                  <div className="text-xs">Concept mastered: Distributive Property</div>
+                                  <div className="text-sm font-medium">Leadership Style Insight!</div>
+                                  <div className="text-xs">Style identified: Decisive Strategist</div>
                                 </div>
                               </motion.div>
                             </motion.div>
@@ -377,7 +430,7 @@ export default function ProductShowcaseSection() {
                               animate={{ opacity: 1 }}
                               transition={{ delay: 1 }}
                             >
-                              <div className="text-xs text-secondary mb-1">Mastery Progress</div>
+                              <div className="text-xs text-secondary mb-1">Analysis Progress</div>
                               <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                                 <motion.div 
                                   className="h-full bg-gradient-to-r from-accent to-success"
@@ -387,7 +440,7 @@ export default function ProductShowcaseSection() {
                                 />
                               </div>
                               <div className="flex justify-between text-xs mt-1">
-                                <span>Distributive Property</span>
+                                <span>Leadership Style Analysis</span>
                                 <span className="text-success font-medium">85%</span>
                               </div>
                             </motion.div>
@@ -437,10 +490,10 @@ export default function ProductShowcaseSection() {
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
             >
-              💬
+              📊
             </motion.div>
-            <h3 className="text-lg font-medium text-primary mb-2">Ask Anything, Anytime</h3>
-            <p className="text-secondary">No more waiting for office hours. Get immediate, personalized explanations whenever you need them.</p>
+            <h3 className="text-lg font-medium text-primary mb-2">Leadership Playbooks</h3>
+            <p className="text-secondary">Instantly generate personalized strategies for navigating critical leadership interactions with key stakeholders.</p>
           </motion.div>
 
           <motion.div 
@@ -455,10 +508,10 @@ export default function ProductShowcaseSection() {
               animate={{ rotate: [0, 5, 0, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
-              🔍
+              👥
             </motion.div>
-            <h3 className="text-lg font-medium text-primary mb-2">Conversational Learning</h3>
-            <p className="text-secondary">Sage adapts to your learning style with Socratic dialogue that builds true understanding, not just memorization.</p>
+            <h3 className="text-lg font-medium text-primary mb-2">Leadership Style Analysis</h3>
+            <p className="text-secondary">Get deep insights into your executives' leadership preferences, priorities, and communication styles based on AI analysis.</p>
           </motion.div>
 
           <motion.div 
@@ -475,8 +528,8 @@ export default function ProductShowcaseSection() {
             >
               📊
             </motion.div>
-            <h3 className="text-lg font-medium text-primary mb-2">Track Your Progress</h3>
-            <p className="text-secondary">Monitor your growth with insights into mastered concepts and areas that need more focus.</p>
+            <h3 className="text-lg font-medium text-primary mb-2">Meeting Prep Assistant</h3>
+            <p className="text-secondary">Prepare for crucial meetings with executives and stakeholders with AI-generated talking points and insights.</p>
           </motion.div>
         </div>
         
@@ -491,7 +544,7 @@ export default function ProductShowcaseSection() {
             href="/#pricing" 
             className="inline-block bg-accent hover:bg-accent/90 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group"
           >
-            <span className="relative z-10">Try Sage Free for 7 Days</span>
+            <span className="relative z-10">Try VisionsAlign Free for 14 Days</span>
             <motion.div 
               className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20"
               animate={{ x: [-100, 250] }}

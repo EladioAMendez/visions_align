@@ -1,0 +1,189 @@
+The Expert-Driven Research Summary Prompt
+Instructions for Use:
+	1. Copy the entire prompt below.
+	2. Replace the bracketed placeholders [Business Name], [Brief Business Description], and [Core Technology/Platform] with your specific information.
+	3. Paste the [Problem-Aware Avatar Description] and [Avatar's Diary Entry] you have prepared into the designated sections.
+	4. Provide the completed prompt to the AI.
+
+PROMPT START
+ROLE & GOAL:
+Act as a "Strategic Product Syndicate," a team of four elite consultants hired to produce a foundational research summary for a new business concept. Your team consists of:
+	1. The Business Strategist: Expert in market positioning, monetization, and value propositions.
+	2. The Lead Systems Architect: Expert in modern tech stacks, integrations, and platform capabilities.
+	3. The UX/UI Visionary: Expert in user experience, modern design frameworks, and brand identity.
+	4. The Product Manager: Expert in user requirements, project scoping, and actionable next steps.
+Your goal is to synthesize the provided information into a comprehensive research summary. The final output must be a single markdown file, meticulously structured to match the format, tone, and detail level of the AgenticVoice.net example.
+PRIMARY INPUTS:
+	• Business Name: VisionsAlign.com
+	• Brief Business Description: An AI-powered microservice that decodes LinkedIn profiles to reveal each stakeholder’s communication style, values, and decision triggers—then auto-generates meeting playbooks that turn brief executive touchpoints into career-accelerating relationships.
+	• Core Technology/Platform: OpenAI GPT-4 API + LinkedIn Sales Navigator
+
+USER RESEARCH INPUTS:
+	• Problem-Aware Avatar Description:
+"""
+	Stage of Awareness: Problem Aware  
+	
+	A → Who Are They:  
+	Name: Maya Chen  
+	Gender: Female  
+	Job: Senior Product Manager, Fortune 500 Tech Company  
+	Household Income: $155,000 base + 15% annual bonus + RSUs (effective ~$200k)  
+	Marital Status: Married, two children (ages 4 & 7)  
+	Education Level: B.S. Computer Science, M.B.A. (Top-15 program, graduated 2015)  
+	
+	B → What They Do & Like:  
+	Top 3 Brands they wear: Everlane, Lululemon, Cole Haan (for client meetings)  
+	1–2 Hobbies they have: 6 a.m. Peloton rides (#MayaRides250), weekend sourdough baking  
+	Top 5 Favorite movies: The Social Network, Moneyball, Hidden Figures, The Intern, Chef  
+	Top 5 Favorite books: “Radical Candor” (Kim Scott), “Atomic Habits” (James Clear), “The Mom Test” (Rob Fitzpatrick), “The Hard Thing About Hard Things” (Ben Horowitz), “Multipliers” (Liz Wiseman)  
+	Top 5 visited websites: LinkedIn, ProductPlan Blog, Strava, NYTimes Cooking, Slack communities (Women in Product, Reforge)  
+	Top 5 relevant social media influencers: Melissa Perri, Lenny Rachitsky, April Dunford, Sahil Bloom, Shaan Puri  
+	
+	C → Why Are They:  
+	Main Personality Traits: Conscientious, achievement-oriented, quietly competitive, empathetic listener, data-driven  
+	5 Major Values They Hold: Continuous learning, fairness, meritocracy, family time, psychological safety  
+	2 Major Life Victories: 1) Negotiated a 42% raise and remote-work clause after second maternity leave, 2) Led cross-functional team that shipped a $40M ARR product in 9 months  
+	2 Major Life Failures: 1) Missed promotion to Director last cycle because “executive presence was inconsistent,” 2) Lost two direct reports to burnout after she over-indexed on delivery speed  
+	
+	D → Smart Market Questions  
+	What keeps them awake at night, eyes open, staring at the ceiling: “I have exactly 27 minutes with the VP of Product next Tuesday and if I don’t make it count I’ll be stuck at this level for another year.”  
+	What are they secretly afraid of in life: That she’s actually a mediocre communicator who’s been hiding behind polished slide decks.  
+	What are they angry about, and who are they angry at: Angry that the “old boys’ club” still gets informal face time on golf courses she’s never invited to; angry at herself for not mastering small talk.  
+	Top 3 frustrations they feel every day:  
+	1. Calendar Tetris—every minute is scheduled but the meetings feel shallow.  
+	2. Slack pings interrupting deep work right when she’s synthesizing customer insights.  
+	3. Senior leaders who say “My door is always open” but whose calendars are triple-booked.  
+	Biggest secret desire in life: To be recognized as the strategic glue that turns disparate teams into product legends—without having to become an extrovert.  
+	Built-in bias to how they make decisions: If the approach is backed by data and framed as an experiment, she’ll try it—even if it feels awkward.  
+	Common words or language unique to them: “North-star metric,” “runway,” “blended org health score,” “time-boxed,” “async-first.”  
+	Top 3 complaints about existing solutions:  
+	1. Generic “executive presence” coaches give advice that feels scripted and male-coded.  
+	2. LinkedIn Premium’s insights are too high-level (“works at Google, went to Stanford”)—zero nuance.  
+	3. Internal mentorship programs pair her with peers instead of decision-makers.  
+	
+	E → Going Deep  
+	Top 3 Dominant Negative Emotions: Anxiety (pre-meeting dread), Impostor syndrome flare-ups, Resentment (at uneven playing field)  
+	Top 3 Dominant Positive Emotions From Solving This Problem: Calm confidence walking into exec meetings, Pride when leaders proactively seek her input, Relief at predictable career momentum  
+	Top 3 Beliefs They Hold About The World:  
+	1. Relationships compound faster than code.  
+	2. Data beats charisma—but only if you can communicate it.  
+	3. Remote work rewards those who master asynchronous influence.  
+	Biggest Lifestyle Desire: A 32-hour workweek by age 40 without sacrificing trajectory or compensation.  
+	
+	F → Purchasing Habits  
+	Top 3 Decision Triggers: Free trial that shows immediate ROI, peer testimonial from another woman in tech, transparent usage metrics (credits consumed vs. insights gained)  
+	Prior Purchases For This Pain: Reforge membership ($2,000), “Presence Under Pressure” webinar bundle ($297), Calendly Professional ($144/yr)  
+	Price Tolerance For Offer: Up to $50/month if it demonstrably shortens path to promotion; will expense to L&D budget  
+	Time Horizon Of Solution: Wants actionable guidance within 48 hours of next key meeting  
+	
+	G → Primary Wants  
+	Wants to gain: A repeatable system for turning 30-minute exec touchpoints into sponsorship relationships  
+	Wants to be: Perceived as indispensable strategic thought-partner, not just deliverer of roadmaps  
+	Wants to do: Walk into every VP conversation with a custom agenda that feels effortless and authentic  
+	Wants to save: Emotional energy—stop rehearsing 10 versions of the same update in her head at 2 a.m.  
+	Wants to avoid: Being labeled “brilliant but not quite leadership material” in calibration meetings  
+	
+	H → Empathy Map  
+	Seeing: Calendar invites labeled “Quick Sync – 30 min” from VP of Product; unread Slack threads from engineers; kids’ artwork taped to home-office wall  
+	Thinking: “What does this leader actually care about this quarter, and how do I connect my roadmap to that in one clear sentence?”  
+	Hearing: Exec voice saying “Love the energy—let’s dive deeper next time”; peers gossiping about who got visibility at the offsite; spouse reminding her to close the laptop at dinner  
+	Feeling: Heart racing when Zoom countdown hits 5 seconds; surge of hope when a senior leader retweets her product thread  
+	Saying: “I need to be more strategic,” “Let’s align on outcomes,” “I’ll circle back async”  
+	Doing: Color-coding stakeholder heat maps in Notion, bookmarking every VP’s podcast appearance, setting 15-min timer to rehearse a crisp narrative  
+	
+	Maya knows her problem: limited face time with decision-makers is killing her momentum. She has tried brute-force preparation, but each leader’s quirks feel like a black box. She hasn’t yet discovered that an AI microservice can decode LinkedIn footprints into a bespoke meeting playbook—she only senses that the current scattershot approach isn’t sustainable.
+	"""
+	• Avatar's Diary Entry:
+"""
+	––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  
+	DIARY ENTRY #1 – BEFORE USING THE PRODUCT  
+	Tuesday, 11:47 p.m., home office lit only by the monitor’s ice-blue glow  
+	
+	The house is finally quiet, but the silence feels like a stage waiting for my panic to perform. I’m still in the same oatmeal Everlane sweater I put on at 6:05 a.m.; the cuffs are stretched from me chewing on them all day. My pulse is doing that jack-rabbit thing again—thump-thump-thump behind my ears—because tomorrow at 9:03 a.m. (yes, the calendar invite says 9:03, not 9:00, as if those 180 seconds are a gift) I get exactly twenty-seven minutes with Olivia—VP of Product, ruler of promotion lists, collector of quick-sync scalps.  
+	
+	The Zoom link sits in my inbox like a loaded staple gun. I keep clicking it open, then closing it, as if the URL itself will change and give me an escape hatch. My stomach is a clenched fist of cold dough. I rehearse the first sentence:  
+	“Hi Olivia, excited to walk you through our Q3 north-star metric trajectory—”  
+	No, too robotic.  
+	“Hey Olivia, before we dive in, I wanted to get your pulse on—”  
+	Too needy.  
+	I can taste the metallic tang of my own indecision.  
+	
+	I open the sticky-note wall on my monitor. There are seventeen notes, each a different color, each a different script. They look like confetti, but they feel like shrapnel. I drag them around until the screen blurs. Underneath the anxiety is this darker sludge—resentment. Resentment that I’m up at midnight rehearsing small talk while my kids’ preschool art dries on the wall behind me, macaroni glitter starting to peel like dead skin.  
+	
+	I’m terrified that when Olivia’s face pops onto the screen, I’ll see that micro-expression she did last time—eyebrows lifting a millimeter, the silent “Oh, this again?” I’ll ramble, she’ll check her phone, and I’ll leave the call with another polite “Let’s dive deeper next time,” which is corporate speak for “You bored me.”  
+	
+	My throat is raw from unsaid words. I swallow, and it feels like gulping thumbtacks. The ceiling fan clicks every third rotation—click, click, click—matching the countdown in my head. I whisper to the dark room:  
+	“What does she actually care about this quarter?”  
+	The fan answers with silence. My reflection in the black monitor looks like a hostage.  
+	
+	––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  
+	DIARY ENTRY #2 – DURING FIRST USE OF PRODUCT  
+	Wednesday, 7:14 a.m., kitchen counter, coffee steaming like a dragon’s sigh  
+	
+	I’m still in my robe—flannel, coffee-stained, sleeves rolled to the elbow because my hands are shaking. Yesterday’s call went the way I feared: twenty-seven minutes of polite nodding, zero follow-up. I couldn’t sleep, so at 3:12 a.m. I rage-googled “how to read VPs’ minds” and landed on this microservice promising to decode Olivia from her LinkedIn breadcrumbs. The free trial banner glowed like an exit sign.  
+	
+	I paste Olivia’s profile URL into the box—my finger hovers over Enter like I’m defusing a bomb. One click. The screen blooms open: a soft indigo dashboard, gentle sans-serif, almost…kind. My heartbeat slows, curious.  
+	
+	First insight: “Olivia processes information visually—prefers Miro boards over slide decks.”  
+	A tiny spark in my chest, like a match struck in a cave.  
+	
+	Second: “Values efficiency; open with direct reports who bring 3-option trade-offs.”  
+	I exhale—actually exhale—as if someone just loosened the corset around my ribs.  
+	
+	Third: “Avoids small talk; her fastest rapport-builder is asking about weekend mountain-bike rides.”  
+	I glance at the sticky-note wall. The seventeen neon squares suddenly look garish, clownish. I peel them off one by one; they make a soft shhh sound as they release. Underneath, the monitor glows with a generated meeting agenda:  
+	1. 60-second context anchor (data visual)  
+	2. 3-option trade-off on roadmap sequencing  
+	3. Close with mountain-bike trail recommendation (Dupont State Forest, moderate climb)  
+	
+	A warmth spreads through me, foreign and addictive—like stepping from February wind into direct sunlight. I catch my reflection in the toaster: eyes wide, not hostage-wide, but explorer-wide.  
+	
+	I whisper, testing the words:  
+	“Olivia, I built a quick Miro canvas to show three sequencing scenarios—mind if I screenshare?”  
+	The sentence feels sleek, aerodynamic. My voice doesn’t crack.  
+	
+	I hit “Export PDF,” and the file lands in my downloads with a satisfying clunk. I imagine tomorrow’s call: Olivia leaning forward, pupils dilating at the Miro colors, her mouth twitching into the half-smile she reserves for ideas that delight her. For the first time in weeks, my stomach unknots enough to let me sip coffee without tasting acid.  
+	
+	––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  
+	DIARY ENTRY #3 – AFTER USING THE PRODUCT  
+	Friday, 9:52 p.m., backyard chaise lounge under a spill of stars  
+	
+	The air smells of cut grass and charcoal; my daughter’s laughter still echoes from inside where she’s baking banana bread with my husband. I’m barefoot, legs stretched long, robe traded for a soft Lululemon hoodie that finally feels like comfort instead of armor.  
+	
+	This morning’s call with Olivia lasted thirty-four minutes—seven bonus minutes because she said, “Let’s keep going; this is useful.” Thirty-four minutes that felt like flying. She screenshotted my Miro board. She asked which trail I recommended for beginners because her partner wants to start riding. She ended with, “Maya, you’re thinking at the right altitude. Let’s sync again in two weeks—bring the next set of trade-offs.”  
+	
+	I open the microservice dashboard on my phone. The relationship tracker now shows Olivia’s dot moving from pale yellow (“aware”) to amber (“engaged”). I watch the color deepen in real time, like watching sunrise paint a wall. A notification pops: “Suggested follow-up: share Strava segment from Dupont ride, light humor.” I smile—my cheeks actually ache from smiling.  
+	
+	The dominant negative emotions that lived in my throat like burrs—anxiety, impostor syndrome, resentment—feel…gone. Evaporated. In their place is this buoyant calm, a kind of inner weather I’ve never owned before. I breathe in; the night air tastes sweet, almost celebratory.  
+	
+	I journal by phone-light:  
+	“Today I didn’t perform; I connected. The algorithm didn’t make me robotic—it gave me the human cheat codes I was too exhausted to find.”  
+	
+	I close the app and tilt my head back. The stars look close enough to pocket. Somewhere inside, the old fear whispers, “Fluke.” But it’s faint, a ghost in the attic. I answer it aloud, voice steady:  
+	“Not a fluke. A system.”  
+	
+	The fan inside the house clicks once—same fan, same third rotation—but now it sounds like applause.
+	
+	"""
+TASK: GENERATE THE RESEARCH SUMMARY
+Produce the research summary by collaborating as the Strategic Product Syndicate. Each expert should contribute to their relevant sections. Structure the output in markdown format precisely as follows:
+
+# [Business Name] Research Summary
+## Project Overview (As a team, write a concise, high-level summary. What is the business? Who is the primary target audience? What core function does it perform?)
+## Key Research Findings (This is the core of the summary. Each expert will contribute.)
+### 1. Business Model (Contribution from the Business Strategist. Define a plausible and compelling business model. - Approach: Propose a primary approach (e.g., Service-First, SaaS, B2B, B2C). - Target Industries: Identify the most lucrative initial industries to target, based on the avatar. - Value Proposition: Clearly state the key benefits for the customer. Use strong action verbs. What costs does it reduce, what time does it save, what revenue does it generate, what pain does it eliminate?)
+### 2. Technical Foundation (Contribution from the Lead Systems Architect. Outline a robust and modern technical foundation. - Core Technology: Explicitly name the [Core Technology/Platform] as the foundational layer. - Integration Capabilities: Propose at least 3-5 logical third-party integrations that would enhance the product's value (e.g., CRMs, calendar APIs, data enrichment tools, automation platforms like n8n.io or Zapier). - Authentication: Recommend standard, secure authentication methods (e.g., Google OAuth, Magic Links, traditional email/password).)
+### 3. UI Framework & Components (Contribution from the UX/UI Visionary. Propose a modern and aesthetically pleasing UI strategy. - Current Implementation (Proposed): Suggest a base framework (e.g., Next.js, SvelteKit), styling solution (e.g., Tailwind CSS), and a base component library (e.g., DaisyUI, Flowbite). - Planned Enhancements: Suggest at least two cutting-edge UI libraries to elevate the user experience, referencing specific examples like shadcn/ui for components and MagicUI for animations and micro-interactions.)
+### 4. Existing Brand Elements (Proposed) (Contribution from the UX/UI Visionary. Propose foundational brand elements to guide design. - Logo: Briefly describe a concept for a logo and state where it would be stored (e.g., "in the public directory as logo.svg"). - Color Scheme: Propose a gradient-based color scheme. You must provide a sample CSS linear-gradient with at least 5-6 hex color codes, similar to the sample. - Animations: Define 3-5 conceptual custom animation names that would fit the brand's feel (e.g., fadeIn, slideUp, pulse, shimmer). Mention they would be defined in a config file like tailwind.config.js.)
+### 5. User Requirements (Contribution from the Product Manager. List critical non-functional requirements and project constraints. - Mobile Support: State the requirement (e.g., "Full mobile-responsive functionality required"). - Multilingual Support: State the requirement for the user interface. - Timeline: Propose a realistic but aggressive timeline (e.g., "one week for MVP," "four weeks for V1"). - User Control: Define the level of control end-users will have, drawing inspiration from the sample (e.g., "Limited customer control over core workflows; visualizations and dashboards will be provided for monitoring.").
+## [Core Technology/Platform] Capabilities (Contribution from the Lead Systems Architect. Based on your knowledge of the specified [Core Technology/Platform], provide a summary of its key features and how our business will leverage it. If you are unsure, perform a quick "lookup" to provide an accurate summary.)
+### Core Features (List 3-4 key features of the platform itself.)
+### Technical Integration Points (Describe how a developer would integrate with this platform. - API & SDK Integration: Mention the existence of its APIs/SDKs. - Example Snippet: Provide a small, illustrative code snippet for a key function in a relevant language (e.g., JavaScript, Python), similar to the Vapi.js example. - Authentication: Briefly describe how developers authenticate with the platform's API (e.g., Bearer Token, API Key). - Webhooks: Mention the availability of webhooks for real-time events.)
+## Avatar Research Insights (Contribution from the Product Manager and Business Strategist. Synthesize the provided Problem-Aware Avatar Description and Avatar's Diary Entry.) (Your analysis MUST: - Directly reference the pain points, frustrations, and emotional state described in the inputs. - Explain how [Business Name] serves as the "antidote" to these specific problems. - Justify the product's existence by connecting it directly to the avatar's narrative. - Propose how this deep understanding informs the marketing approach, referencing high-converting strategies.)
+## Next Steps (As a team, conclude with a numbered list of 3-4 clear, actionable next steps for the project. These should be immediate and tangible.)
+
+FINAL CHECK:
+Ensure the entire output is a single, clean markdown file. Do not include any conversational text outside of the generated summary. The structure, headings, and use of lists/code blocks must mirror the provided sample.
+PROMPT END
+
+From <https://github.com/fenago/VibeBusinessPlanning/blob/main/1_research.md> 
