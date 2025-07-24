@@ -11,28 +11,28 @@ import {
 
 const faqData = [
   {
-    question: "What is VisionsAlign?",
-    answer: "VisionsAlign is a strategic communication platform that helps leaders align their teams, articulate their vision, and drive measurable results. We provide tools for data-driven insights, stakeholder engagement, and transparent progress tracking."
-  },
-  {
-    question: "Is using AI for communication insights ethical?",
+    question: "Is this ethical?",
     answer: "We define this as Strategic Empathy—a core principle of modern leadership. Effective leaders have always invested time to understand their audience; VisionsAlign provides a more efficient, data-driven framework for that essential work. Our platform is designed to enhance genuine understanding and respect, not to enable manipulation. To ensure this, we operate exclusively on publicly available professional data."
   },
   {
-    question: "Who is this platform for?",
-    answer: "Our platform is designed for executives, project managers, and team leaders who need to ensure their strategic initiatives are understood, adopted, and successfully executed across their organizations."
+    question: "How is this different from ChatGPT?",
+    answer: "While ChatGPT is a generalist, VisionsAlign is a specialist. Our AI Brain Trust is composed of six distinct expert personas (e.g., a Strategist, a Data Scientist, a Psychologist) who collaborate to analyze your specific challenge from multiple angles, delivering a more nuanced and actionable playbook than any single AI can."
   },
   {
-    question: "How does VisionsAlign improve communication?",
-    answer: "By providing a centralized hub for your vision, goals, and progress, we eliminate information silos. Our tools help you craft clear, compelling messages and our analytics show you how effectively those messages are resonating with your team."
+    question: "What's the ROI?",
+    answer: "The ROI is career velocity. It's the promotion you get six months early. It's the budget that gets approved. It's the startup that gets funded. Our users don't just win meetings; they build the influence needed to accelerate their careers."
   },
   {
-    question: "Can I integrate VisionsAlign with other tools?",
-    answer: "Yes, we are developing integrations for popular project management and communication tools like Slack, Jira, and Asana to ensure a seamless workflow. Please check our roadmap or contact us for specific requests."
+    question: "How long does it take?",
+    answer: "What used to take 10+ hours of manual research, brainstorming, and slide-building now takes about 15 minutes. VisionsAlign automates the prep work so you can focus on the performance."
   },
   {
-    question: "What kind of support do you offer?",
-    answer: "We offer comprehensive support including an extensive knowledge base, email support, and dedicated onboarding assistance for enterprise clients to ensure you get the most value from VisionsAlign."
+    question: "Is my data secure?",
+    answer: "Absolutely. We use enterprise-grade encryption for all data, both in transit and at rest. Your inputs are used exclusively to generate your private playbook and are never used for training our models."
+  },
+  {
+    question: "Does this replace human connection?",
+    answer: "No. It enhances it. By handling the analytical heavy lifting, VisionsAlign frees you to focus on what humans do best: building rapport, showing genuine empathy, and making the personal connection that ultimately closes the deal or wins the room."
   }
 ];
 
@@ -50,10 +50,10 @@ export default function FaqSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Frequently Asked Questions
+            Your Questions, Answered
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Have questions? We've got answers. If you don't see what you're looking for, feel free to contact us.
+            Everything you need to know to get started with VisionsAlign.
           </p>
         </motion.div>
 

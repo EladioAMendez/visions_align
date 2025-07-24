@@ -31,7 +31,7 @@ const PricingPlanCard = ({ plan, index }) => {
       <div className="flex-grow flex flex-col">
         <div className="flex-grow">
           <h3 className="text-2xl font-semibold text-white text-center mb-2">{plan.name}</h3>
-          <p className="text-slate-400 text-center mb-6 h-12">{plan.description}</p>
+          <p className="text-slate-400 text-center mb-10 min-h-[4rem]">{plan.description}</p>
           <div className="text-center mb-8">
             <span className="text-5xl font-bold text-white">{plan.price}</span>
             {plan.period && <span className="text-slate-400">/{plan.period}</span>}
@@ -63,47 +63,45 @@ export default function PricingSection() {
       name: "Starter",
       price: "Free",
       period: null,
-      description: "For individuals ready to experience the power of a single, expertly-crafted playbook.",
+      description: "Get a free playbook to win your next critical meeting.",
       features: [
         "1 Playbook Credit",
         "Analysis of 1 Stakeholder",
+        "Standard AI Brain Trust Access",
         "Standard Email Support",
-        "Access to Core Insights",
       ],
       cta: "Generate Your First Playbook",
-      ctaLink: "/get-started",
+      ctaLink: "/get-started?plan=starter",
       popular: false,
     },
     {
       name: "Pro",
-      price: "$49",
+      price: "$29",
       period: "month",
-      description: "For professionals who regularly engage in high-stakes communication.",
+      description: "Get AI-powered prep for all your important meetings.",
       features: [
         "10 Playbook Credits per Month",
-        "Analysis of up to 25 Stakeholders",
+        "Analyze up to 25 Stakeholders",
+        "Advanced AI Brain Trust Access",
         "Priority Email & Chat Support",
-        "Advanced Personality & Value Mapping",
-        "Calendar Integration (Coming Soon)",
       ],
-      cta: "Get Started with Pro",
+      cta: "Choose Pro",
       ctaLink: "/get-started?plan=pro",
       popular: true,
     },
     {
-      name: "Enterprise",
-      price: "Custom",
-      period: null,
-      description: "For teams and organizations requiring scalable communication excellence.",
+      name: "Director",
+      price: "$49",
+      period: "month",
+      description: "Unlock strategic mastery with full control & custom AI analysis.",
       features: [
-        "Unlimited Playbook Credits",
-        "Unlimited Stakeholder Analysis",
-        "Dedicated Account Manager",
-        "Team Management & Reporting",
-        "API Access & Custom Integrations",
+        "25 Playbook Credits per Month",
+        "Analyze up to 100 Stakeholders",
+        "Executive AI Brain Trust Access",
+        "Customizable Analysis Parameters",
       ],
-      cta: "Contact Sales",
-      ctaLink: "/contact-sales",
+      cta: "Choose Director",
+      ctaLink: "/get-started?plan=director",
       popular: false,
     },
   ];
@@ -122,7 +120,7 @@ export default function PricingSection() {
             Simple, Transparent Pricing
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Choose the plan that aligns with your professional goals. No hidden fees, cancel anytime.
+            Choose the plan that aligns with your professional goals. Start free, no credit card required.
           </p>
         </motion.div>
 

@@ -61,9 +61,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
             >
-              Engineer Resonance. 
-              <br />
-              <span className="text-brand-sea-green">Win Executive Buy-In.</span>
+              Engineer Resonance. <br /> <span className="text-brand-sea-green">Win Executive Buy-In.</span>
             </motion.h1>
             
             <motion.p 
@@ -72,7 +70,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
             >
-              VisionsAlign is the AI co-pilot for ambitious professionals. We translate stakeholder psychology into actionable communication strategies, ensuring your ideas don't just get heard—they get championed.
+              Stop navigating complex stakeholder dynamics alone. VisionsAlign is your AI co-pilot for engineering resonance, ensuring your best ideas get the executive buy-in they deserve.
             </motion.p>
 
             <motion.div 
@@ -82,7 +80,7 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             >
               <Link href="#pricing" className="btn btn-primary">
-                Get Started for Free
+                Generate Your First Playbook
               </Link>
             </motion.div>
           </div>

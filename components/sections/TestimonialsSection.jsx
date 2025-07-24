@@ -6,24 +6,24 @@ import { useInView } from 'react-intersection-observer';
 
 const testimonials = [
   {
-    quote: "VisionsAlign was a game-changer for my promotion. The stakeholder analysis was shockingly accurate, and the communication playbook gave me the confidence to nail my presentation.",
-    name: "Jessica M.",
-    title: "Senior Product Manager, Tech Corp",
+    quote: "I went from being terrified of our CFO to confidently presenting a budget that got approved on the spot. The playbook's psychological breakdown was the key.",
+    name: "Maya R.",
+    title: "Senior Product Manager",
   },
   {
-    quote: "I used to dread meetings with our executive team. Now, I see them as opportunities. VisionsAlign helped me understand their motivations and speak their language. The difference is night and day.",
+    quote: "VisionsAlign is my secret weapon for investor meetings. I can anticipate questions and frame our vision in a way that resonates every single time. We closed our seed round in half the expected time.",
+    name: "Alex C.",
+    title: "Founder & CEO",
+  },
+  {
+    quote: "The difference is night and day. I used to spend 10+ hours prepping for a single board meeting. Now, I generate a playbook in 15 minutes and walk in feeling more prepared than ever.",
     name: "David L.",
-    title: "Director of Engineering, Innovate Inc.",
+    title: "Director of Engineering",
   },
   {
-    quote: "As a founder, I'm constantly pitching to investors and partners. This tool is my secret weapon for building rapport and getting to 'yes' faster. The AI insights are brilliant.",
+    quote: "I got my promotion six months ahead of schedule. My manager cited my 'dramatically improved executive presence' as a key factor. That's all VisionsAlign.",
     name: "Sarah K.",
-    title: "Founder & CEO, StartUp Solutions",
-  },
-  {
-    quote: "The ability to generate a tailored communication strategy in minutes is invaluable. It's saved me countless hours of prep time and made my team's presentations far more effective.",
-    name: "Michael B.",
-    title: "VP of Sales, Enterprise Co.",
+    title: "VP of Sales",
   },
 ];
 
@@ -83,10 +83,10 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Trusted by High-Achievers Like You
+            Real Resonance, Real Results
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Here's what industry leaders are saying about their experience with VisionsAlign.
+            See how ambitious professionals are turning anxiety into authority.
           </p>
         </motion.div>
 

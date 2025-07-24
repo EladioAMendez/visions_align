@@ -6,25 +6,54 @@ import ButtonCheckout from "./ButtonCheckout";
 // <ButtonCheckout /> renders a button that will redirect the user to Stripe checkout called the /api/stripe/create-checkout API endpoint with the correct priceId
 
 const Pricing = () => {
+  const plans = [
+    {
+      name: "Starter",
+      price: "$0",
+      description: "For your single most urgent meeting. Experience the core power of VisionsAlign.",
+      features: ["1 Playbook Credit per Month", "Composite AI View", "Standard Email Support"],
+      cta: "Get Started for Free",
+      isFeatured: false,
+    },
+    {
+      name: "Pro",
+      price: "$29/month",
+      description: "For building a habit of influence. The system for consistent, weekly excellence.",
+      features: ["5 Playbook Credits per Month", "Composite AI View", "Priority Email Support"],
+      cta: "Start Your Pro Trial",
+      isFeatured: true,
+    },
+    {
+      name: "Director",
+      price: "$49/month",
+      description: "For mastering the room, every time. The ultimate toolkit for strategic leadership.",
+      features: ["Unlimited Playbook Credits", "**Choice of AI Expert Lead Lens**", "Relationship Tracker", "Calendar Integration"],
+      cta: "Become a Director",
+      isFeatured: false,
+    },
+  ];
+
   return (
     <section className="bg-base-200 overflow-hidden" id="pricing">
       <div className="py-24 px-8 max-w-5xl mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
-          <p className="font-medium text-primary mb-8">Pricing</p>
           <h2 className="font-bold text-3xl lg:text-5xl tracking-tight">
-            Save hours of repetitive code and ship faster!
+            Find the Plan That Aligns With Your Ambition
           </h2>
+          <p className="text-lg text-secondary mt-4">
+            Start for free. Upgrade when you're ready to turn influence into your superpower.
+          </p>
         </div>
 
         <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
-          {config.stripe.plans.map((plan) => (
-            <div key={plan.priceId} className="relative w-full max-w-lg">
+          {plans.map((plan) => (
+            <div key={plan.name} className="relative w-full max-w-lg">
               {plan.isFeatured && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                   <span
                     className={`badge text-xs text-primary-content font-semibold border-0 bg-primary`}
                   >
-                    POPULAR
+                    MOST POPULAR
                   </span>
                 </div>
               )}
@@ -47,22 +76,12 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  {plan.priceAnchor && (
-                    <div className="flex flex-col justify-end mb-[4px] text-lg ">
-                      <p className="relative">
-                        <span className="absolute bg-base-content h-[1.5px] inset-x-0 top-[53%]"></span>
-                        <span className="text-base-content/80">
-                          ${plan.priceAnchor}
-                        </span>
-                      </p>
-                    </div>
-                  )}
                   <p className={`text-5xl tracking-tight font-extrabold`}>
-                    ${plan.price}
+                    {plan.price.startsWith('$') ? '' : '$'}{plan.price.split('/')[0]}
                   </p>
                   <div className="flex flex-col justify-end mb-[4px]">
                     <p className="text-xs text-base-content/60 uppercase font-semibold">
-                      USD
+                      {plan.price.includes('/') ? plan.price.split('/')[1] : 'USD'}
                     </p>
                   </div>
                 </div>
@@ -83,17 +102,15 @@ const Pricing = () => {
                           />
                         </svg>
 
-                        <span>{feature.name} </span>
+                        <span dangerouslySetInnerHTML={{ __html: feature }}></span>
                       </li>
                     ))}
                   </ul>
                 )}
                 <div className="space-y-2">
-                  <ButtonCheckout priceId={plan.priceId} />
-
-                  <p className="flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative">
-                    Pay once. Access forever.
-                  </p>
+                  <a href="#" className={`btn ${plan.isFeatured ? 'btn-primary' : 'btn-ghost'}`}>
+                    {plan.cta}
+                  </a>
                 </div>
               </div>
             </div>

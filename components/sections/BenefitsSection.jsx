@@ -30,18 +30,18 @@ const StepCard = ({ title, description, icon, index }) => {
 export default function BenefitsSection() {
   const steps = [
     {
-      title: "1. Connect Data",
-      description: "We securely analyze public data points and your communication style to build a comprehensive stakeholder profile.",
+      title: "Connect Your Data",
+      description: "Securely link your calendar, upload meeting invites, or provide a LinkedIn URL. Our AI Brain Trust ingests the context.",
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>,
     },
     {
-      title: "2. Generate Insights",
-      description: "Our AI identifies core motivations and communication preferences, generating a personalized insight report.",
+      title: "Generate Your Playbook",
+      description: "In about 90 seconds, our six-persona AI team analyzes the stakeholders and goals to generate a comprehensive communication playbook.",
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 9.75l1.25-2.188a2.25 2.25 0 00-2.188-2.188L15.063 4.5l-1.25 2.188a2.25 2.25 0 002.188 2.188l2.25.813-2.25.813a2.25 2.25 0 00-2.188 2.188l-1.25 2.188 1.25 2.188a2.25 2.25 0 002.188 2.188l2.25.813-2.25.813a2.25 2.25 0 00-2.188 2.188L15.063 20.5l1.25-2.188a2.25 2.25 0 002.188-2.188l2.25-.813-2.25-.813a2.25 2.25 0 00-2.188-2.188z" /></svg>,
     },
     {
-      title: "3. Execute Strategy",
-      description: "Receive a clear, actionable playbook with tailored talking points to ensure your message resonates and drives results.",
+      title: "Execute with Confidence",
+      description: "Walk into your meeting with a clear strategy, tailored talking points, and the psychological insights needed to win.",
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>,
     },
   ];
@@ -62,10 +62,10 @@ export default function BenefitsSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Your Path to Influence in 3 Simple Steps
+            From Data to Dominance in 90 Seconds
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            We turn complex stakeholder data into your strategic advantage. Here's our proven process.
+            Our streamlined process transforms raw information into your strategic playbook for executive influence.
           </p>
         </motion.div>
 

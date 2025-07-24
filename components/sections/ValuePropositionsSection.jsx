@@ -44,18 +44,18 @@ export default function ValuePropositionsSection() {
   const propositions = [
     {
       icon: <TargetIcon className="w-8 h-8 text-brand-sea-green" />,
-      title: "Clarity in Communication",
-      description: "Translate complex ideas into clear, compelling messages that resonate with any audience, ensuring your vision is understood and embraced.",
-    },
-    {
-      icon: <TrendingUpIcon className="w-8 h-8 text-brand-sea-green" />,
-      title: "Strategic Influence",
-      description: "Move beyond simple persuasion. Our AI analyzes stakeholder motivations to build data-backed strategies that win buy-in and drive action.",
+      title: "Decode Stakeholder Psychology",
+      description: "Our AI Brain Trust analyzes LinkedIn profiles and meeting context to reveal the hidden motivations, communication preferences, and unspoken needs of your audience.",
     },
     {
       icon: <ZapIcon className="w-8 h-8 text-brand-sea-green" />,
-      title: "Data-Driven Decisions",
-      description: "Leverage sophisticated personality and value mapping to anticipate reactions, address concerns proactively, and navigate high-stakes conversations with confidence.",
+      title: "Eliminate Pre-Meeting Anxiety",
+      description: "Walk into any high-stakes meeting with a clear, actionable playbook. Know exactly what to say, how to say it, and what to anticipate.",
+    },
+    {
+      icon: <TrendingUpIcon className="w-8 h-8 text-brand-sea-green" />,
+      title: "Build Career Momentum",
+      description: "Consistently demonstrate executive presence, build stronger alliances, and get your best ideas championed. Turn every meeting into a career catalyst.",
     },
   ];
 
@@ -70,10 +70,10 @@ export default function ValuePropositionsSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Engineer Resonance. Win Buy-In.
+            More Than a Tool—It's Your AI Brain Trust
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            VisionsAlign is more than a tool—it's your strategic partner in communication. We empower you to turn every interaction into an opportunity for influence.
+            VisionsAlign assembles a team of six expert AI personas to analyze your unique communication challenges and deliver a winning strategy.
           </p>
         </motion.div>
 
