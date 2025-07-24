@@ -22,6 +22,7 @@ VisionsAlign.com is an innovative AI-powered microservice designed to resolve **
 *   **Save Significant Time and Emotional Energy:** Instead of spending hours in "analysis paralysis" before a meeting, users generate a tailored plan in minutes, preserving mental bandwidth for strategic thinking.
 *   **Accelerate Career Progression:** By turning every executive touchpoint into a strategic opportunity for resonance, VisionsAlign.com helps users build the sponsorship relationships critical for promotion.
 *   **Increase Influence and Impact:** By understanding and adapting to stakeholder communication styles, users deliver their message with greater impact, achieving better outcomes and true thought-partnership.
+*   **Embrace Strategic Empathy:** We define the core of our approach as **Strategic Empathy**—a core principle of modern leadership. Effective leaders have always invested time to understand their audience; VisionsAlign provides a more efficient, data-driven framework for that essential work. Our platform is designed to enhance genuine understanding and respect, not to enable manipulation.
 
 ### 2. Technical Foundation
 *(Contribution from the Lead Systems Architect)*
@@ -55,7 +56,7 @@ VisionsAlign.com will feature a modern, intuitive, and aesthetically pleasing us
 *   **Styling Solution:** **Tailwind CSS** will be utilized for styling. Its utility-first approach allows for rapid UI development, highly customizable designs, and ensures consistency across the application. The ability to directly apply styles in the markup streamlines the development workflow and reduces CSS bloat.
 *   **Base Component Library:** **DaisyUI** will provide a robust set of pre-built, customizable UI components. As a Tailwind CSS plugin, it offers a wide range of accessible and responsive components that can be easily themed to match the VisionsAlign.com brand identity, accelerating the development of common UI elements.
 
-**Planned Enhancements:** To elevate the user experience and provide a cutting-edge feel, we plan to integrate advanced UI libraries and custom elements:
+**Core UI Framework:** The user experience is built upon a foundation of modern, best-in-class UI libraries that define our clean, professional, and engaging aesthetic:
 
 *   **shadcn/ui:** This collection of re-usable components, built with Radix UI and Tailwind CSS, offers highly customizable and accessible UI primitives. Its focus on composition over configuration allows for extreme flexibility, enabling us to create unique and sophisticated UI elements that are perfectly tailored to our specific needs, such as advanced data visualization components for presenting stakeholder insights or interactive meeting playbook builders.
 *   **MagicUI:** For subtle yet impactful animations and micro-interactions, MagicUI will be explored. This library will be used to create a **visual narrative**, guiding the user from a feeling of "dissonance" (subtle static/glitch effects on problem-focused elements) to "resonance" (smooth, pulsing, and shimmering effects on solution-focused elements), reinforcing the product's core transformation.
@@ -69,16 +70,16 @@ To establish a strong and cohesive brand identity for VisionsAlign.com, foundati
 
 **Color Scheme:** A sophisticated, gradient-based color scheme will be employed to evoke a sense of calm confidence, intelligence, and forward momentum. The palette will blend cool blues and greens with warm, inviting accents, creating a professional yet approachable feel. This gradient replaces the previous primary/accent color system for a more integrated and premium brand feel.
 
-Sample CSS linear-gradient:
-```css
-linear-gradient(90deg, #2A3B4C 0%, #3E5A72 25%, #5C8A9E 50%, #8FBCCF 75%, #C2E0F0 100%)
-```
+**Color Palette:** The brand's color palette is designed to evoke professionalism, clarity, and calm confidence. The colors are implemented via a `daisyUI` theme in Tailwind CSS to ensure consistency and are referenced by their semantic names.
 
-*   **Primary Text:** `#2A3B4C` (Deep Slate Blue): Represents stability, trust, and depth of insight.
-*   **Secondary Text:** `#3E5A72` (Muted Steel Blue): A slightly lighter shade, maintaining professionalism for subtext.
-*   **Primary Accent / CTA:** `#5C8A9E` (Soft Teal): The core action color, representing clarity and innovation.
-*   **Highlight / Success:** `#8FBCCF` (Light Sky Blue): Used for highlights, success states, and interactive borders, evoking calm and openness.
-*   **Background:** `#FAFBFC` (Professional Light) with `#FFFFFF` (White) cards remains.
+*   **`primary` (`#2A3B4C`):** Deep Slate Blue. The foundational color for all primary text, ensuring high readability and a serious, professional tone.
+*   **`secondary` (`#3E5A72`):** Muted Steel Blue. A slightly lighter shade, maintaining professionalism for subtext.
+*   **`accent` (`#5C8A9E`):** Soft Teal. The core action color, representing clarity and innovation.
+*   **`success` (`#8FBCCF`):** Light Sky Blue. Used for highlights, success states, and interactive borders, evoking calm and openness.
+*   **`base-100` (`#FFFFFF`):** White. Used for card backgrounds.
+*   **`base-200` (`#FAFBFC`):** Professional Light. The primary page background color.
+
+**Typography:** The official brand typeface is **Inter**. It is a clean, modern, and highly readable sans-serif typeface used for all headlines, body text, and UI elements to ensure a professional, consistent, and accessible user experience.
 
 **Animations:** Subtle, purposeful animations will enhance the user experience by providing visual feedback, guiding attention, and adding a layer of polish without distracting from the core functionality. These conceptual custom animation names will be defined in a configuration file like `tailwind.config.js` for consistent application across the platform:
 
