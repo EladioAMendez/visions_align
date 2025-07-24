@@ -45,7 +45,7 @@ const TestimonialCard = ({ testimonial, isActive }) => {
       </div>
       
       {/* Accent top border */}
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent to-success"></div>
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent to-accent"></div>
       
       {/* Rating stars */}
       <div className="flex items-center mb-5">
@@ -76,7 +76,7 @@ const TestimonialCard = ({ testimonial, isActive }) => {
           
           {/* Author info with avatar */}
           <div className="flex items-center mt-6">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-success/20 flex items-center justify-center text-primary font-medium mr-4 overflow-hidden">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-accent/20 flex items-center justify-center text-primary font-medium mr-4 overflow-hidden">
               {testimonial.avatar ? (
                 <img 
                   src={testimonial.avatar} 
@@ -112,7 +112,7 @@ export default function TestimonialsSection() {
     <section id="testimonials" className="relative py-24 px-card-outer overflow-hidden bg-background">
       {/* Decorative background elements */}
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
-      <div className="absolute top-24 left-10 w-64 h-64 bg-success/5 rounded-full blur-2xl"></div>
+      <div className="absolute top-24 left-10 w-64 h-64 bg-accent/5 rounded-full blur-2xl"></div>
       
       {/* Container */}
       <div className="container mx-auto relative z-10">
@@ -133,7 +133,7 @@ export default function TestimonialsSection() {
           
           {/* Decorative accent line */}
           <motion.div 
-            className="h-1 w-24 bg-gradient-to-r from-accent to-success mx-auto mt-8"
+            className="h-1 w-24 bg-gradient-to-r from-accent to-accent mx-auto mt-8"
             initial={{ width: 0 }}
             animate={inView ? { width: 96 } : { width: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -202,7 +202,7 @@ export default function TestimonialsSection() {
           transition={{ delay: 0.3, duration: 0.6 }}
         >
           <motion.div 
-            className="flex items-center bg-gradient-to-r from-accent/5 to-success/5 px-6 py-3 rounded-full"
+            className="flex items-center bg-gradient-to-r from-accent/5 to-accent/5 px-6 py-3 rounded-full"
             whileHover={{ scale: 1.05 }}
           >
             <div className="flex text-accent text-2xl mr-3">
@@ -221,10 +221,10 @@ export default function TestimonialsSection() {
           </motion.div>
           
           <motion.div 
-            className="text-primary font-medium flex items-center bg-gradient-to-r from-success/5 to-accent/5 px-6 py-3 rounded-full"
+            className="text-primary font-medium flex items-center bg-gradient-to-r from-accent/5 to-accent/5 px-6 py-3 rounded-full"
             whileHover={{ scale: 1.05 }}
           >
-            <span className="text-success mr-2">★</span>
+            <span className="text-accent mr-2">★</span>
             "Featured in <Accent>Top HR Tech Solutions of 2025</Accent>"
           </motion.div>
         </motion.div>

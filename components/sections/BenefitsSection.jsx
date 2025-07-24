@@ -99,7 +99,7 @@ export default function BenefitsSection() {
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>,
-      animationComponent: PathSlideUp,
+      animationComponent: DataShimmer,
       highlightColor: "success"
     },
     {
@@ -109,7 +109,7 @@ export default function BenefitsSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>,
-      animationComponent: AlignPulse,
+      animationComponent: DataShimmer,
       highlightColor: "accent"
     },
     {
@@ -119,7 +119,7 @@ export default function BenefitsSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H7" />
             </svg>,
-      animationComponent: ConnectExpand,
+      animationComponent: DataShimmer,
       highlightColor: "accent"
     },
   ];

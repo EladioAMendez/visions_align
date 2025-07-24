@@ -1,8 +1,8 @@
-# FeNAgO Authentication System
+# VisionsAlign Authentication System
 
 ## Overview
 
-FeNAgO uses NextAuth.js to provide a robust authentication system with multiple authentication methods. This document outlines the authentication architecture, configuration, and implementation details.
+VisionsAlign uses NextAuth.js to provide a robust authentication system with multiple authentication methods. This document outlines the authentication architecture, configuration, and implementation details.
 
 ## Authentication Methods
 

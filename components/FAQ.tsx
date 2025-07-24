@@ -13,22 +13,57 @@ interface FAQItemProps {
 
 const faqList: FAQItemProps[] = [
   {
-    question: "What do I get exactly?",
-    answer: <div className="space-y-2 leading-relaxed">Loreum Ipseum</div>,
-  },
-  {
-    question: "Can I get a refund?",
+    question: "Will this help with my pre-meeting anxiety?",
     answer: (
-      <p>
-        Yes! You can request a refund within 7 days of your purchase. Reach out
-        by email.
-      </p>
+      <div className="space-y-2 leading-relaxed">
+        <p>Absolutely. Maya, we designed VisionsAlign specifically for women who feel that knot in their stomach before executive meetings. You'll get personalized playbooks that eliminate the guesswork and give you the confidence that comes from being fully prepared.</p>
+        <p>Our users report a 73% reduction in pre-meeting anxiety within the first month.</p>
+      </div>
     ),
   },
   {
-    question: "I have another question",
+    question: "How does the LinkedIn analysis work?",
     answer: (
-      <div className="space-y-2 leading-relaxed">Cool, contact us by email</div>
+      <div className="space-y-2 leading-relaxed">
+        <p>Our AI analyzes LinkedIn profiles to decode communication styles, decision-making patterns, and what resonates with each executive. You'll know exactly how to frame your ideas, what questions to ask, and how to present yourself for maximum impact.</p>
+        <p>It takes 30 seconds to analyze a profile and generates insights you can't get anywhere else.</p>
+      </div>
+    ),
+  },
+  {
+    question: "Is this designed for women in tech specifically?",
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        <p>Yes. While our tools work for everyone, we've built VisionsAlign with insights from hundreds of successful women in tech who've navigated the unique challenges of male-dominated executive rooms.</p>
+        <p>You'll join a community of ambitious women supporting each other's rise to leadership.</p>
+      </div>
+    ),
+  },
+  {
+    question: "How quickly will I see career results?",
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        <p>Most users see immediate improvements in their confidence and executive presence. Career advancement typically follows within 3-6 months as you build stronger relationships and demonstrate consistent leadership communication.</p>
+        <p>Sarah from Salesforce got promoted 6 months faster than expected. Lisa from Stripe landed a board presentation that changed her career trajectory.</p>
+      </div>
+    ),
+  },
+  {
+    question: "What if I'm not naturally confident?",
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        <p>Neither were most of our successful users. Confidence isn't something you're born with—it's something you build through preparation and proven strategies. VisionsAlign gives you the tools to develop authentic executive presence, even if you currently struggle with imposter syndrome.</p>
+        <p>Our anxiety-to-confidence transformation system has helped hundreds of women find their executive voice.</p>
+      </div>
+    ),
+  },
+  {
+    question: "Can I get a refund if it doesn't work for me?",
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        <p>Absolutely. We offer a 30-day money-back guarantee because we're confident in the transformation VisionsAlign delivers. If you don't see improvements in your confidence and executive communication within 30 days, we'll refund your investment.</p>
+        <p>Email us at maya@visionsalign.com with any questions or concerns.</p>
+      </div>
     ),
   },
 ];

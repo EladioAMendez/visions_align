@@ -8,11 +8,12 @@ UI Components:
 - Testimonials: Carousel or list view featuring customer reviews and ratings.
 - Footer: Additional links, contact information, and social media icons.
 Visual Style:
-- Theme: Light Gray #F1F5F9 background with White #FFFFFF card backgrounds
-- Primary color: Dark Blue #1E293B for question text and main content
-- Secondary color: Medium Gray #647488 for secondary information
-- Accent color: Teal #4ECDC4 for expand/collapse indicators and category tabs
-- Success color: Mint #6BCF7F for helpful tip highlights
+- Theme: Professional light background (#FAFBFC) with clean white cards (#FFFFFF).
+- Primary color: Deep navy (#1A2332) for primary text and elements.
+- Secondary color: Slate gray (#475569) for secondary text.
+- Accent color: Sky blue (#0EA5E9) for CTAs, highlights, and interactive elements.
+- Success color: Brand-aligned teal (#07b39b) for success states.
+- Gradient: A sophisticated linear-gradient from deep slate blue to light sky blue, used for key branding moments like primary buttons.
 - Spacing: 24px outer padding, 12px between question cards
 - Borders: 1px solid Light Gray #F1F5F9 on card borders; 12px border radius
 - Typography: Inter Medium (500) for questions, Regular (400) for answers
@@ -37,7 +38,7 @@ meeting playbook. The overall aesthetic should be professional yet approachable,
 *   **Button Text:** **Get Your Free Playbook Today!**
 *   **Placement:** Prominently centered below the subtext.
 *   **Microinteraction:**
-    *   **On Hover:** The button subtly expands (e.g., `scale(1.05)`) and changes to the `Accent color: Teal #4ECDC4` with a soft `pulse` animation (from `MagicUI` or custom Tailwind animation) to draw attention and encourage clicking. The text color shifts to white.
+    *   **On Hover:** The button has a subtle opacity change (`hover:opacity-90`) to maintain the integrity of the brand gradient while providing clear visual feedback.
     *   **On Click:** A quick `fadeIn` animation (from `MagicUI` or custom Tailwind animation) on a small, reassuring text below the button: 
 
 
@@ -62,19 +63,16 @@ meeting playbook. The overall aesthetic should be professional yet approachable,
 
 *   **Icon:** A brain with a lightning bolt (representing quick insights).
     *   **Benefit:** **Decode Leadership Styles Instantly.** Uncover the communication preferences, values, and decision triggers of any stakeholder from their LinkedIn profile. No more guesswork.
-    *   **Microinteraction:** On hover, the icon subtly animates with a `dataShimmer` effect (from `MagicUI` or custom Tailwind animation), and the text below gains a soft glow, emphasizing the power of the insight.
+    *   **Microinteraction:** To ensure a consistent and professional user experience, all benefit icons in this section use the `dataShimmer` animation on hover. This creates a unified, clean, and engaging effect that reinforces the brand's attention to detail.
 
 *   **Icon:** A playbook or a roadmap icon.
     *   **Benefit:** **Generate Bespoke Meeting Playbooks.** Walk into every conversation with a custom-tailored agenda, talking points, and rapport-building strategies. Feel prepared, not panicked.
-    *   **Microinteraction:** On hover, the icon animates with a `pathSlideUp` effect (from `MagicUI` or custom Tailwind animation), and the text below highlights in the `Success color: Mint #6BCF7F`, suggesting a clear path to success.
 
 *   **Icon:** A heart with a rising arrow (representing emotional well-being and growth).
     *   **Benefit:** **Boost Your Confidence & Influence.** Transform pre-meeting anxiety into calm confidence. Build stronger relationships and accelerate your career with every interaction.
-    *   **Microinteraction:** On hover, the icon animates with a gentle `alignPulse` (from `MagicUI` or custom Tailwind animation), and the text below subtly increases in font size, emphasizing the growth in confidence and influence.
 
 *   **Icon:** A clock with a fast-forward arrow.
     *   **Benefit:** **Save Hours of Prep Time.** Stop the late-night rehearsals and endless second-guessing. Get actionable insights in minutes, so you can focus on what matters most.
-    *   **Microinteraction:** On hover, the icon animates with a quick `connectExpand` effect (from `MagicUI` or custom Tailwind animation), and the text below highlights in the `Accent color: Teal #4ECDC4`, showcasing the efficiency gain.
 
 
 

@@ -1,8 +1,8 @@
-# FeNAgO Payment Integration
+# VisionsAlign Payment Integration
 
 ## Overview
 
-FeNAgO integrates with Stripe for payment processing, subscription management, and billing. This document outlines the payment architecture, configuration, and implementation details.
+VisionsAlign integrates with Stripe for payment processing, subscription management, and billing. This document outlines the payment architecture, configuration, and implementation details.
 
 ## Stripe Integration
 
@@ -187,7 +187,7 @@ export async function POST(req: Request) {
 4. User is redirected to Stripe checkout page
 5. User completes payment
 6. Stripe sends webhook event (`checkout.session.completed`)
-7. FeNAgO updates user record with subscription details
+7. VisionsAlign updates user record with subscription details
 8. User is redirected to success page/dashboard
 
 ### Subscription Management
@@ -198,8 +198,8 @@ export async function POST(req: Request) {
 4. User is redirected to Stripe customer portal
 5. User makes changes (upgrade, downgrade, cancel)
 6. Stripe sends webhook events with changes
-7. FeNAgO updates user record accordingly
-8. User is redirected back to FeNAgO
+7. VisionsAlign updates user record accordingly
+8. User is redirected back to VisionsAlign
 
 ## User Subscription Data
 
@@ -248,7 +248,7 @@ stripe listen --forward-to localhost:3000/api/webhook/stripe
 
 ## Agentic Payment Features
 
-For the FeNAgO agentic platform, consider implementing these payment features:
+For the VisionsAlign AI platform, consider implementing these payment features:
 
 ### 1. Usage-Based Billing
 

@@ -1,8 +1,8 @@
-# FeNAgO Rebranding Strategy
+# VisionsAlign Rebranding Strategy
 
 ## Overview
 
-This document outlines the comprehensive strategy for rebranding the ShipFast template to FeNAgO, an agentic SaaS platform. It provides a detailed roadmap for ensuring all references to the original brand are properly updated throughout the codebase.
+This document outlines the comprehensive strategy for rebranding the current template to VisionsAlign, an AI-powered executive communication platform. It provides a detailed roadmap for ensuring all references to the original brand are properly updated throughout the codebase.
 
 ## Identified Brand References
 
@@ -10,26 +10,26 @@ Based on the code review, the following brand references need to be updated:
 
 ### 1. Direct Brand Name References
 
-- **ShipFast** -> **FeNAgO**
-- **shipfast** -> **fenago** (lowercase variations)
-- **SHIPFAST** -> **FENAGO** (uppercase variations)
+- **FeNAgO** -> **VisionsAlign**
+- **fenago** -> **visionsalign** (lowercase variations)
+- **FENAGO** -> **VISIONSALIGN** (uppercase variations)
 
 ### 2. URLs and Domains
 
-- **shipfa.st** -> **fenago.com**
-- **https://shipfa.st/** -> **https://fenago.com/**
-- **shipfast.beehiiv.com** -> **fenago.beehiiv.com** (update or remove)
+- **fenago.com** -> **visionsalign.com**
+- **https://fenago.com/** -> **https://visionsalign.com/**
+- **shipfast.beehiiv.com** -> **visionsalign.beehiiv.com** (update or remove)
 
 ### 3. Email Addresses
 
-- **hello@shipfa.st** -> **hello@fenago.com**
-- **marc@shipfa.st** -> **[appropriate email]@fenago.com**
+- **hello@fenago.com** -> **hello@visionsalign.com**
+- **marc@fenago.com** -> **[appropriate email]@visionsalign.com**
 
 ## Rebranding Checklist
 
 ### Configuration Files
 
-- [x] Update `config.ts` appName to "FeNAgO" (partially completed)
+- [x] Update `config.ts` appName to "VisionsAlign" (completed)
 - [ ] Update `config.ts` domainName to "fenago.com"
 - [ ] Update `config.ts` email configurations
 - [ ] Update `next-sitemap.config.js` siteUrl
@@ -42,7 +42,7 @@ Based on the code review, the following brand references need to be updated:
 
 ### Components
 
-- [x] Update `Hero.tsx` with FeNAgO branding (partially completed)
+- [ ] Update `Hero.tsx` with VisionsAlign branding (pending)
 - [ ] Update `Header.tsx` navigation and branding
 - [ ] Update `Footer.tsx` brand references and links
 - [ ] Review and update all testimonial components
@@ -50,12 +50,12 @@ Based on the code review, the following brand references need to be updated:
 
 ### Legal Documents
 
-- [ ] Update `app/tos/page.tsx` with FeNAgO branding and contact information
-- [ ] Update `app/privacy-policy/page.tsx` with FeNAgO details
+- [ ] Update `app/tos/page.tsx` with VisionsAlign branding and contact information
+- [ ] Update `app/privacy-policy/page.tsx` with VisionsAlign details
 
 ### Documentation
 
-- [ ] Update `README.md` with FeNAgO information
+- [ ] Update `README.md` with VisionsAlign information
 - [ ] Update any inline documentation or comments
 
 ### Blog Content
@@ -64,7 +64,7 @@ Based on the code review, the following brand references need to be updated:
 
 ### Email Templates
 
-- [ ] Update email templates with FeNAgO branding
+- [ ] Update email templates with VisionsAlign branding
 
 ## File-by-File Rebranding Guide
 
@@ -75,7 +75,7 @@ Based on the code review, the following brand references need to be updated:
    - Review and update plan descriptions and features
 
 2. **README.md**
-   - Complete rewrite with FeNAgO information
+   - Complete rewrite with VisionsAlign information
    - Update documentation links
    - Remove/replace ProductHunt badges
 
@@ -170,7 +170,7 @@ After completing rebranding changes, perform the following tests:
    - Check Open Graph and Twitter card metadata
 
 4. **Legal Compliance**:
-   - Ensure ToS and Privacy Policy correctly reference FeNAgO
+   - Ensure ToS and Privacy Policy correctly reference VisionsAlign
    - Verify copyright notices and legal disclaimers
 
 ## Post-Rebranding Tasks

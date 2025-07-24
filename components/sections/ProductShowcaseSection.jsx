@@ -203,7 +203,7 @@ export default function ProductShowcaseSection() {
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-accent/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-success/5 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-accent/5 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
@@ -236,7 +236,7 @@ export default function ProductShowcaseSection() {
           <div className="bg-primary p-4 flex justify-between items-center border-b border-border">
             <div className="flex items-center">
                <motion.div 
-                    className="w-8 h-8 bg-gradient-to-r from-accent to-success rounded-full flex items-center justify-center text-white font-medium mr-3"
+                    className="w-8 h-8 bg-gradient-to-r from-accent to-accent rounded-full flex items-center justify-center text-white font-medium mr-3"
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 6, repeat: Infinity, repeatType: 'reverse' }}
                   >
@@ -290,7 +290,7 @@ export default function ProductShowcaseSection() {
               {/* Auto-play toggle */}
               <motion.button
                 onClick={toggleAutoPlay}
-                className={`p-1.5 rounded-full ${isAutoPlaying ? 'bg-success text-white' : 'bg-primary-focus/30 text-white/70'}`}
+                className={`p-1.5 rounded-full ${isAutoPlaying ? 'bg-accent text-white' : 'bg-primary-focus/30 text-white/70'}`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 15 }}
@@ -340,7 +340,7 @@ export default function ProductShowcaseSection() {
                 <div className="flex items-start">
                   {/* Sage avatar */}
                   <motion.div 
-                    className="w-8 h-8 bg-gradient-to-r from-accent to-success rounded-full flex items-center justify-center text-white font-medium mr-2 flex-shrink-0 shadow-sm"
+                    className="w-8 h-8 bg-gradient-to-r from-accent to-accent rounded-full flex items-center justify-center text-white font-medium mr-2 flex-shrink-0 shadow-sm"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
@@ -375,7 +375,7 @@ export default function ProductShowcaseSection() {
                           {/* Understanding click badge - animated entry */}
                           {index === 2 && typingComplete[index] && (
                             <motion.div 
-                              className="mt-2 p-2 bg-success/20 rounded border border-success/30 text-success relative overflow-hidden"
+                              className="mt-2 p-2 bg-accent/20 rounded border border-accent/30 text-accent relative overflow-hidden"
                               initial={{ opacity: 0, scale: 0.9, height: 0 }}
                               animate={{ opacity: 1, scale: 1, height: 'auto' }}
                               transition={{ delay: 0.8 }}
@@ -433,7 +433,7 @@ export default function ProductShowcaseSection() {
                               <div className="text-xs text-secondary mb-1">Analysis Progress</div>
                               <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                                 <motion.div 
-                                  className="h-full bg-gradient-to-r from-accent to-success"
+                                  className="h-full bg-gradient-to-r from-accent to-accent"
                                   initial={{ width: 0 }}
                                   animate={{ width: '85%' }}
                                   transition={{ delay: 1.2, duration: 1.5, ease: "easeOut" }}
@@ -441,7 +441,7 @@ export default function ProductShowcaseSection() {
                               </div>
                               <div className="flex justify-between text-xs mt-1">
                                 <span>Leadership Style Analysis</span>
-                                <span className="text-success font-medium">85%</span>
+                                <span className="text-accent font-medium">85%</span>
                               </div>
                             </motion.div>
                           )}

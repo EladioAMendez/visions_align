@@ -24,54 +24,166 @@ progress::-webkit-progress-value {
 
 @layer components {
   .btn-gradient {
-    @apply !bg-gradient !bg-[length:300%_300%] hover:saturate-[1.2] shadow duration-100 !border-0 !border-transparent !bg-transparent animate-shimmer disabled:!bg-none disabled:!bg-gray-500/30 !text-white;
+    @apply !bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary !bg-[length:200%_200%] shadow-lg duration-300 !border-0 !border-transparent !text-white font-medium;
   }
   .btn {
-    @apply !capitalize;
+    @apply !capitalize font-medium;
   }
   
-  /* Card styles */
-  .td-card {
-    @apply bg-card rounded-card shadow-sm border border-border p-card-inner transition-all;
+  /* VisionsAlign Card styles */
+  .va-card {
+    @apply bg-card rounded-xl shadow-sm border border-border p-6 transition-all duration-300;
   }
   
-  .td-card-hover {
-    @apply td-card hover:shadow-md hover:-translate-y-1 duration-300;
+  .va-card-hover {
+    @apply va-card hover:shadow-xl hover:border-accent/20 hover:-translate-y-1;
   }
   
-  /* Gradient backgrounds */
-  .gradient-primary {
-    @apply bg-gradient-to-br from-accent to-success/80;
+  /* Professional gradient backgrounds */
+  .va-gradient-primary {
+    @apply bg-gradient-to-r from-primary via-accent to-primary/80;
   }
   
-  .gradient-overlay {
-    @apply bg-gradient-to-b from-transparent to-background/90;
+  .va-gradient-overlay {
+    @apply bg-gradient-to-b from-transparent via-background/50 to-background;
   }
   
-  /* Section styles */
-  .section-padding {
-    @apply py-16 md:py-20 lg:py-24 px-card-outer;
+  /* Executive-focused section styles */
+  .va-section {
+    @apply py-20 md:py-32 lg:py-40 px-4 sm:px-6 lg:px-8;
   }
   
-  /* Text highlight effects */
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient;
+  /* Professional text styling */
+  .va-heading {
+    @apply font-bold text-primary leading-tight tracking-tight;
   }
   
-  /* Animation classes */
-  .fade-in {
+  .va-subheading {
+    @apply text-secondary font-medium;
+  }
+  
+  /* Executive communication highlights */
+  .va-highlight {
+    @apply text-accent font-semibold;
+  }
+  
+  /* Professional hover effects */
+  .va-hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+  
+  /* Executive-focused grid pattern */
+  .va-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(26, 35, 50, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26, 35, 50, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  
+  /* Professional button states */
+  .va-btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90 focus:ring-2 focus:ring-primary/20;
+  }
+  
+  .va-btn-accent {
+    @apply bg-accent text-white hover:bg-accent/90 focus:ring-2 focus:ring-accent/20;
+  }
+  
+  /* Executive card shadows */
+  .va-shadow-executive {
+    @apply shadow-lg shadow-primary/5;
+  }
+  
+  /* Executive typography refinements */
+  .va-display {
+    @apply font-display font-bold tracking-tight;
+  }
+  
+  .va-body {
+    @apply font-sans font-normal leading-relaxed;
+  }
+  
+  .va-caption {
+    @apply text-sm font-medium text-muted;
+  }
+  
+  /* Executive spacing system */
+  .va-section-hero {
+    @apply py-32 md:py-48 lg:py-64;
+  }
+  
+  .va-section-standard {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+  
+  .va-section-compact {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+  
+  /* Executive icon styling */
+  .va-icon {
+    @apply w-6 h-6 text-accent;
+  }
+  
+  .va-icon-large {
+    @apply w-8 h-8 text-primary;
+  }
+  
+  .va-icon-feature {
+    @apply w-12 h-12 text-accent bg-accent/10 rounded-lg p-3;
+  }
+  
+  /* Refined executive animations */
+  .va-fade-in-up {
     @apply animate-fadeInUp;
   }
   
-  .hover-grow {
-    @apply transition-transform hover:scale-105;
+  .va-stagger-1 { animation-delay: 100ms; }
+  .va-stagger-2 { animation-delay: 200ms; }
+  .va-stagger-3 { animation-delay: 300ms; }
+  
+  /* Executive hover states */
+  .va-hover-executive {
+    @apply transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-1;
   }
   
-  /* Grid pattern background for visual texture */
-  .bg-grid-pattern {
-    background-image: 
-      linear-gradient(to right, rgba(100, 116, 139, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(100, 116, 139, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
+  .va-hover-subtle {
+    @apply transition-all duration-200 ease-out hover:shadow-md hover:shadow-primary/10;
   }
+  
+  /* Executive focus states */
+  .va-focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2;
+  }
+  
+  /* Executive button refinements */
+  .va-btn-executive {
+    @apply px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .va-btn-primary-executive {
+    @apply va-btn-executive bg-gradient text-white hover:opacity-90;
+  }
+  
+  .va-btn-accent-executive {
+    @apply va-btn-executive bg-accent text-white hover:bg-accent/90;
+  }
+  
+  /* Executive card refinements */
+  .va-card-executive {
+    @apply bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300;
+  }
+  
+  .va-card-feature {
+    @apply va-card-executive p-8 hover:border-accent/20;
+  }
+  
+  /* Executive grid refinements */
+  .va-grid-executive {
+    @apply grid gap-8 lg:gap-12;
+  }
+  
+  .va-grid-2 { @apply va-grid-executive grid-cols-1 lg:grid-cols-2; }
+  .va-grid-3 { @apply va-grid-executive grid-cols-1 md:grid-cols-2 lg:grid-cols-3; }
+  .va-grid-4 { @apply va-grid-executive grid-cols-1 sm:grid-cols-2 lg:grid-cols-4; }
 }

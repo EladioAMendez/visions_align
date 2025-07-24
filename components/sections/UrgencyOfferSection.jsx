@@ -63,7 +63,7 @@ const UrgencyOfferSection = () => {
     <section 
       id="urgency-offer" 
       ref={ref}
-      className="urgency-offer-section bg-gradient-to-r from-accent/5 to-success/10 py-12 md:py-20 border-t border-b border-accent/10"
+      className="urgency-offer-section bg-gradient-to-r from-accent/5 to-accent/10 py-12 md:py-20 border-t border-b border-accent/10"
     >
       <motion.div 
         className="container mx-auto px-4 max-w-5xl"
@@ -79,7 +79,7 @@ const UrgencyOfferSection = () => {
         >
           {/* Decorative background elements */}
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-success/5 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-accent/5 rounded-full blur-3xl"></div>
           
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-primary">
@@ -98,7 +98,7 @@ const UrgencyOfferSection = () => {
               
               <DataShimmer>
                 <div className="stat-item text-center">
-                  <p className="text-4xl font-bold text-success mb-1">3.5×</p>
+                  <p className="text-4xl font-bold text-accent mb-1">3.5×</p>
                   <p className="text-sm text-secondary">Faster Promotion Rate</p>
                 </div>
               </DataShimmer>
@@ -113,9 +113,9 @@ const UrgencyOfferSection = () => {
               </DataShimmer>
             </div>
             
-            <div className="offer-block bg-gradient-to-r from-accent/10 to-success/10 p-6 rounded-xl mb-8 relative overflow-hidden">
+            <div className="offer-block bg-gradient-to-r from-accent/10 to-accent/10 p-6 rounded-xl mb-8 relative overflow-hidden">
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-accent/20 to-success/20 opacity-0"
+                className="absolute inset-0 bg-gradient-to-r from-accent/20 to-accent/20 opacity-0"
                 animate={{ opacity: [0, 0.5, 0] }}
                 transition={{ 
                   duration: 3, 
@@ -172,7 +172,7 @@ const UrgencyOfferSection = () => {
               <AnimatePresence>
                 {claimHovered && (
                   <motion.p
-                    className="text-sm text-success mb-3"
+                    className="text-sm text-accent mb-3"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -185,7 +185,7 @@ const UrgencyOfferSection = () => {
               
               <AlignPulse>
                 <motion.button 
-                  className="bg-gradient-to-r from-success to-accent px-8 py-4 rounded-full text-white font-medium shadow-lg hover:shadow-xl transition-all"
+                  className="bg-gradient-to-r from-accent to-accent px-8 py-4 rounded-full text-white font-medium shadow-lg hover:shadow-xl transition-all"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onHoverStart={() => setClaimHovered(true)}

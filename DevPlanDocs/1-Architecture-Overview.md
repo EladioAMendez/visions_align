@@ -1,8 +1,8 @@
-# FeNAgO Architecture Overview
+# VisionsAlign Architecture Overview
 
 ## Project Structure
 
-The FeNAgO project (forked from ShipFast) is a Next.js-based SaaS starter kit with the following directory structure:
+The VisionsAlign project (forked from ShipFast) is a Next.js-based AI-powered microservice with the following directory structure:
 
 ```
 /
@@ -87,7 +87,7 @@ The global application configuration is centralized in `config.ts`, making it ea
 
 ## Deployment Architecture
 
-The application is designed to be deployed as a monolithic application on platforms like Vercel or Netlify. It leverages serverless functions for API routes and has the following external dependencies:  
+VisionsAlign is built as a modern, scalable AI-powered executive communication platform. It is designed to be deployed as a monolithic application on platforms like Vercel or Netlify. It leverages serverless functions for API routes and has the following external dependencies:  
 
 - MongoDB Atlas for database  
 - Stripe for payments  

@@ -4,23 +4,21 @@ import config from "@/config";
 
 const Hero = () => {
   return (
-    <section className="max-w-7xl mx-auto bg-base-100 flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 px-8 py-8 lg:py-20">
-      <div className="flex flex-col gap-10 lg:gap-14 items-center justify-center text-center lg:text-left lg:items-start">
-        <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight">
-          Launch your Agentic SaaS in days, not weeks
+    <section className="max-w-7xl mx-auto bg-background flex flex-col lg:flex-row items-center justify-center gap-20 lg:gap-32 px-8 py-20 lg:py-32 va-section-standard">
+      <div className="flex flex-col gap-12 lg:gap-16 items-center justify-center text-center lg:text-left lg:items-start max-w-2xl lg:max-w-none">
+        <h1 className="va-display text-5xl lg:text-7xl tracking-tight leading-tight">
+          From Pre-Meeting Anxiety
+          <br />
+          <span className="text-accent">To Executive Confidence</span>
         </h1>
-        <p className="text-lg opacity-80 leading-relaxed">
-          FeNAgO empowers students, developers, startups, and entrepreneurs to build
-          fully agentic SaaS solutions at lightning speed by handling security
-          (logins & registration), database setup, SEO, and monetization right out
-          of the box—powered by Next.js, Tailwind, and React. All you bring is
-          your idea!
+        <p className="text-xl lg:text-2xl text-secondary leading-relaxed max-w-xl lg:max-w-2xl">
+          Maya, imagine walking into every executive meeting knowing exactly how to communicate with confidence. VisionsAlign analyzes LinkedIn profiles to decode communication styles and generates personalized meeting playbooks that transform anxiety into executive presence.
         </p>
         <a
-          href="https://fenago.com"
-          className="btn btn-primary btn-wide"
+          href="#pricing"
+          className="va-btn-primary-executive"
         >
-          Get {config.appName}
+          Start Your Free Trial
         </a>
 
         <TestimonialsAvatars priority={true} />
@@ -28,7 +26,7 @@ const Hero = () => {
       <div className="lg:w-full">
         <Image
           src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"
-          alt="FeNAgO product demo"
+          alt="VisionsAlign product demo"
           className="w-full"
           priority={true}
           width={500}

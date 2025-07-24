@@ -1,12 +1,12 @@
 # Payment and Subscription Flow Diagram
 
-This diagram visualizes the payment and subscription process within the FeNAgO platform, showing the interactions between the user, application, and Stripe.
+This diagram visualizes the payment and subscription process within the VisionsAlign platform, showing the interactions between the user, application, and Stripe.
 
 ```mermaid
 sequenceDiagram
     actor User
-    participant UI as FeNAgO UI
-    participant API as FeNAgO API
+    participant UI as VisionsAlign UI
+    participant API as VisionsAlign API
     participant Stripe as Stripe API
     participant Webhook as Webhook Handler
     participant DB as Database

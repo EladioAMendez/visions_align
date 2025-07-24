@@ -20,13 +20,14 @@ export const metadata = getSEOTags();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="visionsalign">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Transform your FTCE exam preparation with Sage, the AI-powered conversational study partner that helps you understand complex concepts, study on your schedule, and pass with confidence." />
+        <meta name="description" content="Master executive communication with VisionsAlign - AI-powered insights that decode executive communication styles and generate personalized meeting playbooks for career advancement." />
         <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <meta name="theme-color" content="#1A2332" />
       </head>
-      <body>
+      <body className="bg-background text-primary font-sans">
         <Layout>
           {children}
         </Layout>

@@ -13,7 +13,7 @@ import config from "@/config";
 
 // I need your help to write a simple privacy policy for my website. Here is some context:
 // - Website: https://fenago.com
-// - Name: FeNAgO
+// - Name: VisionsAlign
 // - Description: A Next.js agentic SaaS boilerplate to help entrepreneurs build AI-powered applications more efficiently
 // - User data collected: name, email and payment information
 // - Non-personal data collection: web cookies
@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
         >
           {`Last Updated: May 5, 2025
 
-Thank you for visiting FeNAgO ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://fenago.com (the "Website").
+Thank you for visiting VisionsAlign ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://visionsalign.com (the "Website").
 
 By accessing or using the Website, you agree to the terms of this Privacy Policy. If you do not agree with the practices described in this policy, please do not use the Website.
 
@@ -87,7 +87,7 @@ We do not share your personal data with any third parties except as required for
 
 4. Children's Privacy
 
-FeNAgO is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
+VisionsAlign is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
 
 5. Updates to the Privacy Policy
 
@@ -101,7 +101,7 @@ Email: support@fenago.com
 
 For all other inquiries, please visit our Contact Us page on the Website.
 
-By using FeNAgO, you consent to the terms of this Privacy Policy.`}
+By using VisionsAlign, you consent to the terms of this Privacy Policy.`}
         </pre>
       </div>
     </main>

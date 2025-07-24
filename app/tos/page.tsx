@@ -13,7 +13,7 @@ import config from "@/config";
 
 // I need your help to write a simple Terms & Services for my website. Here is some context:
 // - Website: https://fenago.com
-// - Name: FeNAgO
+// - Name: VisionsAlign
 // - Contact information: support@fenago.com
 // - Description: A Next.js agentic SaaS boilerplate to help entrepreneurs build AI-powered applications more efficiently
 // - Ownership: when buying a package, users can download code to create apps. 
@@ -59,17 +59,17 @@ const TOS = () => {
         >
           {`Last Updated: May 5, 2025
 
-Welcome to FeNAgO!
+Welcome to VisionsAlign!
 
-These Terms of Service ("Terms") govern your use of the FeNAgO website at https://fenago.com ("Website") and the services provided by FeNAgO. By using our Website and services, you agree to these Terms.
+These Terms of Service ("Terms") govern your use of the VisionsAlign website at https://visionsalign.com ("Website") and the services provided by VisionsAlign. By using our Website and services, you agree to these Terms.
 
-1. Description of FeNAgO
+1. Description of VisionsAlign
 
-FeNAgO is a platform that offers a Next.js agentic SaaS boilerplate to assist entrepreneurs in building AI-powered applications more efficiently.
+VisionsAlign is an AI-powered microservice that helps senior product managers decode executive communication styles and generate personalized meeting playbooks to accelerate career advancement.
 
 2. Ownership and Usage Rights
 
-When you purchase a package from FeNAgO, you gain the right to download and use the code provided for creating applications. You own the code you create but do not have the right to resell it. We offer a full refund within 7 days of purchase, as specified in our refund policy.
+When you subscribe to VisionsAlign, you gain access to AI-powered insights and personalized meeting playbooks. You own the strategies and insights you create but do not have the right to resell our proprietary algorithms. We offer a full refund within 7 days of subscription, as specified in our refund policy.
 
 3. User Data and Privacy
 
@@ -89,7 +89,7 @@ We may update these Terms from time to time. Users will be notified of any chang
 
 For any questions or concerns regarding these Terms of Service, please contact us at support@fenago.com.
 
-Thank you for using FeNAgO!`}
+Thank you for using VisionsAlign!`}
         </pre>
       </div>
     </main>

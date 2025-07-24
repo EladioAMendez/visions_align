@@ -1,4 +1,4 @@
-# UI Components Guide for FeNAgO
+# UI Components Guide for VisionsAlign
 
 ## Components Framework
 
@@ -10,7 +10,7 @@ Your application is built with:
 
 ## UI Library
 
-The FeNAgO project uses:
+The VisionsAlign project uses:
 
 - **DaisyUI** - A component library built on top of Tailwind CSS (referenced in your config.ts file)
 - **Tailwind CSS** - A utility-first CSS framework for styling components
@@ -91,7 +91,7 @@ If you're using Next.js 13+ with the App Router:
 
 ## Building Custom Components
 
-When creating your own components for FeNAgO:
+When creating your own components for VisionsAlign:
 
 1. **Place in the components directory**: `/components/{ComponentName}.tsx`
 2. **Use TypeScript interfaces** for props:
@@ -134,4 +134,4 @@ When creating your own components for FeNAgO:
 
 ---
 
-This guide should help you understand the component ecosystem in your FeNAgO project and provide resources for finding additional components to enhance your application.
+This guide should help you understand the component ecosystem in your VisionsAlign project and provide resources for finding additional components to enhance your application.

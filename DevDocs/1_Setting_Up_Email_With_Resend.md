@@ -381,7 +381,7 @@ Before going to production, you should verify your domain with Resend:
 ```typescript
 // In config.ts
 resend: {
-  fromNoReply: `FeNAgO <noreply@yourdomain.com>`,
+  fromNoReply: `VisionsAlign <noreply@yourdomain.com>`,
   fromAdmin: `Support Team <support@yourdomain.com>`,
   supportEmail: "support@yourdomain.com",
 },

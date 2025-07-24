@@ -1,8 +1,8 @@
-# FeNAgO Database Models
+# VisionsAlign Database Models
 
 ## Overview
 
-FeNAgO uses MongoDB as its database, interfaced through Mongoose ODM (Object-Document Mapper). This document outlines the database models and their relationships.
+VisionsAlign uses MongoDB as its database, interfaced through Mongoose ODM (Object-Document Mapper). This document outlines the database models and their relationships.
 
 ## Database Connection
 
@@ -75,7 +75,7 @@ interface LeadDocument extends Document {
 
 ## Planned Agentic Models
 
-These models will need to be implemented to support the agentic features of FeNAgO:
+These models will need to be implemented to support the AI-powered features of VisionsAlign:
 
 ### Agent Model
 

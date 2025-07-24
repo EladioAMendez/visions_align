@@ -8,18 +8,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // TeachingDream custom colors from design spec
-        background: "#F1F5F9", // Theme: Light Gray background
-        card: "#FFFFFF", // Theme: White card backgrounds
-        primary: "#1E293B", // Primary color: Dark Blue for question text and main content
-        secondary: "#64748B", // Secondary color: Medium Gray for secondary information
-        accent: "#4ECDC4", // Accent color: Teal for expand/collapse indicators
-        success: "#6BCF7F", // Success color: Mint for helpful tip highlights
-        border: "#F1F5F9", // Border color: Light Gray for card borders
+        // VisionsAlign professional brand colors
+        background: "#FAFBFC", // Professional light background
+        card: "#FFFFFF", // Clean white cards
+        primary: "#1A2332", // Deep navy - primary brand color
+        secondary: "#475569", // Slate gray - secondary text
+        accent: "#0EA5E9", // Sky blue - accent for CTAs and highlights
+        success: "#07b39b", // Teal - for success states that align with the brand's palette
+        warning: "#F59E0B", // Amber - warnings and attention
+        error: "#EF4444", // Red - error states
+        border: "#E2E8F0", // Light border for subtle divisions
+        muted: "#64748B", // Muted text for secondary information
       },
       backgroundImage: {
         gradient:
-          "linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82)",
+          "linear-gradient(90deg, #2A3B4C 0%, #3E5A72 25%, #5C8A9E 50%, #8FBCCF 75%, #C2E0F0 100%)",
       },
       animation: {
         opacity: "opacity 0.25s ease-in-out",
@@ -90,18 +93,47 @@ module.exports = {
         },
       },
       borderRadius: {
-        'card': '12px', // Card border radius from design spec
+        'card': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        '2xl': '24px',
+        '3xl': '32px',
       },
       spacing: {
-        'card-outer': '24px', // Outer padding from design spec
-        'card-inner': '12px', // Spacing between question cards from design spec
+        'card-outer': '24px',
+        'card-inner': '12px',
+        'section-sm': '80px',
+        'section-md': '120px',
+        'section-lg': '160px',
+        'executive': '200px',
+        '18': '4.5rem',
+        '88': '22rem',
+        '100': '25rem',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+        display: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.5rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1.1' }],
+        '6xl': ['3.75rem', { lineHeight: '1.1' }],
+        '7xl': ['4.5rem', { lineHeight: '1.1' }],
       },
       fontWeight: {
-        normal: 400, // Regular weight for answers
-        medium: 500, // Medium weight for questions
+        light: 300,
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+        extrabold: 800,
       },
     },
   },
@@ -112,13 +144,18 @@ module.exports = {
     // Add "data-theme='theme_name" to any HTML tag to enable the 'theme_name' theme.
     // https://daisyui.com/
     themes: [{
-      teachingdream: {
-        "primary": "#1E293B",
-        "secondary": "#64748B",
-        "accent": "#4ECDC4",
-        "neutral": "#F1F5F9",
-        "base-100": "#FFFFFF",
-        "success": "#6BCF7F",
+      visionsalign: {
+        "primary": "#1A2332", // Deep navy
+        "secondary": "#475569", // Slate gray
+        "accent": "#0EA5E9", // Sky blue
+        "neutral": "#1A2332", // Dark for neutral elements
+        "base-100": "#FFFFFF", // White base
+        "base-200": "#FAFBFC", // Light background
+        "base-300": "#F1F5F9", // Lighter background
+        "success": "#07b39b", // Teal
+        "warning": "#F59E0B", // Amber
+        "error": "#EF4444", // Red
+        "info": "#0EA5E9", // Sky blue for info
       }
     }, "light", "dark"],
   },

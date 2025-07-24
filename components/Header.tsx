@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
-import logo from "@/app/icon.png";
+import logo from "@/app/logo.svg";
 import config from "@/config";
 
 const links: {
@@ -14,16 +14,16 @@ const links: {
   label: string;
 }[] = [
   {
-    href: "/#pricing",
-    label: "Pricing",
+    href: "/#features",
+    label: "Features",
   },
   {
     href: "/#testimonials",
-    label: "Reviews",
+    label: "Success Stories",
   },
   {
-    href: "/#faq",
-    label: "FAQ",
+    href: "/#pricing",
+    label: "Pricing",
   },
 ];
 
@@ -41,7 +41,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-card border-b border-border shadow-sm">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"

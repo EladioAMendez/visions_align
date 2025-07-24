@@ -1,8 +1,8 @@
-# FeNAgO Components Overview
+# VisionsAlign Components Overview
 
 ## UI Component Structure
 
-The FeNAgO project has a rich set of pre-built UI components to accelerate development. These components are located in the `/components` directory and follow a flat organization structure with semantic naming.
+The VisionsAlign project has a rich set of pre-built UI components to accelerate development. These components are located in the `/components` directory and follow a flat organization structure with semantic naming.
 
 ## Core Components
 

@@ -1,8 +1,8 @@
-# FeNAgO API Endpoints Documentation
+# VisionsAlign API Endpoints Documentation
 
 ## Overview
 
-FeNAgO provides a set of API endpoints built on Next.js API routes. These endpoints handle authentication, payment processing, lead generation, and webhooks. This document outlines the available endpoints and their functionality.
+VisionsAlign provides a set of API endpoints built on Next.js API routes. These endpoints handle authentication, payment processing, lead generation, and webhooks. This document outlines the available endpoints and their functionality.
 
 ## Authentication API
 

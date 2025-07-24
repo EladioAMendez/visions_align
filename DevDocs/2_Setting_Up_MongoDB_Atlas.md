@@ -24,7 +24,7 @@ MongoDB Atlas is a fully-managed cloud database service that handles all the com
 ## Step 2: Create a Project and Cluster
 
 1. After logging in, click **New Project** in your Atlas dashboard
-2. Name your project (e.g., `FeNAgO` or `MyNextJSApp`)
+2. Name your project (e.g., `VisionsAlign` or `MyNextJSApp`)
 3. Click **Create Project**
 4. In the project dashboard, click **Build a Database**
 5. Choose the **Shared** cluster option (this is the free tier)
