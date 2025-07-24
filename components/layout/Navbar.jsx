@@ -32,25 +32,25 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-white/80'}`}
     >
       <nav className="container mx-auto px-card-outer py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-primary">
-          <Highlight><strong>VisionsAlign</strong></Highlight>
+        <Link href="/" className="text-2xl font-bold text-slate-900">
+          <strong>VisionsAlign</strong>
         </Link>
         
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="#benefits" className="text-secondary hover:text-primary transition-colors">
+          <Link href="#benefits" className="text-slate-600 hover:text-slate-900 font-medium transition-colors">
             Benefits
           </Link>
-          <Link href="#showcase" className="text-secondary hover:text-primary transition-colors">
+          <Link href="#showcase" className="text-slate-600 hover:text-slate-900 font-medium transition-colors">
             Demo
           </Link>
-          <Link href="#testimonials" className="text-secondary hover:text-primary transition-colors">
+          <Link href="#testimonials" className="text-slate-600 hover:text-slate-900 font-medium transition-colors">
             Testimonials
           </Link>
-          <Link href="#faq" className="text-secondary hover:text-primary transition-colors">
+          <Link href="#faq" className="text-slate-600 hover:text-slate-900 font-medium transition-colors">
             FAQ
           </Link>
-          <Link href="#pricing" className="text-secondary hover:text-primary transition-colors">
+          <Link href="#pricing" className="text-slate-600 hover:text-slate-900 font-medium transition-colors">
             Pricing
           </Link>
           <motion.div
@@ -59,7 +59,7 @@ export default function Navbar() {
           >
             <Link 
               href="#trial" 
-              className="bg-accent text-white px-4 py-2 rounded-card font-medium hover:bg-opacity-90 transition-all"
+              className="bg-success text-slate-900 px-4 py-2 rounded-card font-medium hover:bg-success/90 transition-all"
             >
               Get Your Free Playbook
             </Link>
@@ -129,7 +129,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="#trial" 
-                className="bg-accent text-white px-6 py-3 rounded-card font-medium text-xl"
+                className="bg-success text-slate-900 px-6 py-3 rounded-card font-medium text-xl"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Your Free Playbook

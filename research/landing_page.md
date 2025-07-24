@@ -1,226 +1,153 @@
 <example-format>
 Product Requirement: AI SaaS Software - Homepage
-Purpose: To address common concerns about AI tutoring, pricing, and effectiveness while maintaining StudyVoice's supportive, encouraging tone.
+Purpose: To address the professional pain of "conversational dissonance" and present VisionsAlign as the systematic solution for achieving "executive resonance" and career momentum, speaking directly to our data-driven, ambitious avatar.
 UI Components:
 - Navigation Bar: Global navigation for product sections; includes links to features, pricing, and contact.
 - Hero Section: Prominent feature area with a headline, subheadline, and call-to-action button.
-- Feature Highlights: Grid or list of key features with icons and brief descriptions.
+- How It Works Section: A 3-step visual explanation of the core product mechanism.
+- Feature Highlights: Grid or list of key benefits with icons and brief descriptions.
 - Testimonials: Carousel or list view featuring customer reviews and ratings.
 - Footer: Additional links, contact information, and social media icons.
 Visual Style:
 - Theme: Professional light background (#FAFBFC) with clean white cards (#FFFFFF).
-- Primary color: Deep navy (#1A2332) for primary text and elements.
-- Secondary color: Slate gray (#475569) for secondary text.
-- Accent color: Sky blue (#0EA5E9) for CTAs, highlights, and interactive elements.
-- Success color: Brand-aligned teal (#07b39b) for success states.
-- Gradient: A sophisticated linear-gradient from deep slate blue to light sky blue, used for key branding moments like primary buttons.
+- Primary Text Color: Deep Slate Blue (#2A3B4C) for primary text and elements.
+- Secondary Text Color: Muted Steel Blue (#3E5A72) for secondary text.
+- Accent/CTA Color: Soft Teal (#5C8A9E) for CTAs, highlights, and interactive elements.
+- Success/Highlight Color: Light Sky Blue (#8FBCCF) for success states and borders on hover.
+- Gradient: `linear-gradient(90deg, #2A3B4C 0%, #3E5A72 25%, #5C8A9E 50%, #8FBCCF 75%, #C2E0F0 100%)` used for key branding moments and primary buttons.
 - Spacing: 24px outer padding, 12px between question cards
 - Borders: 1px solid Light Gray #F1F5F9 on card borders; 12px border radius
 - Typography: Inter Medium (500) for questions, Regular (400) for answers
-- Icons/images: Question mark icons; expand/collapse arrows; category indicator icons
+- Animation Narrative: A visual journey from "dissonance" (subtle static/glitch effects) to "transformation" (clean, directional slides) to "resonance" (live, pulsing effects).
 </example-format>
 
 ## B2C SaaS Landing Page (Homepage)
 
 ### 1. Hero Section
 
-**Headline:** **Unlock Your Executive Influence. Master Every Meeting.**
+**Headline:** **From Conversational Dissonance to Executive Resonance. VisionsAlign Delivers the Playbook.**
 
-**Subtext:** Transform anxiety into strategic advantage. VisionsAlign decodes leadership styles and crafts personalized playbooks, so you walk into every VP conversation with calm confidence and a clear path to promotion.
+**Subtext:** Stop the awkward silences and missed opportunities. VisionsAlign analyzes both you and your stakeholders, delivering an AI-powered playbook to turn every high-stakes conversation into a state of genuine connection and career momentum.
 
-**Imagery:** A split image. On one side, a professional woman (Maya Chen's archetype) looking slightly stressed, perhaps with a cluttered desk and a clock showing late hours. On the other side, the same woman, now smiling confidently, holding a tablet displaying a clean, intuitive dashboard with a 
-
-
-meeting playbook. The overall aesthetic should be professional yet approachable, with a subtle glow around the confident version of the user, hinting at the internal transformation.
+**Imagery:** A split image. On the left, a professional woman (Maya Chen's archetype) looks stressed, with a subtle, almost subliminal `static/glitch` effect on the screen behind her, representing dissonance. On the right, she is smiling confidently, holding a tablet displaying a clean meeting playbook. A subtle glow around her represents the feeling of resonance.
 
 **Call-to-Action (CTA):**
 
-*   **Button Text:** **Get Your Free Playbook Today!**
+*   **Button Text:** **Generate Your First Playbook Free**
 *   **Placement:** Prominently centered below the subtext.
-*   **Microinteraction:**
-    *   **On Hover:** The button has a subtle opacity change (`hover:opacity-90`) to maintain the integrity of the brand gradient while providing clear visual feedback.
-    *   **On Click:** A quick `fadeIn` animation (from `MagicUI` or custom Tailwind animation) on a small, reassuring text below the button: 
-
-
-
-
-**Microinteraction (continued):**
-    *   **On Click (continued):** "No credit card required. Start your journey to influence now!" This text will appear briefly and then fade out, leading the user to the signup form.
+*   **Style:** Uses the brand `gradient`.
+*   **Microinteraction:** On hover, the button has a subtle opacity change (`hover:opacity-90`). On click, a `fadeIn` animation on the text below: "No credit card required. Find your resonance now."
 
 **Navigation Bar Microinteractions:**
-*   **On Hover (Links):** Navigation links (Features, Pricing, Contact) will slightly `slideUp` (custom Tailwind animation) and change text color to `Accent color: Teal #4ECDC4`.
-*   **On Click (Links):** A smooth `fadeIn` transition (MagicUI) to the respective section or page, providing a fluid user experience.
+*   **On Hover (Links):** Navigation links (Features, Pricing, Contact) slightly `slideUp` and change text color to `Accent/CTA Color: #5C8A9E`.
+*   **On Click (Links):** A smooth `fadeIn` transition to the respective section.
 
+### 2. How It Works: Your System for Predictable Influence
 
+**Section Headline:** **Your Strategic Engine: From Data to Dialogue in 3 Steps**
 
+**(A clean, 3-column layout with icons and connecting lines)**
 
+*   **Step 1: Input the Players**
+    *   **Icon:** LinkedIn icon + User icon
+    *   **Text:** Securely provide the LinkedIn profiles of you and the executive you're meeting. This sets the stage for our strategic analysis.
 
-### 2. Value Proposition / Benefits Snapshot
+*   **Step 2: AI-Powered Analysis**
+    *   **Icon:** A brain/chip icon with connecting lines
+    *   **Text:** Our proprietary AI analyzes career trajectories, communication patterns, and psychological drivers to find the core of what makes them tick.
 
-**Section Headline:** **Your Strategic Advantage, Delivered in Minutes.**
+*   **Step 3: Receive Your Playbook**
+    *   **Icon:** A playbook/document icon
+    *   **Text:** In minutes, receive a bespoke meeting playbook with tailored talking points and rapport-building strategies based on your specific meeting goals.
+    *   **Microinteraction:** Each step uses a clean `pathSlideUp` animation as it enters the viewport, showing a clear progression.
+
+### 3. Value Proposition / Benefits Snapshot
+
+**Section Headline:** **Your Unfair Advantage, Delivered in Minutes.**
 
 **Benefits (with icons):**
 
 *   **Icon:** A brain with a lightning bolt (representing quick insights).
-    *   **Benefit:** **Decode Leadership Styles Instantly.** Uncover the communication preferences, values, and decision triggers of any stakeholder from their LinkedIn profile. No more guesswork.
-    *   **Microinteraction:** To ensure a consistent and professional user experience, all benefit icons in this section use the `dataShimmer` animation on hover. This creates a unified, clean, and engaging effect that reinforces the brand's attention to detail.
+    *   **Benefit:** **Decode Communication Styles.** Uncover the nuanced preferences, values, and decision triggers of any stakeholder. Go beyond surface-level data.
+    *   **Microinteraction:** Icons use the `dataShimmer` animation on hover.
 
 *   **Icon:** A playbook or a roadmap icon.
-    *   **Benefit:** **Generate Bespoke Meeting Playbooks.** Walk into every conversation with a custom-tailored agenda, talking points, and rapport-building strategies. Feel prepared, not panicked.
+    *   **Benefit:** **Generate Bespoke Meeting Playbooks.** Walk into every conversation with a custom-tailored agenda and talking points that create resonance, not friction.
 
 *   **Icon:** A heart with a rising arrow (representing emotional well-being and growth).
-    *   **Benefit:** **Boost Your Confidence & Influence.** Transform pre-meeting anxiety into calm confidence. Build stronger relationships and accelerate your career with every interaction.
+    *   **Benefit:** **Transform Anxiety into Confidence.** Replace pre-meeting dread with the calm confidence that comes from being strategically prepared.
 
 *   **Icon:** A clock with a fast-forward arrow.
-    *   **Benefit:** **Save Hours of Prep Time.** Stop the late-night rehearsals and endless second-guessing. Get actionable insights in minutes, so you can focus on what matters most.
+    *   **Benefit:** **Reclaim Hours of Prep Time.** Stop the late-night rehearsals. Get actionable insights in minutes so you can focus on execution.
 
+### 4. Social Proof
 
-
-
-
-### 3. Social Proof
-
-**Section Headline:** **Real Stories. Real Impact. Real Confidence.**
+**Section Headline:** **Real Stories. Real Resonance. Real Momentum.**
 
 **Testimonial 1:**
 
-*   **Quote:** "Before VisionsAlign, I was stuck in a cycle of anxiety before every VP meeting. Now, I walk in with a clear agenda and genuine confidence. It's not just a tool; it's my secret weapon for career momentum." - *Maya C., Senior Product Manager, Fortune 500 Tech*
-*   **Microinteraction:** The testimonial card (using the `White #FFFFFF` card background and `1px solid Light Gray #F1F5F9` border with `12px border radius`) will subtly `fadeIn` and `slideUp` (custom Tailwind animations) when it enters the viewport, drawing attention to its content. On hover, the card will have a slight `pulse` effect, and the border will change to the `Accent color: Teal #4ECDC4`.
+*   **Quote:** "Before VisionsAlign, every VP meeting felt like I was speaking a different language. Now, I have the 'human cheat codes.' I walk in with a clear path to connection and confidence. This isn't just a tool; it's my system for career momentum." - *Maya C., Senior Product Manager, Fortune 500 Tech*
+*   **Microinteraction:** The testimonial card uses the `insightFadeIn` and `pathSlideUp` animations when it enters the viewport. On hover, the card will have a slight `alignPulse` effect, and the border will change to the `Success/Highlight Color: #8FBCCF`.
 
 **Testimonial 2:**
 
-*   **Quote:** "This app changed how I approach leadership. The insights are uncanny, and the playbooks are gold. I feel so much more in control of my career trajectory." - *Sarah L., Director of Engineering, Tech Startup*
-*   **Microinteraction:** Similar to Testimonial 1, this card will also `fadeIn` and `slideUp` on scroll. On hover, the card will have a slight `pulse` effect, and the border will change to the `Accent color: Teal #4ECDC4`.
+*   **Quote:** "The insights are uncanny. I went from feeling constantly out of sync with a key director to having him seek out my opinion. The playbooks are gold. I feel in control of my career trajectory for the first time." - *Sarah L., Director of Engineering, Tech Startup*
+*   **Microinteraction:** Same as Testimonial 1.
 
 **Credibility Indicators:**
 
-*   **Text:** "Trusted by ambitious professionals at leading companies worldwide." (This text will be displayed prominently, perhaps with subtle `dataShimmer` animation to highlight its importance.)
-*   **Imagery:** Logos of generic, well-known corporate companies (e.g., a stylized 
+*   **Text:** "Trusted by ambitious professionals at leading companies worldwide."
+*   **Imagery:** Logos of generic, well-known corporate companies displayed in a carousel with a `connectExpand` animation on hover.
 
+### 5. Product Showcase
 
-Fortune 500 company logo, a tech startup logo) displayed in a carousel with a `connectExpand` animation on hover, indicating growth and reach.
+**(Content remains largely the same, but with refined language)**
 
+**Section Headline:** **See VisionsAlign in Action: Your Path to Resonance.**
 
-
-
-### 4. Product Showcase
-
-**Section Headline:** **See VisionsAlign in Action. Your Path to Influence.**
-
-**Visual/Video Concept:** A short, engaging promo video (1-2 minutes) that combines a demo of the VisionsAlign.com interface with a compelling narrative. The video will follow Maya Chen’s journey, showcasing a “before and after” transformation. It will start with her pre-VisionsAlign anxiety (e.g., staring at a cluttered sticky-note wall, feeling overwhelmed), then transition to her using the product. Key visual elements will include:
-
-*   **Dashboard View:** A clean, intuitive dashboard (using the `Light Gray #F1F5F9` background and `White #FFFFFF` card backgrounds) showing Olivia’s LinkedIn profile being analyzed, with key insights (e.g., “Olivia processes information visually,” “Values efficiency”) highlighted.
-*   **Playbook Generation:** A dynamic animation (using `pathSlideUp` and `dataShimmer` effects) showing the personalized meeting playbook being generated, with specific talking points and Miro board suggestions appearing on screen.
-*   **Relationship Tracker:** A visual representation of the relationship tracker, showing Olivia’s dot moving from “aware” to “engaged” with a subtle `alignPulse` animation.
-*   **Meeting Success:** A final scene of Maya confidently leading a virtual meeting, perhaps sharing a Miro board, with a subtle smile of satisfaction.
+**Visual/Video Concept:** A short promo video following Maya Chen’s journey from "dissonance" (staring at a cluttered wall, feeling overwhelmed) to "resonance" (confidently leading a meeting, sharing a Miro board, with a smile of satisfaction). Key visuals include the AI analyzing profiles, the playbook being generated with `pathSlideUp` and `dataShimmer` effects, and the relationship tracker showing a dot moving from "aware" to "engaged" with a subtle `alignPulse` animation.
 
 **Voiceover Narrative (Calm, encouraging tone):**
+"...But then, she discovered VisionsAlign. With a simple LinkedIn profile, our AI decodes a leader's unique communication style. No more guessing games. VisionsAlign crafts a personalized meeting playbook, giving Maya the exact insights she needs to build genuine resonance... Watch as she transforms conversational friction into career-defining connections..."
 
-"Meet Maya. Like many ambitious product leaders, she struggled to connect with senior executives, feeling her career momentum stall. Every meeting felt like a high-stakes gamble, filled with anxiety and guesswork. But then, she discovered VisionsAlign.
-
-With VisionsAlign, Maya simply inputs a leader's LinkedIn profile. Our AI instantly decodes their unique communication style, values, and decision triggers. No more guessing games. VisionsAlign then crafts a personalized meeting playbook, giving Maya the exact insights and talking points she needs to build genuine rapport and drive strategic conversations.
-
-Watch as Maya transforms her interactions. From anxious preparation to confident execution, VisionsAlign empowers her to turn every brief touchpoint into a powerful sponsorship opportunity. See how her relationships deepen, her influence grows, and her career accelerates. VisionsAlign: Your strategic advantage, in every conversation."
-
-**Text Summary (for those who don't watch the video):**
-
-Experience the power of VisionsAlign.com. Our intuitive platform analyzes key stakeholder profiles, revealing their communication preferences and decision-making styles. We then generate custom meeting playbooks, equipping you with actionable insights and personalized strategies for every executive interaction. Transform your approach, build stronger relationships, and accelerate your career with confidence. See how VisionsAlign turns guesswork into strategic success, helping you achieve your professional goals with ease. From understanding a leader's visual preferences to crafting the perfect opening line, VisionsAlign provides the clarity and confidence you need to excel.
-
-
-
-
-### 5. Call-to-Action (Mid-page and Persistent)
-
-**Mid-page CTA:**
-
-*   **Placement:** After the 
-
-
-Product Showcase section, reinforcing the value proposition.
-*   **Button Text:** **Ready for Your Strategic Advantage? Get Started Free!**
-*   **Microinteraction:** Similar to the Hero Section CTA, on hover, the button will subtly expand (`scale(1.05)`) and change to the `Accent color: Teal #4ECDC4` with a soft `pulse` animation. On click, a `fadeIn` animation on a small text: "No credit card needed. Unlock your influence now!" before redirecting to the signup form.
-
-**Persistent CTA (Sticky Header/Footer Bar):**
-
-*   **Placement:** A fixed header bar that remains visible as the user scrolls, especially on mobile.
-*   **Button Text:** **Start Free Trial**
-*   **Microinteraction:** The sticky bar itself will have a subtle `fadeIn` animation when it appears on scroll. The button within the sticky bar will use the `alignPulse` animation on hover, and its background will be the `Accent color: Teal #4ECDC4` to ensure high visibility and contrast. This ensures the call to action is always accessible, providing immediate opportunity for conversion once the user is convinced.
-
-
-
-
-### 6. Urgency or Special Offer (Optional)
-
-**Section Headline:** **Don't Miss Your Moment to Lead.**
-
-**Offer:** "Unlock your first month of VisionsAlign Premium for **20% off** when you sign up **today!** This exclusive offer is for the next 48 hours only to help you prepare for your next critical executive meeting."
-
-**Placement:** This section can be a thin banner just below the Hero Section or integrated subtly above the mid-page CTA.
-
-**Microinteraction:**
-
-*   **Countdown Timer:** A dynamic countdown timer (e.g., 48:00:00) will be prominently displayed next to the offer, visually reinforcing the limited-time nature. The numbers will subtly `pulse` (custom Tailwind animation) as time ticks down, creating a gentle sense of urgency.
-*   **FOMO (Fear Of Missing Out) Text:** Below the offer, a small, reassuring text will appear with a `fadeIn` animation: "Join thousands of leaders like you who are already transforming their careers. Don't get left behind!" This text will be in the `Secondary color: Medium Gray #647488`.
-*   **Button Highlight:** The CTA button within this section (e.g., "Claim Your Discount Now") will use the `Success color: Mint #6BCF7F` for its background and will have a continuous, subtle `alignPulse` animation to draw immediate attention. On hover, it will `scale(1.05)` and the text will change to `Primary color: Dark Blue #1E293B`.
-
-
-
-
-
-### 7. Frequently Asked Questions
+### 6. Frequently Asked Questions
 
 **Section Headline:** **Your Questions, Answered.**
 
-**FAQ 1:**
+**(Accordion style for all questions)**
 
-*   **Question:** **Q: Is my data private and secure?**
-*   **Answer:** A: Absolutely. We prioritize your privacy and data security. All LinkedIn profile data is processed with the highest encryption standards and is never shared with third parties. Your insights are yours alone.
-*   **Microinteraction:** Each FAQ item will be an expandable/collapsible accordion. The question text will be in `Primary color: Dark Blue #1E293B`. On click, the `expand/collapse arrow` icon (using `Accent color: Teal #4ECDC4`) will rotate 90 degrees, and the answer will `slideDown` (custom Tailwind animation) smoothly. The answer text will be in `Secondary color: Medium Gray #647488`.
+*   **Q: Is my data private and secure?**
+*   **A:** Absolutely. We prioritize your privacy and data security. All LinkedIn profile data is processed with the highest encryption standards and is never shared. Your insights are yours alone.
 
-**FAQ 2:**
+*   **Q: Will I be charged after the free trial?**
+*   **A:** No, you will not be automatically charged. Our free trial is genuinely free, no credit card required. You can continue on our free plan or choose to upgrade when you’re ready.
 
-*   **Question:** **Q: Will I be charged after the free trial?**
-*   **Answer:** A: No, you will not be automatically charged. Our free trial is genuinely free, no credit card required. You can continue on our free plan with limited features, or choose to upgrade to a premium subscription when you’re ready to unlock full power.
-*   **Microinteraction:** Similar accordion behavior as FAQ 1.
+*   **Q: Is this ethical? Does it feel like… cheating?**
+*   **A:** We see it as strategic empathy. Great leaders have always done this work—they research, listen, and adapt. VisionsAlign simply provides a more efficient, data-driven tool to help you build genuine understanding. It's about preparation and respect, not manipulation. All data is sourced from publicly available profiles.
 
-**FAQ 3:**
+*   **Q: How quickly can I generate a playbook?**
+*   **A:** VisionsAlign is designed for speed. You can typically generate a comprehensive meeting playbook within minutes of inputting a LinkedIn profile. Get actionable guidance exactly when you need it.
 
-*   **Question:** **Q: How quickly can I get insights for my next meeting?**
-*   **Answer:** A: VisionsAlign is designed for speed. You can typically generate a comprehensive meeting playbook within minutes of inputting a LinkedIn profile. Get actionable guidance exactly when you need it.
-*   **Microinteraction:** Similar accordion behavior as FAQ 1.
+*   **Microinteraction:** On click, an arrow icon rotates 90 degrees, and the answer `slidesDown` smoothly. The question text is in `Primary Text Color: #2A3B4C`, and the answer text is in `Secondary Text Color: #3E5A72`.
 
-**FAQ 4:**
-
-*   **Question:** **Q: Can VisionsAlign help me with internal team communication too?**
-*   **Answer:** A: While primarily focused on external executive interactions, the principles of understanding communication styles can absolutely be applied to internal team dynamics. Many users find our insights valuable for improving cross-functional collaboration and building stronger internal relationships.
-*   **Microinteraction:** Similar accordion behavior as FAQ 1.
-
-
-
-
-
-### 8. Final CTA / Sign-Up Section
+### 7. Final CTA / Sign-Up Section
 
 **Section Headline:** **Ready to Align Your Vision with Influence?**
 
-**Encouraging Statement:** Stop rehearsing at 2 a.m. and start leading with confidence. VisionsAlign is your system for predictable career momentum and authentic influence. Your next breakthrough is just a click away.
+**Encouraging Statement:** Stop rehearsing at 2 a.m. and start leading with resonance. VisionsAlign is your system for predictable career momentum and authentic influence. Your next breakthrough is just a click away.
 
 **Sign-Up Form:**
 
 *   **Input Field:** Email Address
-*   **Button Text:** **Get Your Free Playbook Now!**
+*   **Button Text:** **Get Your Free Playbook Now**
+*   **Style:** Uses the brand `gradient`.
 *   **Microinteraction:**
-    *   The entire section will have a clean, visually appealing background, perhaps with a subtle `Vanta.js` animation (e.g., `waves` or `dots` effect in `Accent color: Teal #4ECDC4` or `Primary color: Dark Blue #1E293B`) to create a sense of dynamic energy and forward movement.
-    *   An arrow directional cue (using `Accent color: Teal #4ECDC4`) will subtly `fadeIn` and `pulse` (custom Tailwind animation) pointing towards the sign-up button, guiding the user's eye.
-    *   The input field will have a subtle `shimmer` effect (MagicUI) on focus, indicating readiness for input.
-    *   The button will use the `Success color: Mint #6BCF7F` for its background and will have a continuous, subtle `alignPulse` animation. On hover, it will `scale(1.05)` and the text will change to `Primary color: Dark Blue #1E293B`.
+    *   The input field has a `dataShimmer` effect on focus.
+    *   The button has a continuous, subtle `alignPulse` animation to draw the eye and signal "liveness." On hover, it will `scale(1.05)`.
 
-**Reiterate Offer (if applicable):** "No credit card required. Start your journey to influence today!"
+**Reiterate Offer (if applicable):** "No credit card required. Start your journey to resonance today!"
 
-**Footer (brief overview of components):**
-
+**Footer:**
 *   **Links:** Home, Features, Pricing, Contact, Privacy Policy, Terms of Service.
 *   **Social Media Icons:** LinkedIn, X (Twitter).
-*   **Microinteraction:** Social media icons will have a `connectExpand` animation on hover, and links will `slideUp` on hover, changing color to `Accent color: Teal #4ECDC4`.
-
-
+*   **Microinteraction:** Social media icons use `connectExpand` on hover; links `slideUp` on hover, changing color to `Accent/CTA Color: #5C8A9E`.
