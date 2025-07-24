@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://fenago.com
+Host: https://visionsalign.com
 
 # Sitemaps
-Sitemap: https://fenago.com/sitemap.xml
+Sitemap: https://visionsalign.com/sitemap.xml

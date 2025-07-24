@@ -81,12 +81,8 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             >
-              <Link href="#pricing" passHref>
-                <div
-                  className="px-8 py-3 bg-brand-sea-green text-slate-900 font-semibold rounded-lg shadow-lg hover:bg-brand-sea-green/90 transition-colors duration-300 cursor-pointer"
-                >
-                  Get Started for Free
-                </div>
+              <Link href="#pricing" className="btn btn-primary">
+                Get Started for Free
               </Link>
             </motion.div>
           </div>

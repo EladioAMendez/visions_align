@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 interface PathSlideUpProps {
   children: ReactNode;
@@ -22,7 +22,7 @@ const PathSlideUp: React.FC<PathSlideUpProps> = ({
   staggerChildren = 0.1,
   className = ''
 }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { 
       opacity: 0,
     },
@@ -36,7 +36,7 @@ const PathSlideUp: React.FC<PathSlideUpProps> = ({
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { 
       opacity: 0, 
       y: distance 

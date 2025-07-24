@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { ThemeProvider } from '../ui/ThemeContext';
 
 export default function Layout({ children }) {
   // Add performance monitoring and optimization
@@ -60,8 +59,8 @@ export default function Layout({ children }) {
   }, []);
   
   return (
-    <ThemeProvider>
+    <>
       {children}
-    </ThemeProvider>
+    </>
   );
 }
