@@ -16,7 +16,7 @@ const faqData = [
   },
   {
     question: "How is this different from ChatGPT?",
-    answer: "While ChatGPT is a generalist, VisionsAlign is a specialist. Our AI Brain Trust is composed of six distinct expert personas (e.g., a Strategist, a Data Scientist, a Psychologist) who collaborate to analyze your specific challenge from multiple angles, delivering a more nuanced and actionable playbook than any single AI can."
+        answer: <>While ChatGPT is a generalist, VisionsAlign is a specialist. <span className="text-slate-200">The Insight Panel</span> is composed of six distinct expert personas (e.g., a Strategist, a Data Scientist, a Psychologist) who collaborate to analyze your specific challenge from multiple angles, delivering a more nuanced and actionable playbook than any single AI can.</>
   },
   {
     question: "What's the ROI?",

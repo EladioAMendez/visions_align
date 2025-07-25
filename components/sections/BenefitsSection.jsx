@@ -31,7 +31,7 @@ export default function BenefitsSection() {
   const steps = [
     {
       title: "Connect Your Data",
-      description: "Securely link your calendar, upload meeting invites, or provide a LinkedIn URL. Our AI Brain Trust ingests the context.",
+            description: <>Securely link your calendar, upload meeting invites, or provide a LinkedIn URL. Our system convenes <span className="text-slate-200">The Insight Panel</span> to analyze the context.</>,
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>,
     },
     {
@@ -41,7 +41,7 @@ export default function BenefitsSection() {
     },
     {
       title: "Execute with Confidence",
-      description: "Walk into your meeting with a clear strategy, tailored talking points, and the psychological insights needed to win.",
+      description: "Walk into your meeting with a clear strategy, tailored talking points, and the psychological insights needed to build alignment.",
       icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>,
     },
   ];
@@ -62,10 +62,10 @@ export default function BenefitsSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            From Data to Dominance in 90 Seconds
+            Your Playbook for Authentic Resonance
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Our streamlined process transforms raw information into your strategic playbook for executive influence.
+            Go beyond the slide deck. Our AI decodes the human data, giving you a clear path to connection in every high-stakes conversation.
           </p>
         </motion.div>
 

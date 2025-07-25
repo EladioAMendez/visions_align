@@ -36,7 +36,7 @@ const FeaturesGrid = () => {
       <div className="max-w-7xl mx-auto px-8 va-section-standard">
         <div className="text-center mb-20 lg:mb-32">
           <h2 className="va-display text-4xl lg:text-6xl mb-8 tracking-tight">
-            More Than a Tool—It's Your AI Brain Trust
+            More Than a Tool—It's Your Insight Panel
           </h2>
           <p className="text-xl lg:text-2xl text-secondary max-w-3xl mx-auto leading-relaxed">
             Every analysis is powered by a team of six interacting AI experts, giving you an unparalleled strategic edge.

@@ -16,7 +16,7 @@ const faqList: FAQItemProps[] = [
     question: "Is this just another personality test?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        <p>No. Personality tests are static and generic. VisionsAlign provides dynamic, context-aware intelligence. Our AI Brain Trust analyzes specific stakeholders for specific meetings, giving you actionable tactics, not just broad personality traits. It's the difference between a map and a GPS.</p>
+        <p>No. Personality tests are static and generic. VisionsAlign provides dynamic, context-aware intelligence. <span className="text-slate-200">The Insight Panel</span> analyzes specific stakeholders for specific meetings, giving you actionable tactics, not just broad personality traits. It's the difference between a map and a GPS.</p>
       </div>
     ),
   },

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 const ResonanceVisualization = () => {
   return (
@@ -61,7 +61,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
             >
-              Engineer Resonance. <br /> <span className="text-brand-sea-green">Win Executive Buy-In.</span>
+              The Blueprint to <br /> <span className="text-brand-sea-green">Direct the Conversation.</span>
             </motion.h1>
             
             <motion.p 
@@ -70,7 +70,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
             >
-              Stop navigating complex stakeholder dynamics alone. VisionsAlign is your AI co-pilot for engineering resonance, ensuring your best ideas get the executive buy-in they deserve.
+              Stop navigating complex stakeholder dynamics alone. VisionsAlign provides the data-driven clarity you need to lead high-stakes meetings with calm confidence, ensuring your best ideas get the executive alignment they deserve.
             </motion.p>
 
             <motion.div 
@@ -79,9 +79,9 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             >
-              <Link href="#pricing" className="btn btn-primary">
+              <button onClick={() => signIn('google')} className="btn btn-primary">
                 Generate Your First Playbook
-              </Link>
+              </button>
             </motion.div>
           </div>
           

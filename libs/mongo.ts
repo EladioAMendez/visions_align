@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 // This lib is use just to connect to the database in next-auth.
 // We don't use it anywhere else in the API routes—we use mongoose.js instead (to be able to use models)
@@ -10,7 +10,13 @@ declare global {
 }
 
 const uri = process.env.MONGODB_URI;
-const options = {};
+const options = {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+};
 
 let client: MongoClient | undefined;
 let clientPromise: Promise<MongoClient> | undefined;

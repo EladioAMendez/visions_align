@@ -4,6 +4,7 @@ import { Viewport } from "next";
 import { getSEOTags } from "@/libs/seo";
 import dynamic from "next/dynamic";
 import "./globals.css";
+import NextAuthProvider from "@/components/providers/NextAuthProvider";
 
 // Dynamically import our layout component to avoid SSR issues with useEffect
 const Layout = dynamic(() => import("@/components/layout/Layout"), { ssr: false });
@@ -28,9 +29,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="theme-color" content="#1A2332" />
       </head>
       <body className="bg-background text-primary font-sans">
-        <Layout>
-          {children}
-        </Layout>
+                <NextAuthProvider>
+          <Layout>
+            {children}
+          </Layout>
+        </NextAuthProvider>
       </body>
     </html>
   );

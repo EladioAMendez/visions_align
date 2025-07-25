@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -45,11 +45,11 @@ const PricingPlanCard = ({ plan, index }) => {
             ))}
           </ul>
         </div>
-        <Link href={plan.ctaLink} passHref>
-          <div className={`w-full text-center font-semibold py-3 rounded-lg transition-colors duration-300 cursor-pointer ${isPopular ? 'bg-success text-slate-900 hover:bg-success/90' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}>
-            {plan.cta}
-          </div>
-        </Link>
+        <button
+          onClick={() => signIn('google')}
+          className={`w-full text-center font-semibold py-3 rounded-lg transition-colors duration-300 cursor-pointer ${isPopular ? 'bg-success text-slate-900 hover:bg-success/90' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}>
+          {plan.cta}
+        </button>
       </div>
     </motion.div>
   );
@@ -67,7 +67,7 @@ export default function PricingSection() {
       features: [
         "1 Playbook Credit",
         "Analysis of 1 Stakeholder",
-        "Standard AI Brain Trust Access",
+        "Access to The Insight Panel",
         "Standard Email Support",
       ],
       cta: "Generate Your First Playbook",
@@ -82,7 +82,7 @@ export default function PricingSection() {
       features: [
         "10 Playbook Credits per Month",
         "Analyze up to 25 Stakeholders",
-        "Advanced AI Brain Trust Access",
+        "Advanced Insight Panel Controls",
         "Priority Email & Chat Support",
       ],
       cta: "Choose Pro",
@@ -97,7 +97,7 @@ export default function PricingSection() {
       features: [
         "25 Playbook Credits per Month",
         "Analyze up to 100 Stakeholders",
-        "Executive AI Brain Trust Access",
+        "Full Direction of The Insight Panel",
         "Customizable Analysis Parameters",
       ],
       cta: "Choose Director",

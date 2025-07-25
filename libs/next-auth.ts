@@ -52,11 +52,15 @@ export const authOptions: NextAuthOptionsExtended = {
   ...(connectMongo && { adapter: MongoDBAdapter(connectMongo) }),
 
   callbacks: {
-    session: async ({ session, token }) => {
+        session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub;
       }
       return session;
+    },
+    redirect: async ({ url, baseUrl }) => {
+      // Redirect to dashboard after login
+      return baseUrl + "/dashboard";
     },
   },
   session: {

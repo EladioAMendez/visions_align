@@ -1,7 +1,7 @@
 # VisionsAlign.com Research Summary
 
 ## Project Overview
-VisionsAlign.com is an innovative AI-powered microservice designed to resolve **conversational dissonance** and foster **executive resonance**. It targets ambitious professionals like Maya Chen by providing a personal **AI Brain Trust** that analyzes stakeholder psychology and generates bespoke meeting playbooks. Our goal is to transform high-stakes interactions from sources of anxiety into opportunities for career acceleration, empowering users to achieve executive alignment with calm confidence.
+VisionsAlign.com is an innovative AI-powered microservice designed to resolve **conversational dissonance** and foster **executive resonance**. It targets ambitious professionals like Maya Chen by providing **The Insight Panel**, a proprietary feature that analyzes stakeholder psychology and generates bespoke meeting playbooks. Our goal is to transform high-stakes interactions from sources of anxiety into opportunities for career acceleration, empowering users to achieve executive alignment with calm confidence.
 
 ## Key Research Findings
 
@@ -14,11 +14,11 @@ VisionsAlign.com is an innovative AI-powered microservice designed to resolve **
 *   **Pro Tier ($29/mo):** The core offering for professionals seeking consistent performance. It provides enough resources to build a habit of strategic preparation for all key weekly meetings.
 *   **Director Tier ($49/mo):** The premium, aspirational tier for users committed to strategic mastery. The primary value proposition and upgrade driver is control and customization over the AI analysis.
 
-**Value Proposition & Core Differentiator: The AI Brain Trust & Lead Lens**
+**Value Proposition & Core Differentiator: The Insight Panel & Lead Lens**
 
-Our core technology is an **AI Brain Trust**, a team of six interacting AI expert personas who analyze every profile. The key differentiator between tiers is how the user interacts with this team:
+Our core technology is **The Insight Panel**, a system of six interacting AI expert personas who analyze every profile. The key differentiator between tiers is how the user interacts with this team:
 
-*   **The AI Brain Trust (The Team in the Room):**
+*   **The Insight Panel (The Six Expert Personas):**
     1.  **The Strategist** (CEO/VC Mindset)
     2.  **The Empath** (PhD Psychologist Mindset)
     3.  **The Operator** (COO/Product Head Mindset)
@@ -174,7 +174,7 @@ Our deep dive into the Problem-Aware Avatar, Maya Chen, reveals a nuanced landsc
 
 **How VisionsAlign.com Serves as the “Antidote”:**
 
-*   **The "AI Brain Trust" as the Ultimate Solution:** Maya's core struggle is decoding the "black box" of executive personalities. Our AI Brain Trust is the definitive answer. It replaces her exhausting, manual second-guessing with a systematic, multi-faceted analysis. The ability to then *lead* this team via the "Lead Lens" in the Director tier directly maps to her desire for control, mastery, and the strategic thinking expected of a director.
+*   **The Insight Panel as the Ultimate Solution:** Maya's core struggle is decoding the "black box" of executive personalities. Our Insight Panel is the definitive answer. It replaces her exhausting, manual second-guessing with a systematic, multi-faceted analysis. The ability to then *lead* this team via the "Lead Lens" in the Director tier directly maps to her desire for control, mastery, and the strategic thinking expected of a director.
 
 *   **Justifying the Tiered Model:** The journey from Starter to Pro to Director mirrors her career aspirations.
     *   **Starter:** Solves her immediate, acute pain of "that one scary meeting."
@@ -183,7 +183,7 @@ Our deep dive into the Problem-Aware Avatar, Maya Chen, reveals a nuanced landsc
 
 **Informing the Marketing Approach:**
 
-*   **Focus on the "AI Brain Trust":** Marketing messages should lean heavily on the concept of having a personal, on-demand team of AI experts. This is a unique and powerful differentiator.
+*   **Focus on The Insight Panel:** Marketing messages should lean heavily on the concept of convening a personal, on-demand panel of AI experts for analysis. This is a unique and powerful differentiator.
 *   **Sell the Aspirational Journey:** The pricing page and upgrade paths should be framed as a career journey. "Graduate from consistent performance (Pro) to strategic mastery (Director)."
 *   **Leverage Peer Testimonials (Women in Tech):** Maya’s purchasing habits indicate that a “peer testimonial from another woman in tech” is a strong decision trigger. Marketing efforts should prominently feature success stories from women in similar roles who have used VisionsAlign.com to achieve their career goals.
 *   **Address the “Brilliant but Not Leadership Material” Fear:** Position VisionsAlign.com as the tool that bridges the gap between technical brilliance and executive presence. Frame it as the system that ensures her strategic value is always heard and understood, making her an indispensable thought-partner.
@@ -197,7 +197,7 @@ Our deep dive into the Problem-Aware Avatar, Maya Chen, reveals a nuanced landsc
 
 3.  **Strategize V1 Feature Prioritization and Development:** Based on MVP UAT results, finalize the feature set for V1. This includes building the "Lead Lens" selection UI, the Relationship Tracker, and the Calendar Integration for the Director tier. Begin V1 development immediately following MVP launch, targeting a four-week completion.
 
-4.  **Formulate Go-to-Market (GTM) Strategy and Content Plan:** Develop a detailed Go-to-Market strategy that leverages the insights from the Avatar Research. This includes crafting compelling marketing messages focused on the "AI Brain Trust," identifying key channels for reaching our target audience, and planning content (e.g., case studies, testimonials from women in tech) that resonates with Maya Chen’s pain points and aspirations.
+4.  **Formulate Go-to-Market (GTM) Strategy and Content Plan:** Develop a detailed Go-to-Market strategy that leverages the insights from the Avatar Research. This includes crafting compelling marketing messages focused on The Insight Panel, identifying key channels for reaching our target audience, and planning content (e.g., case studies, testimonials from women in tech) that resonates with Maya Chen’s pain points and aspirations.
 
 --- END OF FILE brand.md ---
 

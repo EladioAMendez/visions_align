@@ -45,7 +45,7 @@ export default function ValuePropositionsSection() {
     {
       icon: <TargetIcon className="w-8 h-8 text-brand-sea-green" />,
       title: "Decode Stakeholder Psychology",
-      description: "Our AI Brain Trust analyzes LinkedIn profiles and meeting context to reveal the hidden motivations, communication preferences, and unspoken needs of your audience.",
+            description: <><span className="text-slate-200">The Insight Panel</span> analyzes LinkedIn profiles and meeting context to reveal the hidden motivations, communication preferences, and unspoken needs of your audience.</>,
     },
     {
       icon: <ZapIcon className="w-8 h-8 text-brand-sea-green" />,
@@ -70,7 +70,7 @@ export default function ValuePropositionsSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            More Than a Tool—It's Your AI Brain Trust
+            More Than a Tool—It's Your Insight Panel
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
             VisionsAlign assembles a team of six expert AI personas to analyze your unique communication challenges and deliver a winning strategy.

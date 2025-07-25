@@ -1,17 +1,17 @@
-import ButtonAccount from "@/components/ButtonAccount";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/libs/next-auth";
+import { redirect } from "next/navigation";
+import DashboardClient from "./DashboardClient";
 
-export const dynamic = "force-dynamic";
+const DashboardPage = async () => {
+  const session = await getServerSession(authOptions);
 
-// This is a private page: It's protected by the layout.js component which ensures the user is authenticated.
-// It's a server compoment which means you can fetch data (like the user profile) before the page is rendered.
-// See https://shipfa.st/docs/tutorials/private-page
-export default async function Dashboard() {
-  return (
-    <main className="min-h-screen p-8 pb-24">
-      <section className="max-w-xl mx-auto space-y-8">
-        <ButtonAccount />
-        <h1 className="text-3xl md:text-4xl font-extrabold">Private Page</h1>
-      </section>
-    </main>
-  );
-}
+  if (!session) {
+    redirect("/api/auth/signin");
+  }
+
+  return <DashboardClient />;
+};
+
+export default DashboardPage;
+

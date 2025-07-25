@@ -167,7 +167,7 @@ const FeaturesAccordion = () => {
             Your Path to Influence in 3 Simple Steps
           </h2>
           <p className="text-lg text-secondary mt-4">
-            Our AI Brain Trust turns complex stakeholder data into your strategic advantage.
+            <>Convening <span className="text-slate-200">The Insight Panel</span> turns complex stakeholder data into your strategic advantage.</>
           </p>
         </div>
         <div className=" flex flex-col md:flex-row gap-12 md:gap-24">
