@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { signIn } from 'next-auth/react';
+import ButtonSignin from '../ButtonSignin';
+
 
 const ResonanceVisualization = () => {
   return (
@@ -79,9 +80,11 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
             >
-              <button onClick={() => signIn('google')} className="btn btn-primary">
-                Generate Your First Playbook
-              </button>
+              <ButtonSignin
+                text="Generate Your First Playbook"
+                textLoggedIn="Go to Dashboard"
+                extraStyle="btn-primary"
+              />
             </motion.div>
           </div>
           

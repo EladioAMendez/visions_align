@@ -18,6 +18,8 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "jsx": "preserve",
+    "baseUrl": ".",
+    // Paths are relative to the baseUrl, which is the project root.
     "paths": {
       "@/*": [
         "./*"

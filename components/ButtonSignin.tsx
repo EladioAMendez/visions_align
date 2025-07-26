@@ -11,9 +11,11 @@ import config from "@/config";
 // If the user is already logged in, it will show their profile picture & redirect them to callbackUrl immediately.
 const ButtonSignin = ({
   text = "Get started",
+  textLoggedIn = "Dashboard",
   extraStyle,
 }: {
   text?: string;
+  textLoggedIn?: string;
   extraStyle?: string;
 }) => {
   const router = useRouter();
@@ -23,7 +25,7 @@ const ButtonSignin = ({
     if (status === "authenticated") {
       router.push(config.auth.callbackUrl);
     } else {
-      signIn(undefined, { callbackUrl: config.auth.callbackUrl });
+      signIn("google", { callbackUrl: config.auth.callbackUrl });
     }
   };
 
@@ -47,7 +49,7 @@ const ButtonSignin = ({
             {session.user?.name?.charAt(0) || session.user?.email?.charAt(0)}
           </span>
         )}
-        {session.user?.name || session.user?.email || "Account"}
+        {textLoggedIn}
       </Link>
     );
   }

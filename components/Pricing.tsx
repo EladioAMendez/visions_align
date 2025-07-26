@@ -1,38 +1,11 @@
-import config from "@/config";
 import ButtonCheckout from "./ButtonCheckout";
+import ButtonSignin from "./ButtonSignin";
+import config from "@/config";
 
 // <Pricing/> displays the pricing plans for your app
 // It's your Stripe config in config.js.stripe.plans[] that will be used to display the plans
 // <ButtonCheckout /> renders a button that will redirect the user to Stripe checkout called the /api/stripe/create-checkout API endpoint with the correct priceId
-
 const Pricing = () => {
-  const plans = [
-    {
-      name: "Starter",
-      price: "$0",
-      description: "For your single most urgent meeting. Experience the core power of VisionsAlign.",
-      features: ["1 Playbook Credit per Month", "Composite AI View", "Standard Email Support"],
-      cta: "Get Started for Free",
-      isFeatured: false,
-    },
-    {
-      name: "Pro",
-      price: "$29/month",
-      description: "For building a habit of influence. The system for consistent, weekly excellence.",
-      features: ["5 Playbook Credits per Month", "Composite AI View", "Priority Email Support"],
-      cta: "Start Your Pro Trial",
-      isFeatured: true,
-    },
-    {
-      name: "Director",
-      price: "$49/month",
-      description: "For mastering the room, every time. The ultimate toolkit for strategic leadership.",
-      features: ["Unlimited Playbook Credits", "**Choice of AI Expert Lead Lens**", "Relationship Tracker", "Calendar Integration"],
-      cta: "Become a Director",
-      isFeatured: false,
-    },
-  ];
-
   return (
     <section className="bg-base-200 overflow-hidden" id="pricing">
       <div className="py-24 px-8 max-w-5xl mx-auto">
@@ -41,13 +14,14 @@ const Pricing = () => {
             Find the Plan That Aligns With Your Ambition
           </h2>
           <p className="text-lg text-secondary mt-4">
-            Start for free. Upgrade when you're ready to turn influence into your superpower.
+            Start for free. Upgrade when you're ready to turn influence into
+            your superpower.
           </p>
         </div>
 
         <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
-          {plans.map((plan) => (
-            <div key={plan.name} className="relative w-full max-w-lg">
+          {config.stripe.plans.map((plan) => (
+            <div key={plan.priceId} className="relative w-full max-w-lg">
               {plan.isFeatured && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                   <span
@@ -76,14 +50,24 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <p className={`text-5xl tracking-tight font-extrabold`}>
-                    {plan.price.startsWith('$') ? '' : '$'}{plan.price.split('/')[0]}
-                  </p>
-                  <div className="flex flex-col justify-end mb-[4px]">
-                    <p className="text-xs text-base-content/60 uppercase font-semibold">
-                      {plan.price.includes('/') ? plan.price.split('/')[1] : 'USD'}
+                  {plan.price ? (
+                    <>
+                      <p
+                        className={`text-5xl tracking-tight font-extrabold`}
+                      >
+                        ${plan.price}
+                      </p>
+                      <div className="flex flex-col justify-end mb-[4px]">
+                        <p className="text-xs text-base-content/60 uppercase font-semibold">
+                          USD
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <p className={`text-5xl tracking-tight font-extrabold`}>
+                      Free
                     </p>
-                  </div>
+                  )}
                 </div>
                 {plan.features && (
                   <ul className="space-y-2.5 leading-relaxed text-base flex-1">
@@ -102,15 +86,17 @@ const Pricing = () => {
                           />
                         </svg>
 
-                        <span dangerouslySetInnerHTML={{ __html: feature }}></span>
+                        <span>{feature.name}</span>
                       </li>
                     ))}
                   </ul>
                 )}
                 <div className="space-y-2">
-                  <a href="#" className={`btn ${plan.isFeatured ? 'btn-primary' : 'btn-ghost'}`}>
-                    {plan.cta}
-                  </a>
+                  {plan.price ? (
+                    <ButtonCheckout priceId={plan.priceId} />
+                  ) : (
+                    <ButtonSignin text="Get Started for Free" />
+                  )}
                 </div>
               </div>
             </div>

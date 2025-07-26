@@ -2,55 +2,32 @@ import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@/lib/generated/prisma";
 import config from "@/config";
-import connectMongo from "./mongo";
 
-interface NextAuthOptionsExtended extends NextAuthOptions {
-  adapter: any;
-}
+const prisma = new PrismaClient();
 
-export const authOptions: NextAuthOptionsExtended = {
-  // Set any random key in .env.local
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      // Follow the "Login with Google" tutorial to get your credentials
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      async profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.given_name ? profile.given_name : profile.name,
-          email: profile.email,
-          image: profile.picture,
-          createdAt: new Date(),
-        };
-      },
     }),
-    // Follow the "Login with Email" tutorial to set up your email server
-    // Requires a MongoDB database. Set MONOGODB_URI env variable.
-    ...(connectMongo
-      ? [
-          EmailProvider({
-            server: {
-              host: "smtp.resend.com",
-              port: 465,
-              auth: {
-                user: "resend",
-                pass: process.env.RESEND_API_KEY,
-              },
-            },
-            from: config.resend.fromNoReply,
-          }),
-        ]
-      : []),
+    EmailProvider({
+      server: {
+        host: "smtp.resend.com",
+        port: 465,
+        auth: {
+          user: "resend",
+          pass: process.env.RESEND_API_KEY,
+        },
+      },
+      from: config.resend.fromNoReply,
+    }),
   ],
-  // New users will be saved in Database (MongoDB Atlas). Each user (model) has some fields like name, email, image, etc..
-  // Requires a MongoDB database. Set MONOGODB_URI env variable.
-  // Learn more about the model type: https://next-auth.js.org/v3/adapters/models
-  ...(connectMongo && { adapter: MongoDBAdapter(connectMongo) }),
-
   callbacks: {
         session: async ({ session, token }) => {
       if (session?.user) {
