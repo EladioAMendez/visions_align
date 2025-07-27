@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Highlight, Accent } from '../ui/TextHighlight';
+import ButtonSignin from '../ButtonSignin';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,12 +58,11 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link 
-              href="#trial" 
-              className="bg-success text-slate-900 px-4 py-2 rounded-card font-medium hover:bg-success/90 transition-all"
-            >
-              Get Your Free Playbook
-            </Link>
+            <ButtonSignin
+              text="Get Your Free Playbook"
+              textLoggedIn="Go to Dashboard"
+              extraStyle="bg-success text-slate-900 px-4 py-2 rounded-card font-medium hover:bg-success/90 transition-all"
+            />
           </motion.div>
         </div>
 
@@ -127,13 +127,13 @@ export default function Navbar() {
               >
                 Pricing
               </Link>
-              <Link 
-                href="#trial" 
-                className="bg-success text-slate-900 px-6 py-3 rounded-card font-medium text-xl"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Get Your Free Playbook
-              </Link>
+              <div onClick={() => setIsMobileMenuOpen(false)}>
+                <ButtonSignin
+                  text="Get Your Free Playbook"
+                  textLoggedIn="Go to Dashboard"
+                  extraStyle="bg-success text-slate-900 px-6 py-3 rounded-card font-medium text-xl"
+                />
+              </div>
             </div>
           </motion.div>
         )}

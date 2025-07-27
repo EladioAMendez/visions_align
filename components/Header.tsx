@@ -32,7 +32,7 @@ import ButtonSignin from "./ButtonSignin";
 const cta: JSX.Element = (
   <ButtonSignin
     text="Get Your Free Playbook"
-    textLoggedIn="Dashboard"
+    textLoggedIn="Go to Dashboard"
     extraStyle="btn-primary"
   />
 );

@@ -4,14 +4,15 @@
 import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import config from "@/config";
 
 // A simple button to sign in with our providers (Google & Magic Links).
 // It automatically redirects user to callbackUrl (config.auth.callbackUrl) after login, which is normally a private page for users to manage their accounts.
 // If the user is already logged in, it will show their profile picture & redirect them to callbackUrl immediately.
 const ButtonSignin = ({
-  text = "Get started",
-  textLoggedIn = "Dashboard",
+  text = "Get Your Free Playbook",
+  textLoggedIn = "Go to Dashboard",
   extraStyle,
 }: {
   text?: string;
@@ -20,6 +21,12 @@ const ButtonSignin = ({
 }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure this only renders on client to avoid hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleClick = () => {
     if (status === "authenticated") {
@@ -28,6 +35,19 @@ const ButtonSignin = ({
       signIn("google", { callbackUrl: config.auth.callbackUrl });
     }
   };
+
+  // Show loading state during hydration to prevent flash
+  if (!isClient || status === "loading") {
+    return (
+      <button
+        className={`btn ${extraStyle ? extraStyle : ""}`}
+        disabled
+      >
+        <span className="loading loading-spinner loading-sm"></span>
+        Loading...
+      </button>
+    );
+  }
 
   if (status === "authenticated") {
     return (
