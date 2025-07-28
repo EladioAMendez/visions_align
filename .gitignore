@@ -13,6 +13,9 @@ node_modules
 # production
 /build
 
+# research
+/research
+
 # misc
 .DS_Store
 *.pem

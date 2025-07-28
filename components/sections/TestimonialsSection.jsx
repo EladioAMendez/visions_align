@@ -6,24 +6,24 @@ import { useInView } from 'react-intersection-observer';
 
 const testimonials = [
   {
-    quote: "I went from being terrified of our CFO to confidently presenting a budget that got approved on the spot. The playbook's psychological breakdown was the key.",
-    name: "Maya R.",
-    title: "Senior Product Manager",
+    quote: "Finally got that 27-minute slot with our VP of Product to count. The stakeholder analysis helped me frame our roadmap discussion around his decision triggers. He approved 3 months of runway on the spot.",
+    name: "Jessica M.",
+    title: "Senior Product Manager, Fintech",
   },
   {
-    quote: "VisionsAlign is my secret weapon for investor meetings. I can anticipate questions and frame our vision in a way that resonates every single time. We closed our seed round in half the expected time.",
-    name: "Alex C.",
-    title: "Founder & CEO",
+    quote: "I used to rehearse the same update 10 different ways at 2am. Now I generate a custom playbook in 15 minutes and walk into exec meetings feeling like I already know how the conversation will go.",
+    name: "Priya S.",
+    title: "Principal Product Manager, SaaS",
   },
   {
-    quote: "The difference is night and day. I used to spend 10+ hours prepping for a single board meeting. Now, I generate a playbook in 15 minutes and walk in feeling more prepared than ever.",
-    name: "David L.",
-    title: "Director of Engineering",
+    quote: "The psychological insights are game-changing. I discovered our CTO values async-first communication, so I started leading with written briefs. My influence score in our next calibration doubled.",
+    name: "Amanda R.",
+    title: "Senior PM, Healthcare Tech",
   },
   {
-    quote: "I got my promotion six months ahead of schedule. My manager cited my 'dramatically improved executive presence' as a key factor. That's all VisionsAlign.",
-    name: "Sarah K.",
-    title: "VP of Sales",
+    quote: "Got promoted to Director after using VisionsAlign for 4 months. My manager specifically mentioned my 'strategic executive alignment' in the feedback. That's exactly what the platform taught me.",
+    name: "Rachel K.",
+    title: "Director of Product, B2B Platform",
   },
 ];
 

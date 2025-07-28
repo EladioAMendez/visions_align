@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
-import connectMongo from "@/libs/mongoose";
+import { prisma } from "@/libs/prisma";
 import configFile from "@/config";
-import User from "@/models/User";
 import { findCheckoutSession } from "@/libs/stripe";
+import { PlanTier } from "@/lib/generated/prisma";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2023-08-16",
@@ -17,7 +17,6 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 // By default, it'll store the user in the database
 // See more: https://shipfa.st/docs/features/payments
 export async function POST(req: NextRequest) {
-  await connectMongo();
 
   const body = await req.text();
 
@@ -61,28 +60,37 @@ export async function POST(req: NextRequest) {
 
         // Get or create the user. userId is normally passed in the checkout session (clientReferenceID) to identify the user when we get the webhook event
         if (userId) {
-          user = await User.findById(userId);
+          user = await prisma.user.findUnique({ where: { id: userId } });
         } else if (customer.email) {
-          user = await User.findOne({ email: customer.email });
+          user = await prisma.user.findUnique({ where: { email: customer.email } });
 
           if (!user) {
-            user = await User.create({
-              email: customer.email,
-              name: customer.name,
+            user = await prisma.user.create({
+              data: {
+                email: customer.email,
+                name: customer.name,
+              },
             });
-
-            await user.save();
           }
         } else {
           console.error("No user found");
           throw new Error("No user found");
         }
 
-        // Update user data + Grant user access to your product. It's a boolean in the database, but could be a number of credits, etc...
-        user.priceId = priceId;
-        user.customerId = customerId;
-        user.hasAccess = true;
-        await user.save();
+        // Update user data + Grant user access to your product and set plan tier
+        const planTier = plan.name === 'Pro' ? PlanTier.PRO : plan.name === 'Director' ? PlanTier.DIRECTOR : PlanTier.STARTER;
+        const playbookCredits = plan.name === 'Pro' ? 10 : plan.name === 'Director' ? 25 : 1;
+        
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            stripePriceId: priceId,
+            stripeCustomerId: customerId as string,
+            hasAccess: true,
+            planTier,
+            playbookCredits,
+          },
+        });
 
         // Extra: send email with user link, product page, etc...
         // try {
@@ -116,11 +124,21 @@ export async function POST(req: NextRequest) {
         const subscription = await stripe.subscriptions.retrieve(
           stripeObject.id
         );
-        const user = await User.findOne({ customerId: subscription.customer });
+        const user = await prisma.user.findUnique({ 
+          where: { stripeCustomerId: subscription.customer as string } 
+        });
 
-        // Revoke access to your product
-        user.hasAccess = false;
-        await user.save();
+        if (user) {
+          // Revoke access to your product and reset to starter plan
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              hasAccess: false,
+              planTier: PlanTier.STARTER,
+              playbookCredits: 1,
+            },
+          });
+        }
 
         break;
       }
@@ -135,14 +153,20 @@ export async function POST(req: NextRequest) {
         const priceId = stripeObject.lines.data[0].price.id;
         const customerId = stripeObject.customer;
 
-        const user = await User.findOne({ customerId });
+        const user = await prisma.user.findUnique({ 
+          where: { stripeCustomerId: customerId as string } 
+        });
+
+        if (!user) break;
 
         // Make sure the invoice is for the same plan (priceId) the user subscribed to
-        if (user.priceId !== priceId) break;
+        if (user.stripePriceId !== priceId) break;
 
-        // Grant user access to your product. It's a boolean in the database, but could be a number of credits, etc...
-        user.hasAccess = true;
-        await user.save();
+        // Grant user access to your product
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { hasAccess: true },
+        });
 
         break;
       }

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { signIn } from 'next-auth/react';
+import apiClient from '@/libs/api';
+import config from '@/config';
 
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -9,9 +11,9 @@ const CheckIcon = ({ className }) => (
   </svg>
 );
 
-const PricingPlanCard = ({ plan, index }) => {
+const PricingPlanCard = ({ plan, index, isLoading, onCheckout }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
-  const isPopular = plan.popular;
+  const isPopular = plan.isFeatured || plan.popular;
 
   return (
     <motion.div
@@ -46,9 +48,14 @@ const PricingPlanCard = ({ plan, index }) => {
           </ul>
         </div>
         <button
-          onClick={() => signIn('google')}
-          className={`w-full text-center font-semibold py-3 rounded-lg transition-colors duration-300 cursor-pointer ${isPopular ? 'bg-success text-slate-900 hover:bg-success/90' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}>
-          {plan.cta}
+          onClick={() => onCheckout(plan)}
+          disabled={isLoading}
+          className={`w-full text-center font-semibold py-3 rounded-lg transition-colors duration-300 cursor-pointer ${isPopular ? 'bg-success text-slate-900 hover:bg-success/90' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'} disabled:opacity-50`}>
+          {isLoading ? (
+            <span className="loading loading-spinner loading-sm"></span>
+          ) : (
+            plan.cta || `Choose ${plan.name}`
+          )}
         </button>
       </div>
     </motion.div>
@@ -57,7 +64,34 @@ const PricingPlanCard = ({ plan, index }) => {
 
 export default function PricingSection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleCheckout = async (plan) => {
+    if (plan.name === "Starter" || plan.price === "Free") {
+      // For free plan, just sign in
+      signIn('google');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { url } = await apiClient.post('/stripe/create-checkout', {
+        priceId: plan.priceId,
+        successUrl: window.location.origin + '/dashboard?success=true',
+        cancelUrl: window.location.href,
+        mode: 'subscription',
+      });
+
+      window.location.href = url;
+    } catch (error) {
+      console.error('Checkout error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Create pricing plans with free starter + config plans
   const pricingPlans = [
     {
       name: "Starter",
@@ -71,39 +105,15 @@ export default function PricingSection() {
         "Standard Email Support",
       ],
       cta: "Generate Your First Playbook",
-      ctaLink: "/get-started?plan=starter",
       popular: false,
     },
-    {
-      name: "Pro",
-      price: "$29",
+    ...config.stripe.plans.map(plan => ({
+      ...plan,
+      price: `$${plan.price}`,
       period: "month",
-      description: "Get AI-powered prep for all your important meetings.",
-      features: [
-        "10 Playbook Credits per Month",
-        "Analyze up to 25 Stakeholders",
-        "Advanced Insight Panel Controls",
-        "Priority Email & Chat Support",
-      ],
-      cta: "Choose Pro",
-      ctaLink: "/get-started?plan=pro",
-      popular: true,
-    },
-    {
-      name: "Director",
-      price: "$49",
-      period: "month",
-      description: "Unlock strategic mastery with full control & custom AI analysis.",
-      features: [
-        "25 Playbook Credits per Month",
-        "Analyze up to 100 Stakeholders",
-        "Full Direction of The Insight Panel",
-        "Customizable Analysis Parameters",
-      ],
-      cta: "Choose Director",
-      ctaLink: "/get-started?plan=director",
-      popular: false,
-    },
+      features: plan.features.map(f => f.name || f),
+      popular: plan.isFeatured,
+    }))
   ];
 
   return (
@@ -126,7 +136,13 @@ export default function PricingSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch pt-8">
           {pricingPlans.map((plan, index) => (
-            <PricingPlanCard key={index} plan={plan} index={index} />
+            <PricingPlanCard 
+              key={index} 
+              plan={plan} 
+              index={index} 
+              isLoading={isLoading}
+              onCheckout={handleCheckout}
+            />
           ))}
         </div>
       </div>

@@ -19,48 +19,33 @@ const config = {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
     plans: [
       {
-        // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
-        priceId:
-          process.env.NODE_ENV === "development"
-            ? "price_1Niyy5AxyNprDp7iZIqEyD2h"
-            : "price_456",
-        //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: "Starter",
-        // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Perfect for small projects",
-        // The price you want to display, the one user will be charged on Stripe.
-        price: 99,
-        // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
-        priceAnchor: 149,
+        // PRO PLAN
+        priceId: process.env.STRIPE_PRICE_ID_PRO || "price_1Rpee9JMqpxzzGoF9xnpfqbl",
+        isFeatured: true,
+        name: "Pro",
+        description: "The essential toolkit for professionals seeking consistent high-stakes success.",
+        price: 29,
+        priceAnchor: 49,
         features: [
-          {
-            name: "NextJS boilerplate",
-          },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
+          { name: "Composite AI View" },
+          { name: "Analyze up to 10 stakeholders/month" },
+          { name: "Generate unlimited playbooks" },
+          { name: "Calendar Integration" },
         ],
       },
       {
-        priceId:
-          process.env.NODE_ENV === "development"
-            ? "price_1O5KtcAxyNprDp7iftKnrrpw"
-            : "price_456",
-        // This plan will look different on the pricing page, it will be highlighted. You can only have one plan with isFeatured: true
-        isFeatured: true,
-        name: "Advanced",
-        description: "You need more power",
-        price: 149,
-        priceAnchor: 299,
+        // DIRECTOR PLAN
+        priceId: process.env.STRIPE_PRICE_ID_DIRECTOR || "price_1RpeeqJMqpxzzGoFwHQmZi6K",
+        name: "Director",
+        description: "The ultimate strategic advantage for leaders who direct the conversation.",
+        price: 49,
+        priceAnchor: 99,
         features: [
-          {
-            name: "Agentic SaaS app NextJS boilerplate",
-          },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
-          { name: "1 year of updates" },
-          { name: "24/7 support" },
+          { name: "Everything in Pro, plus:" },
+          { name: "Exclusive 'Lead Lens' feature" },
+          { name: "Customize AI analysis" },
+          { name: "Analyze unlimited stakeholders" },
+          { name: "Priority Support" },
         ],
       },
     ],

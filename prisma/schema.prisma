@@ -73,6 +73,12 @@ model User {
   image           String?
   planTier        PlanTier    @default(STARTER) @map("plan_tier")
   playbookCredits Int         @default(1) @map("playbook_credits")
+  
+  // Stripe subscription fields
+  stripeCustomerId String?    @unique @map("stripe_customer_id")
+  stripePriceId    String?    @map("stripe_price_id")
+  hasAccess        Boolean    @default(false) @map("has_access")
+  
   createdAt       DateTime    @default(now()) @map("created_at")
   updatedAt       DateTime    @updatedAt @map("updated_at")
 
