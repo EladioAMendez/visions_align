@@ -209,10 +209,10 @@ export default function BillingClient({ user }: Props) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + index * 0.1 }}
                 className={`bg-white rounded-lg p-6 shadow-sm border-2 ${
-                  plan.isMostPopular ? 'border-blue-500' : 'border-gray-200'
+                  plan.isFeatured ? 'border-blue-500' : 'border-gray-200'
                 } relative`}
               >
-                {plan.isMostPopular && (
+                {plan.isFeatured && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                       Most Popular
@@ -242,7 +242,7 @@ export default function BillingClient({ user }: Props) {
                   onClick={() => handleUpgrade(plan.priceId)}
                   disabled={isLoading}
                   className={`btn w-full ${
-                    plan.isMostPopular ? 'btn-primary' : 'btn-outline'
+                    plan.isFeatured ? 'btn-primary' : 'btn-outline'
                   }`}
                 >
                   {isLoading ? (
@@ -324,7 +324,7 @@ export default function BillingClient({ user }: Props) {
               Ready to unlock more stakeholders and unlimited playbooks?
             </p>
             <button
-              onClick={() => handleUpgrade(config.stripe.plans.find(p => p.isMostPopular)?.priceId || '')}
+              onClick={() => handleUpgrade(config.stripe.plans.find(p => p.isFeatured)?.priceId || '')}
               disabled={isLoading}
               className="btn btn-primary"
             >

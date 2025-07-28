@@ -20,7 +20,6 @@ export default async function StakeholdersPage() {
           playbooks: {
             select: {
               id: true,
-              title: true,
               status: true,
               createdAt: true,
             },

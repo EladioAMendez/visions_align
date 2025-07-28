@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/libs/next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
-import PlaybooksClient from "./PlaybooksClient";
+import PlaybooksClient from "./PlaybooksClientNew";
 
 export default async function PlaybooksPage() {
   const session = await getServerSession(authOptions);
@@ -21,9 +21,8 @@ export default async function PlaybooksPage() {
             select: {
               id: true,
               name: true,
-              role: true,
-              influence: true,
-              relationship: true,
+              title: true,
+              company: true,
             }
           }
         },
@@ -33,7 +32,8 @@ export default async function PlaybooksPage() {
         select: {
           id: true,
           name: true,
-          role: true,
+          title: true,
+          company: true,
         }
       }
     }
@@ -43,5 +43,5 @@ export default async function PlaybooksPage() {
     redirect("/api/auth/signin");
   }
 
-  return <PlaybooksClient user={user} playbooks={user.playbooks} stakeholders={user.stakeholders} />;
+  return <PlaybooksClient user={user} />;
 }

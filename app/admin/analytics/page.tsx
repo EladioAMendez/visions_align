@@ -56,7 +56,12 @@ export default async function Analytics() {
           }
         }
       }
-    })
+    }).then(playbooks => 
+      playbooks.map(playbook => ({
+        ...playbook,
+        title: `Playbook for ${playbook.stakeholder.name}`
+      }))
+    )
   ]);
 
   return (

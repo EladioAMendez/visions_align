@@ -5,6 +5,12 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
+interface Playbook {
+  id: string;
+  status: string;
+  createdAt: Date;
+}
+
 interface Stakeholder {
   id: string;
   name: string;
@@ -14,12 +20,7 @@ interface Stakeholder {
   relationship: string;
   notes: string | null;
   createdAt: Date;
-  playbooks: Array<{
-    id: string;
-    title: string;
-    status: string;
-    createdAt: Date;
-  }>;
+  playbooks: Array<Playbook>;
   _count: {
     playbooks: number;
   };
@@ -108,20 +109,20 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
 
   const getInfluenceColor = (influence: string) => {
     switch (influence) {
-      case 'HIGH': return 'bg-red-100 text-red-800 border-red-200';
-      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'LOW': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'HIGH': return 'bg-slate-800 text-red-300 border-red-800/30';
+      case 'MEDIUM': return 'bg-slate-800 text-amber-300 border-amber-800/30';
+      case 'LOW': return 'bg-slate-800 text-emerald-300 border-emerald-800/30';
+      default: return 'bg-slate-800 text-slate-300 border-slate-700';
     }
   };
 
   const getRelationshipColor = (relationship: string) => {
     switch (relationship) {
-      case 'ALLY': return 'bg-green-100 text-green-800 border-green-200';
-      case 'NEUTRAL': return 'bg-gray-100 text-gray-800 border-gray-200';
-      case 'SKEPTICAL': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'OPPONENT': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'ALLY': return 'bg-slate-800 text-emerald-300 border-emerald-800/30';
+      case 'NEUTRAL': return 'bg-slate-800 text-slate-300 border-slate-700';
+      case 'SKEPTICAL': return 'bg-slate-800 text-amber-300 border-amber-800/30';
+      case 'OPPONENT': return 'bg-slate-800 text-red-300 border-red-800/30';
+      default: return 'bg-slate-800 text-slate-300 border-slate-700';
     }
   };
 
@@ -152,56 +153,64 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
         transition={{ delay: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
       >
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Total Stakeholders</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stakeholders.length}</p>
+              <p className="text-slate-400 text-sm font-medium">Total Stakeholders</p>
+              <p className="text-2xl font-bold text-white mt-1">{stakeholders.length}</p>
             </div>
-            <div className="bg-blue-100 rounded-lg p-3">
-              <span className="text-2xl">👥</span>
+            <div className="bg-blue-900/30 rounded-lg p-3 border border-blue-800/30">
+              <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0" />
+              </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">High Influence</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-slate-400 text-sm font-medium">High Influence</p>
+              <p className="text-2xl font-bold text-gray-100 mt-1">
                 {stakeholders.filter(s => s.influence === 'HIGH').length}
               </p>
             </div>
-            <div className="bg-red-100 rounded-lg p-3">
-              <span className="text-2xl">🔥</span>
+            <div className="bg-red-900/30 rounded-lg p-3 border border-red-800/30">
+              <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Allies</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-slate-400 text-sm font-medium">Allies</p>
+              <p className="text-2xl font-bold text-white mt-1">
                 {stakeholders.filter(s => s.relationship === 'ALLY').length}
               </p>
             </div>
-            <div className="bg-green-100 rounded-lg p-3">
-              <span className="text-2xl">🤝</span>
+            <div className="bg-emerald-900/30 rounded-lg p-3 border border-emerald-800/30">
+              <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Total Playbooks</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-slate-400 text-sm font-medium">Total Playbooks</p>
+              <p className="text-2xl font-bold text-white mt-1">
                 {stakeholders.reduce((sum, s) => sum + s._count.playbooks, 0)}
               </p>
             </div>
-            <div className="bg-purple-100 rounded-lg p-3">
-              <span className="text-2xl">📋</span>
+            <div className="bg-purple-900/30 rounded-lg p-3 border border-purple-800/30">
+              <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
             </div>
           </div>
         </div>
@@ -213,11 +222,15 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200"
+          className="text-center py-12 bg-slate-900 rounded-lg shadow-lg border border-slate-700"
         >
-          <div className="text-6xl mb-4">👥</div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No stakeholders yet</h3>
-          <p className="text-gray-600 mb-6">Add your first stakeholder to start building relationships</p>
+          <div className="bg-slate-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-white mb-2">No stakeholders yet</h3>
+          <p className="text-slate-400 mb-6">Add your first stakeholder to start building relationships</p>
           <button
             onClick={() => setIsAddingStakeholder(true)}
             className="btn btn-primary"
@@ -238,29 +251,43 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 + index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200"
+              whileHover={{ scale: 1.02, y: -2 }}
+              className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 hover:shadow-xl transition-all duration-200 cursor-pointer group"
+              onClick={() => setSelectedStakeholder(stakeholder)}
             >
               <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{stakeholder.name}</h3>
-                  <p className="text-gray-600 text-sm">{stakeholder.role}</p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">{stakeholder.name}</h3>
+                  <p className="text-slate-300 text-sm">{stakeholder.role}</p>
                   {stakeholder.department && (
-                    <p className="text-gray-500 text-xs">{stakeholder.department}</p>
+                    <p className="text-slate-400 text-xs">{stakeholder.department}</p>
                   )}
                 </div>
-                <div className="flex space-x-1">
+                <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
-                    onClick={() => setSelectedStakeholder(stakeholder)}
-                    className="text-gray-400 hover:text-gray-600 p-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedStakeholder(stakeholder);
+                    }}
+                    className="text-slate-400 hover:text-blue-400 p-2 rounded-lg hover:bg-slate-800 transition-all"
+                    title="View details"
                   >
-                    👁️
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
                   </button>
                   <button
-                    onClick={() => handleDeleteStakeholder(stakeholder.id)}
-                    className="text-gray-400 hover:text-red-600 p-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteStakeholder(stakeholder.id);
+                    }}
+                    className="text-slate-400 hover:text-red-400 p-2 rounded-lg hover:bg-slate-800 transition-all"
+                    title="Delete stakeholder"
                   >
-                    🗑️
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -274,9 +301,14 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
                 </span>
               </div>
 
-              <div className="border-t border-gray-200 pt-4">
-                <div className="flex justify-between items-center text-sm text-gray-600">
-                  <span>{stakeholder._count.playbooks} playbooks</span>
+              <div className="border-t border-slate-700 pt-4">
+                <div className="flex justify-between items-center text-sm text-slate-400">
+                  <span className="flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    {stakeholder._count.playbooks} playbooks
+                  </span>
                   <span>{new Date(stakeholder.createdAt).toLocaleDateString()}</span>
                 </div>
                 
@@ -285,7 +317,7 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
                     <p className="text-xs text-gray-500 mb-1">Recent playbooks:</p>
                     {stakeholder.playbooks.slice(0, 2).map(playbook => (
                       <p key={playbook.id} className="text-xs text-gray-600 truncate">
-                        • {playbook.title}
+                        • Playbook ({playbook.status.toLowerCase()})
                       </p>
                     ))}
                   </div>
@@ -426,39 +458,41 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            className="bg-slate-900 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-slate-700"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-900">{selectedStakeholder.name}</h2>
+              <h2 className="text-xl font-bold text-white">{selectedStakeholder.name}</h2>
               <button
                 onClick={() => setSelectedStakeholder(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-slate-400 hover:text-white transition-colors"
               >
-                ✕
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
             
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Role</p>
-                  <p className="text-gray-900">{selectedStakeholder.role}</p>
+                  <p className="text-sm font-medium text-slate-400">Role</p>
+                  <p className="text-white">{selectedStakeholder.role}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Department</p>
-                  <p className="text-gray-900">{selectedStakeholder.department || 'Not specified'}</p>
+                  <p className="text-sm font-medium text-slate-400">Department</p>
+                  <p className="text-white">{selectedStakeholder.department || 'Not specified'}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Influence</p>
+                  <p className="text-sm font-medium text-slate-400">Influence</p>
                   <span className={`inline-block px-2 py-1 rounded text-xs font-medium border ${getInfluenceColor(selectedStakeholder.influence)}`}>
                     {selectedStakeholder.influence}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Relationship</p>
+                  <p className="text-sm font-medium text-slate-400">Relationship</p>
                   <span className={`inline-block px-2 py-1 rounded text-xs font-medium border ${getRelationshipColor(selectedStakeholder.relationship)}`}>
                     {selectedStakeholder.relationship}
                   </span>
@@ -467,24 +501,24 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
 
               {selectedStakeholder.notes && (
                 <div>
-                  <p className="text-sm font-medium text-gray-700 mb-1">Notes</p>
-                  <p className="text-gray-900 bg-gray-50 p-3 rounded">{selectedStakeholder.notes}</p>
+                  <p className="text-sm font-medium text-slate-400 mb-1">Notes</p>
+                  <p className="text-white bg-slate-800 p-3 rounded border border-slate-700">{selectedStakeholder.notes}</p>
                 </div>
               )}
 
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">
+                <p className="text-sm font-medium text-slate-400 mb-2">
                   Playbooks ({selectedStakeholder._count.playbooks})
                 </p>
                 {selectedStakeholder.playbooks.length > 0 ? (
                   <div className="space-y-2">
                     {selectedStakeholder.playbooks.map(playbook => (
-                      <div key={playbook.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                        <span className="text-sm text-gray-900">{playbook.title}</span>
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          playbook.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                          playbook.status === 'IN_PROGRESS' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
+                      <div key={playbook.id} className="flex justify-between items-center p-2 bg-slate-800 rounded border border-slate-700">
+                        <span className="text-sm text-white">Playbook #{playbook.id.slice(-6)}</span>
+                        <span className={`px-2 py-1 rounded text-xs font-medium border ${
+                          playbook.status === 'COMPLETED' ? 'bg-slate-800 text-emerald-300 border-emerald-800/30' :
+                          playbook.status === 'IN_PROGRESS' ? 'bg-slate-800 text-amber-300 border-amber-800/30' :
+                          'bg-slate-800 text-slate-300 border-slate-700'
                         }`}>
                           {playbook.status.replace('_', ' ')}
                         </span>
@@ -492,7 +526,7 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-sm">No playbooks generated yet</p>
+                  <p className="text-slate-400 text-sm">No playbooks generated yet</p>
                 )}
               </div>
             </div>

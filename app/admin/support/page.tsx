@@ -17,16 +17,16 @@ export default async function AdminSupportPage() {
         id: "1",
         user: "maya.chen@techcorp.com",
         subject: "Playbook generation stuck",
-        status: "open",
-        priority: "high",
+        status: "open" as const,
+        priority: "high" as const,
         createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
       },
       {
         id: "2", 
         user: "john.doe@startup.io",
         subject: "Unable to add stakeholders",
-        status: "pending",
-        priority: "medium",
+        status: "pending" as const,
+        priority: "medium" as const,
         createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
       }
     ]),
