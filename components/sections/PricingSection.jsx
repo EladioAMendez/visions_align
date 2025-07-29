@@ -97,14 +97,14 @@ export default function PricingSection() {
       name: "Starter",
       price: "Free",
       period: null,
-      description: "Get a free playbook to win your next critical meeting.",
+      description: "Get your first stakeholder playbook to test the power of strategic preparation.",
       features: [
         "1 Playbook Credit",
         "Analysis of 1 Stakeholder",
-        "Access to The Insight Panel",
+        "Access to 6 AI Expert Personas",
         "Standard Email Support",
       ],
-      cta: "Generate Your First Playbook",
+      cta: "Get Your Free Playbook",
       popular: false,
     },
     ...config.stripe.plans.map(plan => ({
@@ -127,10 +127,10 @@ export default function PricingSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Simple, Transparent Pricing
+            Find the Plan That Aligns With Your Ambition
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Choose the plan that aligns with your professional goals. Start free, no credit card required.
+            Start for free. Upgrade when you're ready to turn influence into your superpower.
           </p>
         </motion.div>
 

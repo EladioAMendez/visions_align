@@ -8,7 +8,17 @@ export default async function UsersManagement() {
   // Get all users with their data
   const users = await prisma.user.findMany({
     orderBy: { createdAt: 'desc' },
-    include: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      planTier: true,
+      hasAccess: true,
+      playbookCredits: true,
+      stripeCustomerId: true,
+      stripePriceId: true,
+      createdAt: true,
+      updatedAt: true,
       stakeholders: {
         select: {
           id: true,

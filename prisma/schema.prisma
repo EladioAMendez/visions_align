@@ -65,6 +65,21 @@ enum PlaybookStatus {
   FAILED
 }
 
+model DropdownOption {
+  id          String   @id @default(cuid())
+  category    String   // "influence" or "relationship"
+  value       String   // The actual value (e.g., "HIGH", "ALLY")
+  label       String   // Display label (e.g., "High Influence", "Strong Ally")
+  description String?  // Optional description for admin clarity
+  sortOrder   Int      @default(0) // For ordering options in dropdowns
+  isActive    Boolean  @default(true) // Allow deactivating without deleting
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([category, value])
+  @@map("dropdown_options")
+}
+
 model User {
   id              String      @id @default(cuid())
   name            String?
@@ -73,6 +88,7 @@ model User {
   image           String?
   planTier        PlanTier    @default(STARTER) @map("plan_tier")
   playbookCredits Int         @default(1) @map("playbook_credits")
+  linkedinUrl     String?     @map("linkedin_url")
   
   // Stripe subscription fields
   stripeCustomerId String?    @unique @map("stripe_customer_id")

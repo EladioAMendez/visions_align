@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 import AddStakeholderModal from '@/components/AddStakeholderModal';
+import EditStakeholderModal from '@/components/EditStakeholderModal';
 import type { Stakeholder, PlanTier, Playbook } from "@/lib/generated/prisma";
 
 interface DashboardClientProps {
@@ -31,6 +32,8 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [generatedPlaybook, setGeneratedPlaybook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingStakeholder, setEditingStakeholder] = useState<Stakeholder | null>(null);
   const router = useRouter();
   
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -40,6 +43,17 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
 
   const handleStakeholderAdded = () => {
     router.refresh();
+  };
+
+  const handleEditStakeholder = (stakeholder: Stakeholder) => {
+    setEditingStakeholder(stakeholder);
+    setIsEditModalOpen(true);
+  };
+
+  const handleStakeholderUpdated = () => {
+    router.refresh();
+    setIsEditModalOpen(false);
+    setEditingStakeholder(null);
   };
 
   const generatePlaybook = async (stakeholderId: string) => {
@@ -56,6 +70,11 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
 
       if (!response.ok) {
         const errorData = await response.json();
+        if (errorData.requiresLinkedIn) {
+          alert(`${errorData.message}\n\nClick OK to go to Account Settings.`);
+          router.push('/dashboard/account');
+          return;
+        }
         throw new Error(errorData.error || 'Failed to generate playbook');
       }
 
@@ -73,8 +92,8 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
 
   const getPlanDisplayName = (tier: PlanTier) => {
     switch (tier) {
-      case 'PRO': return 'Pro';
-      case 'DIRECTOR': return 'Director';
+      case 'PRO': return 'Pro - Stakeholder Playbook';
+      case 'DIRECTOR': return 'Director - Relationship Playbook';
       case 'STARTER': return 'Starter';
       default: return 'Starter';
     }
@@ -95,6 +114,12 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onStakeholderAdded={handleStakeholderAdded}
+      />
+      <EditStakeholderModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onStakeholderUpdated={handleStakeholderUpdated}
+        stakeholder={editingStakeholder}
       />
       <section className="max-w-6xl mx-auto space-y-8">
         {/* Header with Welcome Message */}
@@ -120,7 +145,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
               animate={headerInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
             >
-              Ready to turn your next meeting into a strategic win?
+              Ready to turn your next meeting into a strategic win? Generate your personalized playbook below.
             </motion.p>
           </div>
           <motion.div
@@ -147,7 +172,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
               color: getPlanColor(user?.planTier || 'STARTER'),
               extra: user?.planTier === 'STARTER' && (
                 <Link href="/#pricing" className="text-sm text-brand-sea-green hover:underline mt-2 inline-block">
-                  Upgrade Plan →
+                  Upgrade for Playbooks →
                 </Link>
               )
             },
@@ -163,9 +188,9 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
               title: 'Stakeholders',
               value: stakeholders.length,
               color: 'text-white',
-              subtitle: user?.planTier === 'STARTER' ? 'Add more with Pro' : 
-                       user?.planTier === 'PRO' ? 'up to 25 total' : 
-                       'unlimited'
+              subtitle: user?.planTier === 'STARTER' ? 'Upgrade for more analysis' : 
+                       user?.planTier === 'PRO' ? 'Stakeholder analysis only' : 
+                       'Relationship analysis included'
             }
           ].map((stat, index) => (
             <motion.div 
@@ -324,13 +349,46 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                   whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                 >
                   <div className="mb-3">
-                    <h4 className="font-bold text-white">{stakeholder.name}</h4>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-bold text-white">{stakeholder.name}</h4>
+                      <button
+                        onClick={() => handleEditStakeholder(stakeholder)}
+                        className="text-slate-400 hover:text-white transition-colors p-1"
+                        title="Edit stakeholder"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
+                    </div>
                     {stakeholder.title && (
                       <p className="text-sm text-slate-400">{stakeholder.title}</p>
                     )}
                     {stakeholder.company && (
                       <p className="text-sm text-slate-500">{stakeholder.company}</p>
                     )}
+                    <div className="flex gap-2 mt-2">
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        stakeholder.influence === 'HIGH' ? 'bg-red-100 text-red-800' :
+                        stakeholder.influence === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-green-100 text-green-800'
+                      }`}>
+                        {stakeholder.influence === 'HIGH' ? 'High Influence' :
+                         stakeholder.influence === 'MEDIUM' ? 'Medium Influence' :
+                         'Low Influence'}
+                      </span>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        stakeholder.relationship === 'ALLY' ? 'bg-green-100 text-green-800' :
+                        stakeholder.relationship === 'NEUTRAL' ? 'bg-gray-100 text-gray-800' :
+                        stakeholder.relationship === 'SKEPTICAL' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {stakeholder.relationship === 'ALLY' ? 'Ally' :
+                         stakeholder.relationship === 'NEUTRAL' ? 'Neutral' :
+                         stakeholder.relationship === 'SKEPTICAL' ? 'Skeptical' :
+                         'Opponent'}
+                      </span>
+                    </div>
                   </div>
                   <motion.button 
                     onClick={() => generatePlaybook(stakeholder.id)} 
@@ -349,7 +407,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                         Generating...
                       </motion.span>
                     ) : (
-                      'Generate Playbook'
+                      user?.planTier === 'DIRECTOR' ? 'Generate Relationship Playbook' : 'Generate Stakeholder Playbook'
                     )}
                   </motion.button>
                 </motion.div>
@@ -386,7 +444,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                 animate={stakeholdersInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.9, ease: 'easeOut' }}
               >
-                Add your first stakeholder to start generating personalized playbooks for your meetings.
+                Add your first stakeholder to start generating personalized playbooks. Pro users get stakeholder analysis, Director users get relationship analysis.
               </motion.p>
               <motion.button 
                 onClick={() => setIsModalOpen(true)} 

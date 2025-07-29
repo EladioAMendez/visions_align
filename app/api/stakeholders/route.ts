@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { name, linkedinUrl, title, company } = await req.json();
+    const { name, linkedinUrl, title, company, influence, relationship } = await req.json();
 
     if (!name || !linkedinUrl) {
       return NextResponse.json({ error: 'Name and LinkedIn URL are required' }, { status: 400 });
@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
         linkedinUrl,
         title,
         company,
+        influence: influence || 'MEDIUM',
+        relationship: relationship || 'NEUTRAL',
         userId: session.user.id,
       },
     });

@@ -11,23 +11,31 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { name } = await req.json();
+    const { name, linkedinUrl } = await req.json();
 
-    if (!name || typeof name !== 'string' || !name.trim()) {
-      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    // Validate inputs
+    if (name !== undefined && (!name || typeof name !== 'string' || !name.trim())) {
+      return NextResponse.json({ error: "Name must be a non-empty string" }, { status: 400 });
     }
+
+    if (linkedinUrl !== undefined && linkedinUrl !== null && typeof linkedinUrl !== 'string') {
+      return NextResponse.json({ error: "LinkedIn URL must be a string" }, { status: 400 });
+    }
+
+    // Build update data object
+    const updateData: any = { updatedAt: new Date() };
+    if (name !== undefined) updateData.name = name.trim();
+    if (linkedinUrl !== undefined) updateData.linkedinUrl = linkedinUrl?.trim() || null;
 
     // Update user profile
     const updatedUser = await prisma.user.update({
       where: { email: session.user.email },
-      data: {
-        name: name.trim(),
-        updatedAt: new Date(),
-      },
+      data: updateData,
       select: {
         id: true,
         name: true,
         email: true,
+        linkedinUrl: true,
       }
     });
 

@@ -10,6 +10,7 @@ interface User {
   email: string;
   planTier: string;
   hasAccess: boolean;
+  playbookCredits: number;
   stripeCustomerId: string | null;
   stripePriceId: string | null;
   createdAt: Date;
@@ -38,6 +39,9 @@ export default function UsersManagementClient({ users }: Props) {
   const [filterTier, setFilterTier] = useState("ALL");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [creditModalUser, setCreditModalUser] = useState<User | null>(null);
+  const [creditsToAdd, setCreditsToAdd] = useState<number>(1);
+  const [newCreditAmount, setNewCreditAmount] = useState<number>(0);
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -88,6 +92,60 @@ export default function UsersManagementClient({ users }: Props) {
     } finally {
       setIsUpdating(false);
     }
+  };
+
+  const handleAddCredits = async (userId: string, creditsToAdd: number) => {
+    setIsUpdating(true);
+    try {
+      const response = await fetch('/api/admin/user-credits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, creditsToAdd }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success(data.message);
+        window.location.reload();
+      } else {
+        throw new Error('Failed to add credits');
+      }
+    } catch (error) {
+      toast.error('Failed to add credits');
+    } finally {
+      setIsUpdating(false);
+      setCreditModalUser(null);
+    }
+  };
+
+  const handleSetCredits = async (userId: string, newCredits: number) => {
+    setIsUpdating(true);
+    try {
+      const response = await fetch('/api/admin/user-credits', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, newCredits }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success(data.message);
+        window.location.reload();
+      } else {
+        throw new Error('Failed to set credits');
+      }
+    } catch (error) {
+      toast.error('Failed to set credits');
+    } finally {
+      setIsUpdating(false);
+      setCreditModalUser(null);
+    }
+  };
+
+  const openCreditModal = (user: User) => {
+    setCreditModalUser(user);
+    setCreditsToAdd(1);
+    setNewCreditAmount(user.playbookCredits);
   };
 
   return (
@@ -192,6 +250,9 @@ export default function UsersManagementClient({ users }: Props) {
                   Access
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                  Credits
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
                   Activity
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
@@ -234,6 +295,19 @@ export default function UsersManagementClient({ users }: Props) {
                     }`}>
                       {user.hasAccess ? 'Granted' : 'Denied'}
                     </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-white">
+                        {user.playbookCredits}
+                      </span>
+                      <button
+                        onClick={() => openCreditModal(user)}
+                        className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs transition-colors"
+                      >
+                        Manage
+                      </button>
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
                     <div>
@@ -361,6 +435,117 @@ export default function UsersManagementClient({ users }: Props) {
                   ) : (
                     <p className="text-slate-400">No playbooks generated yet</p>
                   )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Credit Management Modal */}
+      {creditModalUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-slate-800 rounded-lg p-6 max-w-md w-full"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-white">Manage Credits</h2>
+              <button
+                onClick={() => setCreditModalUser(null)}
+                className="text-slate-400 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {creditModalUser.name || "Anonymous"}
+                </h3>
+                <p className="text-slate-400 text-sm">{creditModalUser.email}</p>
+                <p className="text-slate-300 text-sm mt-2">
+                  Current Credits: <span className="font-semibold text-white">{creditModalUser.playbookCredits}</span>
+                </p>
+              </div>
+
+              {/* Add Credits Section */}
+              <div className="bg-slate-700 rounded p-4">
+                <h4 className="text-white font-medium mb-3">Add Credits</h4>
+                <div className="flex items-center space-x-2 mb-3">
+                  <input
+                    type="number"
+                    min="1"
+                    value={creditsToAdd}
+                    onChange={(e) => setCreditsToAdd(parseInt(e.target.value) || 1)}
+                    className="flex-1 px-3 py-2 bg-slate-600 border border-slate-500 rounded text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="Credits to add"
+                  />
+                  <button
+                    onClick={() => handleAddCredits(creditModalUser.id, creditsToAdd)}
+                    disabled={isUpdating || creditsToAdd < 1}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors disabled:opacity-50"
+                  >
+                    {isUpdating ? 'Adding...' : 'Add'}
+                  </button>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  New total: {creditModalUser.playbookCredits + creditsToAdd}
+                </p>
+              </div>
+
+              {/* Set Credits Section */}
+              <div className="bg-slate-700 rounded p-4">
+                <h4 className="text-white font-medium mb-3">Set Exact Amount</h4>
+                <div className="flex items-center space-x-2 mb-3">
+                  <input
+                    type="number"
+                    min="0"
+                    value={newCreditAmount}
+                    onChange={(e) => setNewCreditAmount(parseInt(e.target.value) || 0)}
+                    className="flex-1 px-3 py-2 bg-slate-600 border border-slate-500 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="New credit amount"
+                  />
+                  <button
+                    onClick={() => handleSetCredits(creditModalUser.id, newCreditAmount)}
+                    disabled={isUpdating || newCreditAmount < 0}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors disabled:opacity-50"
+                  >
+                    {isUpdating ? 'Setting...' : 'Set'}
+                  </button>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  This will replace the current amount
+                </p>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="bg-slate-700 rounded p-4">
+                <h4 className="text-white font-medium mb-3">Quick Actions</h4>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleAddCredits(creditModalUser.id, 5)}
+                    disabled={isUpdating}
+                    className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm transition-colors disabled:opacity-50"
+                  >
+                    +5
+                  </button>
+                  <button
+                    onClick={() => handleAddCredits(creditModalUser.id, 10)}
+                    disabled={isUpdating}
+                    className="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1 rounded text-sm transition-colors disabled:opacity-50"
+                  >
+                    +10
+                  </button>
+                  <button
+                    onClick={() => handleSetCredits(creditModalUser.id, 0)}
+                    disabled={isUpdating}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm transition-colors disabled:opacity-50"
+                  >
+                    Reset to 0
+                  </button>
                 </div>
               </div>
             </div>

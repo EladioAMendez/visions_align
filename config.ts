@@ -19,31 +19,33 @@ const config = {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
     plans: [
       {
-        // PRO PLAN
+        // PRO PLAN - STAKEHOLDER PLAYBOOK
         priceId: process.env.STRIPE_PRICE_ID_PRO || "price_1Rpee9JMqpxzzGoF9xnpfqbl",
         isFeatured: true,
         name: "Pro",
-        description: "The essential toolkit for professionals seeking consistent high-stakes success.",
+        description: "Stakeholder Playbook: Deep-dive analysis to help you win the meeting.",
         price: 29,
         priceAnchor: 49,
         features: [
-          { name: "Composite AI View" },
+          { name: "6 AI Expert Personas" },
+          { name: "Stakeholder-focused analysis" },
           { name: "Analyze up to 10 stakeholders/month" },
           { name: "Generate unlimited playbooks" },
           { name: "Calendar Integration" },
         ],
       },
       {
-        // DIRECTOR PLAN
+        // DIRECTOR PLAN - RELATIONSHIP PLAYBOOK
         priceId: process.env.STRIPE_PRICE_ID_DIRECTOR || "price_1RpeeqJMqpxzzGoFwHQmZi6K",
         name: "Director",
-        description: "The ultimate strategic advantage for leaders who direct the conversation.",
+        description: "Relationship Playbook: Comparative analysis to help you win the promotion.",
         price: 49,
         priceAnchor: 99,
         features: [
           { name: "Everything in Pro, plus:" },
-          { name: "Exclusive 'Lead Lens' feature" },
-          { name: "Customize AI analysis" },
+          { name: "Exclusive 'The Connector' AI persona" },
+          { name: "User + Stakeholder comparative analysis" },
+          { name: "Communication style synergy mapping" },
           { name: "Analyze unlimited stakeholders" },
           { name: "Priority Support" },
         ],

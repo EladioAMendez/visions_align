@@ -1,14 +1,25 @@
 "use client";
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 
-interface AddStakeholderModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onStakeholderAdded: () => void;
+interface Stakeholder {
+  id: string;
+  name: string;
+  linkedinUrl: string;
+  title?: string;
+  company?: string;
+  influence: string;
+  relationship: string;
 }
 
-export default function AddStakeholderModal({ isOpen, onClose, onStakeholderAdded }: AddStakeholderModalProps) {
+interface EditStakeholderModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onStakeholderUpdated: () => void;
+  stakeholder: Stakeholder | null;
+}
+
+export default function EditStakeholderModal({ isOpen, onClose, onStakeholderUpdated, stakeholder }: EditStakeholderModalProps) {
   const [name, setName] = useState('');
   const [linkedinUrl, setLinkedinUrl] = useState('');
   const [title, setTitle] = useState('');
@@ -18,14 +29,27 @@ export default function AddStakeholderModal({ isOpen, onClose, onStakeholderAdde
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (stakeholder) {
+      setName(stakeholder.name);
+      setLinkedinUrl(stakeholder.linkedinUrl);
+      setTitle(stakeholder.title || '');
+      setCompany(stakeholder.company || '');
+      setInfluence(stakeholder.influence);
+      setRelationship(stakeholder.relationship);
+    }
+  }, [stakeholder]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!stakeholder) return;
+    
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch('/api/stakeholders', {
-        method: 'POST',
+      const response = await fetch(`/api/stakeholders/${stakeholder.id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -34,10 +58,10 @@ export default function AddStakeholderModal({ isOpen, onClose, onStakeholderAdde
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to add stakeholder');
+        throw new Error(errorData.error || 'Failed to update stakeholder');
       }
 
-      onStakeholderAdded();
+      onStakeholderUpdated();
       onClose();
     } catch (error) {
       setError((error as Error).message);
@@ -46,12 +70,12 @@ export default function AddStakeholderModal({ isOpen, onClose, onStakeholderAdde
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !stakeholder) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
       <div className="bg-slate-800 p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-white mb-4">Add New Stakeholder</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">Edit Stakeholder</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-slate-300">Name</label>
@@ -126,7 +150,7 @@ export default function AddStakeholderModal({ isOpen, onClose, onStakeholderAdde
           <div className="flex justify-end space-x-4">
             <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
             <button type="submit" className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? 'Adding...' : 'Add Stakeholder'}
+              {isLoading ? 'Updating...' : 'Update Stakeholder'}
             </button>
           </div>
         </form>

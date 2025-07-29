@@ -13,6 +13,7 @@ interface User {
   image: string | null;
   planTier: string;
   hasAccess: boolean;
+  linkedinUrl: string | null;
   createdAt: Date;
   updatedAt: Date;
   _count: {
@@ -33,6 +34,7 @@ export default function AccountClient({ user }: Props) {
   const [profileData, setProfileData] = useState({
     name: user.name || "",
     email: user.email,
+    linkedinUrl: user.linkedinUrl || "",
   });
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -48,7 +50,10 @@ export default function AccountClient({ user }: Props) {
       const response = await fetch('/api/user/profile', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: profileData.name.trim() }),
+        body: JSON.stringify({ 
+          name: profileData.name.trim(),
+          linkedinUrl: profileData.linkedinUrl.trim() || null 
+        }),
       });
 
       if (response.ok) {
@@ -169,6 +174,30 @@ export default function AccountClient({ user }: Props) {
             />
             <p className="text-xs text-gray-500 mt-1">
               Email cannot be changed. Contact support if you need to update your email.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              LinkedIn Profile URL
+              {user.planTier === 'DIRECTOR' && (
+                <span className="ml-2 px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-800">
+                  Required for Relationship Playbooks
+                </span>
+              )}
+            </label>
+            <input
+              type="url"
+              value={profileData.linkedinUrl}
+              onChange={(e) => setProfileData({...profileData, linkedinUrl: e.target.value})}
+              className="input input-bordered w-full max-w-md"
+              placeholder="https://linkedin.com/in/your-profile"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              {user.planTier === 'DIRECTOR' 
+                ? 'Required for The Connector AI to perform relationship analysis between you and stakeholders.'
+                : 'Optional. Upgrade to Director tier to unlock relationship analysis features.'
+              }
             </p>
           </div>
 

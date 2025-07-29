@@ -32,6 +32,12 @@ export default function AdminNavbar() {
               Dashboard
             </Link>
             <Link
+              href="/admin/dropdown-options"
+              className="text-red-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Dropdown Editor
+            </Link>
+            <Link
               href="/admin/users"
               className="text-red-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
@@ -130,6 +136,12 @@ export default function AdminNavbar() {
             className="text-red-200 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
           >
             Dashboard
+          </Link>
+          <Link
+            href="/admin/dropdown-options"
+            className="text-red-200 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
+          >
+            Dropdown Editor
           </Link>
           <Link
             href="/admin/users"

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -38,10 +38,25 @@ interface Props {
   stakeholders: Stakeholder[];
 }
 
+interface DropdownOption {
+  value: string;
+  label: string;
+  sortOrder: number;
+}
+
+interface DropdownOptions {
+  influence: DropdownOption[];
+  relationship: DropdownOption[];
+}
+
 export default function StakeholdersClient({ user, stakeholders }: Props) {
   const router = useRouter();
   const [isAddingStakeholder, setIsAddingStakeholder] = useState(false);
   const [selectedStakeholder, setSelectedStakeholder] = useState<Stakeholder | null>(null);
+  const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>({
+    influence: [],
+    relationship: [],
+  });
   const [newStakeholder, setNewStakeholder] = useState({
     name: "",
     role: "",
@@ -50,6 +65,23 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
     relationship: "NEUTRAL",
     notes: "",
   });
+
+  // Fetch dropdown options on component mount
+  useEffect(() => {
+    const fetchDropdownOptions = async () => {
+      try {
+        const response = await fetch('/api/dropdown-options');
+        if (response.ok) {
+          const data = await response.json();
+          setDropdownOptions(data.options);
+        }
+      } catch (error) {
+        console.error('Error fetching dropdown options:', error);
+      }
+    };
+
+    fetchDropdownOptions();
+  }, []);
 
   const handleAddStakeholder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -397,9 +429,11 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
                   onChange={(e) => setNewStakeholder({...newStakeholder, influence: e.target.value})}
                   className="select select-bordered w-full"
                 >
-                  <option value="LOW">Low</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HIGH">High</option>
+                  {dropdownOptions.influence.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -412,10 +446,11 @@ export default function StakeholdersClient({ user, stakeholders }: Props) {
                   onChange={(e) => setNewStakeholder({...newStakeholder, relationship: e.target.value})}
                   className="select select-bordered w-full"
                 >
-                  <option value="ALLY">Ally</option>
-                  <option value="NEUTRAL">Neutral</option>
-                  <option value="SKEPTICAL">Skeptical</option>
-                  <option value="OPPONENT">Opponent</option>
+                  {dropdownOptions.relationship.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 

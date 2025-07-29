@@ -21,6 +21,7 @@ export default async function AccountPage() {
       image: true,
       planTier: true,
       hasAccess: true,
+      linkedinUrl: true,
       createdAt: true,
       updatedAt: true,
       _count: {
