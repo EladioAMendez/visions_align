@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Omit legitimate environment variable names from secrets scanning
+  # NEXTAUTH_URL is a standard NextAuth.js environment variable
+  SECRETS_SCAN_OMIT_KEYS = "NEXTAUTH_URL"
+
+# Headers for static assets
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
