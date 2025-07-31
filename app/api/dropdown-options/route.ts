@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/libs/next-auth";
 import { prisma } from "@/libs/prisma";
+
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    const category = req.nextUrl.searchParams.get('category');
+    const { searchParams } = new URL(req.url);
+    const category = searchParams.get('category');
 
     // If category is specified, filter by it
     const whereClause = category ? { category, isActive: true } : { isActive: true };

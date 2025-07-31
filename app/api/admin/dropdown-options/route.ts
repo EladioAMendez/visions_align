@@ -18,6 +18,12 @@ async function isAdmin(email: string): Promise<boolean> {
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.user?.email || !(await isAdmin(session.user.email))) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const options = await prisma.dropdownOption.findMany({
       orderBy: [
         { category: 'asc' },
