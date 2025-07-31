@@ -5,11 +5,7 @@ import { prisma } from "@/libs/prisma";
 export async function GET(req: NextRequest) {
   try {
 
-    let category: string | null = null;
-    if (req.url) {
-      const { searchParams } = new URL(req.url);
-      category = searchParams.get('category');
-    }
+    const category = req.nextUrl.searchParams.get('category');
 
     // If category is specified, filter by it
     const whereClause = category ? { category, isActive: true } : { isActive: true };
