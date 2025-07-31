@@ -13,6 +13,9 @@ node_modules
 # production
 /build
 
+# stripe research
+research/stripe
+
 # research
 # /research
 
