@@ -2,6 +2,8 @@
 
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import { useSession } from 'next-auth/react';
+import { shouldShowPricing } from '@/libs/preBetaUtils';
 
 // Layout Components
 import Navbar from './layout/Navbar';
@@ -15,6 +17,7 @@ import BenefitsSection from './sections/BenefitsSection';
 const ValuePropositionsSection = dynamic(() => import('./sections/ValuePropositionsSection'));
 const TestimonialsSection = dynamic(() => import('./sections/TestimonialsSection'));
 const PricingSection = dynamic(() => import('./sections/PricingSection'));
+const BetaAccessSection = dynamic(() => import('./sections/BetaAccessSection'));
 const FaqSection = dynamic(() => import('./sections/FaqSection'));
 
 // Font
@@ -23,6 +26,10 @@ import '@fontsource/inter/500.css'; // Medium
 import '@fontsource/inter/700.css'; // Bold
 
 export default function LandingPage() {
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  const showPricing = shouldShowPricing(userEmail);
+
   return (
     <div className="min-h-screen bg-slate-900 font-sans">
       <Navbar />
@@ -36,7 +43,7 @@ export default function LandingPage() {
           <TestimonialsSection />
         </Suspense>
         <Suspense fallback={null}>
-          <PricingSection />
+          {showPricing ? <PricingSection /> : <BetaAccessSection />}
         </Suspense>
         <Suspense fallback={null}>
           <FaqSection />

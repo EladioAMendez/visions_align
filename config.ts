@@ -79,6 +79,12 @@ const config = {
     // REQUIRED — the path you want to redirect users to after a successful login (i.e. /dashboard, /private). This is normally a private page for users to manage their accounts. It's used in apiClient (/libs/api.js) upon 401 errors from our API & in ButtonSignin.js
     callbackUrl: "/dashboard",
   },
+  preBeta: {
+    // Pre-beta mode settings
+    enabled: process.env.NEXT_PUBLIC_PRE_BETA_MODE === 'true',
+    betaAccessEmail: 'beta-access@visionsalign.com',
+    // Admin emails are handled via ADMIN_EMAILS environment variable
+  },
 } as ConfigProps;
 
 export default config;

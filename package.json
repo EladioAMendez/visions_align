@@ -23,6 +23,7 @@
     "crisp-sdk-web": "^1.0.22",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "express": "^5.1.0",
     "form-data": "^4.0.0",
     "framer-motion": "^12.23.6",
     "lucide-react": "^0.525.0",

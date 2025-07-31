@@ -45,7 +45,7 @@ export default function ValuePropositionsSection() {
     {
       icon: <TargetIcon className="w-8 h-8 text-brand-sea-green" />,
       title: "Decode Stakeholder Psychology",
-            description: <><span className="text-slate-200">The Insight Panel</span> analyzes LinkedIn profiles and meeting context to reveal the hidden motivations, communication preferences, and unspoken needs of your audience.</>,
+      description: <><span className="text-slate-200">The Insight Panel</span> analyzes LinkedIn profiles to reveal the hidden motivations, decision triggers, and communication style that turns your next 27-minute meeting into career momentum.</>,
     },
     {
       icon: <ZapIcon className="w-8 h-8 text-brand-sea-green" />,

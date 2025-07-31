@@ -3,12 +3,19 @@ import { authOptions } from "@/libs/next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "../../libs/prisma";
 import DashboardClient from "./DashboardClient";
+import { shouldAllowDashboardAccess } from "@/libs/preBetaUtils";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.id) {
     redirect("/api/auth/signin");
+  }
+
+  // Check if user has dashboard access (admin bypass for pre-beta mode)
+  const userEmail = session.user.email;
+  if (!shouldAllowDashboardAccess(userEmail)) {
+    redirect("/?access=restricted");
   }
 
   // Fetch user data with subscription info

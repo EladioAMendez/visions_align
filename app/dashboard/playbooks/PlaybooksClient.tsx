@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -60,6 +60,35 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Poll for playbook updates if there are pending playbooks
+  useEffect(() => {
+    const hasPendingPlaybooks = playbooks.some(p => p.status === 'PENDING');
+    
+    if (!hasPendingPlaybooks) return;
+
+    const interval = setInterval(() => {
+      router.refresh();
+    }, 10000); // Poll every 10 seconds
+
+    return () => clearInterval(interval);
+  }, [playbooks, router]);
+
+  // Show toast notification when playbooks are completed
+  useEffect(() => {
+    const completedPlaybooks = playbooks.filter(p => p.status === 'COMPLETED');
+    
+    completedPlaybooks.forEach(playbook => {
+      const timeSinceUpdate = Date.now() - new Date(playbook.updatedAt).getTime();
+      // Only show notification for recently completed playbooks (within last 30 seconds)
+      if (timeSinceUpdate < 30000) {
+        toast.success(`Playbook for ${playbook.stakeholder.name} is ready!`, {
+          duration: 5000,
+          icon: '🎉',
+        });
+      }
+    });
+  }, [playbooks]);
+
   const filteredPlaybooks = playbooks.filter(playbook => {
     const matchesSearch = playbook.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          playbook.stakeholder.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -75,7 +104,7 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
 
     setIsGenerating(true);
     try {
-      const response = await fetch('/api/playbooks/generate', {
+      const response = await fetch('/api/playbooks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stakeholderId: selectedStakeholder }),
@@ -97,7 +126,12 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
   };
 
   const handleDeletePlaybook = async (playbookId: string) => {
-    if (!confirm("Are you sure you want to delete this playbook?")) {
+    // Show confirmation dialog
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this playbook? This action cannot be undone.'
+    );
+    
+    if (!confirmed) {
       return;
     }
 

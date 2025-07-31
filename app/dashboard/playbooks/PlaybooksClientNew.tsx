@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -42,6 +42,37 @@ export default function PlaybooksClient({ user }: Props) {
 
   const { playbooks, stakeholders, playbookCredits, planTier } = user;
 
+  // Poll for playbook updates if there are pending playbooks
+  useEffect(() => {
+    const hasPendingPlaybooks = playbooks.some(p => p.status === 'PENDING');
+    
+    if (!hasPendingPlaybooks) return;
+
+    const interval = setInterval(() => {
+      router.refresh();
+    }, 10000); // Poll every 10 seconds
+
+    return () => clearInterval(interval);
+  }, [playbooks, router]);
+
+  // Show toast notification when playbooks are completed
+  useEffect(() => {
+    const completedPlaybooks = playbooks.filter(p => p.status === 'COMPLETED');
+    
+    // Check if there are newly completed playbooks (this is a simple approach)
+    // In a real app, you might want to track this more sophisticatedly
+    completedPlaybooks.forEach(playbook => {
+      const timeSinceUpdate = Date.now() - new Date(playbook.createdAt).getTime();
+      // Only show notification for recently completed playbooks (within last 30 seconds)
+      if (timeSinceUpdate < 30000) {
+        toast.success(`Playbook for ${playbook.stakeholder.name} is ready!`, {
+          duration: 5000,
+          icon: '🎉',
+        });
+      }
+    });
+  }, [playbooks]);
+
   const filteredPlaybooks = playbooks.filter(playbook => {
     const matchesSearch = playbook.stakeholder.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "ALL" || playbook.status === filterStatus;
@@ -66,7 +97,7 @@ export default function PlaybooksClient({ user }: Props) {
     setIsGenerating(stakeholderId);
     
     try {
-      const response = await fetch('/api/playbooks/generate', {
+      const response = await fetch('/api/playbooks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stakeholderId }),
@@ -86,6 +117,15 @@ export default function PlaybooksClient({ user }: Props) {
   };
 
   const handleDeletePlaybook = async (playbookId: string) => {
+    // Show confirmation dialog
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this playbook? This action cannot be undone.'
+    );
+    
+    if (!confirmed) {
+      return;
+    }
+
     try {
       const response = await fetch(`/api/playbooks/${playbookId}`, {
         method: 'DELETE',
