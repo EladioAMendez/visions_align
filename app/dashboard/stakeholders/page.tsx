@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
 import StakeholdersClient from "./StakeholdersClient";
 
+export const dynamic = 'force-dynamic';
+
 export default async function StakeholdersPage() {
   const session = await getServerSession(authOptions);
   
