@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.processing]
+  [build.processing.secrets_scan]
+    # These Stripe Price IDs are public and are expected to be in the build output.
+    # We are telling Netlify's secret scanner to ignore them.
+    omit_keys = ["NEXT_PUBLIC_STRIPE_PRICE_ID_PRO", "NEXT_PUBLIC_STRIPE_PRICE_ID_DIRECTOR"]
