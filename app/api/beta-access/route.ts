@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(req: NextRequest) {
   try {
@@ -64,7 +65,7 @@ Next Steps: Review this request and send beta access details to the user within 
     `;
 
     // Send email notification
-    if (process.env.RESEND_API_KEY) {
+    if (resend && process.env.RESEND_API_KEY) {
       await resend.emails.send({
         from: process.env.EMAIL_FROM || 'noreply@visionsalign.com',
         to: ['beta-access@visionsalign.com'],
@@ -81,7 +82,7 @@ Next Steps: Review this request and send beta access details to the user within 
     }
 
     // Send confirmation email to user
-    if (process.env.RESEND_API_KEY) {
+    if (resend && process.env.RESEND_API_KEY) {
       const confirmationHtml = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e293b, #0f172a); padding: 2rem; border-radius: 12px; color: white;">
