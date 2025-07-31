@@ -20,7 +20,9 @@ const config = {
     plans: [
       {
         // PRO PLAN - STAKEHOLDER PLAYBOOK
-        priceId: process.env.STRIPE_PRICE_ID_PRO || "price_1Rpee9JMqpxzzGoF9xnpfqbl",
+        // The priceId is coming from your Stripe dashboard. You can get it by clicking on the product > pricing.
+        // This is used to display the pricing table and to create the checkout session.
+        priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO,
         isFeatured: true,
         name: "Pro",
         description: "Stakeholder Playbook: Deep-dive analysis to help you win the meeting.",
@@ -36,7 +38,9 @@ const config = {
       },
       {
         // DIRECTOR PLAN - RELATIONSHIP PLAYBOOK
-        priceId: process.env.STRIPE_PRICE_ID_DIRECTOR || "price_1RpeeqJMqpxzzGoFwHQmZi6K",
+        // The priceId is coming from your Stripe dashboard. You can get it by clicking on the product > pricing.
+        // This is used to display the pricing table and to create the checkout session.
+        priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_DIRECTOR,
         name: "Director",
         description: "Relationship Playbook: Comparative analysis to help you win the promotion.",
         price: 49,
