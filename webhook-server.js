@@ -109,7 +109,7 @@ app.post('/', async (req, res) => {
     
     // Try to forward to VisionsAlign webhook (optional - for integration)
     try {
-      const response = await fetch('http://localhost:3000/api/playbooks/webhook', {
+      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/playbooks/webhook`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ app.post('/', async (req, res) => {
       }
     } catch (forwardError) {
       console.log('⚠️ Error forwarding to VisionsAlign:', forwardError.message);
-      console.log('💡 Make sure your Next.js app is running on http://localhost:3000');
+      console.log(`💡 Make sure your Next.js app is running on ${process.env.NEXTAUTH_URL || 'http://localhost:3000'}`);
     }
     
     // Return success response to n8n

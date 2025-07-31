@@ -89,7 +89,7 @@ app.post('/webhook/playbook', async (req, res) => {
 
     // Send response back to VisionsAlign webhook
     try {
-      const response = await fetch('http://localhost:3000/api/playbooks/webhook', {
+      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/playbooks/webhook`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(mockResponse)

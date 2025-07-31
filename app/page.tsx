@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VisionsAlign | Engineering Resonance in Every Interaction',
     description: 'Generate AI-driven playbooks to understand stakeholders, tailor your message, and achieve your objectives in high-stakes meetings.',
-    url: 'https://visionsalign.com',
+    url: process.env.NEXTAUTH_URL || 'https://visionsalign.com',
     siteName: 'VisionsAlign',
     images: [
       {
-        url: 'https://visionsalign.com/og-image.png', // Replace with actual URL
+        url: `${process.env.NEXTAUTH_URL || 'https://visionsalign.com'}/og-image.png`, // Replace with actual URL
         width: 1200,
         height: 630,
         alt: 'VisionsAlign - AI-Powered Communication Strategy for Leaders',
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'VisionsAlign | Master Your Meetings with AI Strategy',
     description: 'Stop guessing, start influencing. VisionsAlign gives you the AI-powered insights to win over any audience.',
-    images: ['https://visionsalign.com/twitter-image.png'], // Replace with actual URL
+    images: [`${process.env.NEXTAUTH_URL || 'https://visionsalign.com'}/twitter-image.png`], // Replace with actual URL
   },
   alternates: {
-    canonical: 'https://visionsalign.com',
+    canonical: process.env.NEXTAUTH_URL || 'https://visionsalign.com',
   },
 };
 
