@@ -1,35 +1,29 @@
 import NextAuth from "next-auth";
-import type { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@/lib/generated/prisma";
-import config from "@/config";
+import { prisma } from "./prisma";
+import EmailProvider from "next-auth/providers/email";
+import { Resend } from "resend";
+import { authConfig, emailConfig } from "./config";
 
-const prisma = new PrismaClient();
+const resend = new Resend(emailConfig.apiKey);
 
 export const authOptions: NextAuthOptions = {
+  secret: authConfig.secret,
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: authConfig.google.clientId,
+      clientSecret: authConfig.google.clientSecret,
     }),
     EmailProvider({
-      server: {
-        host: "smtp.resend.com",
-        port: 465,
-        auth: {
-          user: "resend",
-          pass: process.env.RESEND_API_KEY,
-        },
-      },
-      from: config.resend.fromNoReply,
+      server: emailConfig.smtp,
+      from: emailConfig.from.noReply,
     }),
   ],
   callbacks: {
-        session: async ({ session, token }) => {
+    session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub;
       }

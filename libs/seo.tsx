@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import config from "@/config";
+import { appConfig, getBaseUrl } from "./config";
+import legacyConfig from "@/config";
 
 // These are all the SEO tags you can add to your pages.
 // It prefills data with default title/description/OG, etc.. and you can cusotmize it for each page.
@@ -19,26 +20,24 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: title || config.appName,
+    title: title || legacyConfig.appName,
     // up to 160 characters (how does your app help the user?)
-    description: description || config.appDescription,
+    description: description || legacyConfig.appDescription,
     // some keywords separated by commas. by default it will be your app name
-    keywords: keywords || [config.appName],
-    applicationName: config.appName,
+    keywords: keywords || [legacyConfig.appName],
+    applicationName: legacyConfig.appName,
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
-    metadataBase: new URL(
-      process.env.NEXTAUTH_URL || `https://${config.domainName}/`
-    ),
+    metadataBase: new URL(getBaseUrl()),
 
     openGraph: {
-      title: openGraph?.title || config.appName,
-      description: openGraph?.description || config.appDescription,
-      url: openGraph?.url || `https://${config.domainName}/`,
-      siteName: openGraph?.title || config.appName,
+      title: openGraph?.title || legacyConfig.appName,
+      description: openGraph?.description || legacyConfig.appDescription,
+      url: openGraph?.url || `https://${legacyConfig.domainName}/`,
+      siteName: openGraph?.siteName || legacyConfig.appName,
       // If you add an opengraph-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [
       //   {
-      //     url: `https://${config.domainName}/share.png`,
+      //     url: `https://${legacyConfig.domainName}/share.png`,
       //     width: 1200,
       //     height: 660,
       //   },
@@ -48,8 +47,8 @@ export const getSEOTags = ({
     },
 
     twitter: {
-      title: openGraph?.title || config.appName,
-      description: openGraph?.description || config.appDescription,
+      title: openGraph?.title || legacyConfig.appName,
+      description: openGraph?.description || legacyConfig.appDescription,
       // If you add an twitter-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [openGraph?.image || defaults.og.image],
       card: "summary_large_image",
@@ -81,10 +80,10 @@ export const renderSchemaTags = () => {
         __html: JSON.stringify({
           "@context": "http://schema.org",
           "@type": "SoftwareApplication",
-          name: config.appName,
-          description: config.appDescription,
-          image: `https://${config.domainName}/icon.png`,
-          url: `https://${config.domainName}/`,
+          title: legacyConfig.appName,
+          description: legacyConfig.appDescription,
+          image: `https://${legacyConfig.domainName}/icon.png`,
+          url: `https://${legacyConfig.domainName}/`,
           author: {
             "@type": "Person",
             name: "Marc Lou",

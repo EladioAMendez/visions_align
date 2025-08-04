@@ -1,11 +1,11 @@
 import { Resend } from "resend";
-import config from "@/config";
+import { emailConfig } from "./config";
 
-if (!process.env.RESEND_API_KEY) {
+if (!emailConfig.apiKey) {
   throw new Error("RESEND_API_KEY is not set");
 }
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(emailConfig.apiKey);
 
 export const sendEmail = async ({
   to,
@@ -21,7 +21,7 @@ export const sendEmail = async ({
   replyTo?: string | string[];
 }) => {
   const { data, error } = await resend.emails.send({
-    from: config.resend.fromAdmin,
+    from: emailConfig.from.admin,
     to,
     subject,
     text,

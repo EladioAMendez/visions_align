@@ -1,16 +1,16 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 import { prisma } from "@/libs/prisma";
-import configFile from "@/config";
+import { stripeConfig, legacyConfig } from "@/libs/config";
 import { findCheckoutSession } from "@/libs/stripe";
 import { PlanTier } from "@/lib/generated/prisma";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const stripe = new Stripe(stripeConfig.secretKey, {
   apiVersion: "2023-08-16",
-  typescript: true,
 });
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+const webhookSecret = stripeConfig.webhookSecret;
 
 // This is where we receive Stripe webhook events
 // It's used to update user data, send emails, etc...
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     switch (eventType) {
       case "checkout.session.completed": {
         // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
-        // ✅ Grant access to the product
+        // Grant access to the product
         const stripeObject: Stripe.Checkout.Session = event.data
           .object as Stripe.Checkout.Session;
 
@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
         const customerId = session?.customer;
         const priceId = session?.line_items?.data[0]?.price.id;
         const userId = stripeObject.client_reference_id;
-        const plan = configFile.stripe.plans.find((p) => p.priceId === priceId);
-
+        const plan = legacyConfig.stripe.plans.find((p: any) => p.priceId === priceId);
+        
         if (!plan) break;
 
         const customer = (await stripe.customers.retrieve(

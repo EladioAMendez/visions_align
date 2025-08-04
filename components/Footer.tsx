@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import config from "@/config";
+import { appConfig } from "@/libs/config";
 import logo from "@/app/icon.png";
 
 // Add the Footer to the bottom of your landing page and more.
@@ -19,19 +19,19 @@ const Footer = () => {
             >
               <Image
                 src={logo}
-                alt={`${config.appName} logo`}
+                alt={`${appConfig.name} logo`}
                 priority={true}
                 className="w-6 h-6"
                 width={24}
                 height={24}
               />
               <strong className="font-extrabold tracking-tight text-base md:text-lg">
-                {config.appName}
+                {appConfig.name}
               </strong>
             </Link>
 
             <p className="mt-3 text-sm text-base-content/80">
-              {config.appDescription}
+              {appConfig.description}
             </p>
             <p className="mt-3 text-sm text-base-content/60">
               Copyright © {new Date().getFullYear()} - All rights reserved
@@ -46,9 +46,9 @@ const Footer = () => {
               </div>
 
               <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                {config.resend.supportEmail && (
+                {appConfig.admin.emails.length > 0 && (
                   <a
-                    href={`mailto:${config.resend.supportEmail}`}
+                    href={`mailto:${appConfig.admin.emails[0]}`}
                     target="_blank"
                     className="link link-hover"
                     aria-label="Contact Support"

@@ -2,22 +2,23 @@ import { Suspense } from 'react';
 import LandingPage from "@/components/LandingPage";
 import { Metadata } from 'next';
 import { educationalAppSchema, organizationSchema, faqSchema } from './structured-data';
+import { appConfig } from '@/libs/config';
 
 export const metadata: Metadata = {
-  title: 'VisionsAlign | AI-Powered Communication Strategy',
-  description: 'Unlock executive influence and master every meeting with VisionsAlign. Our AI-powered platform helps you generate tailored communication strategies to persuade, influence, and succeed.',
-  keywords: 'communication strategy, executive influence, stakeholder analysis, AI meeting prep, presentation skills, leadership communication',
+  title: appConfig.seo.title,
+  description: appConfig.seo.description,
+  keywords: [...appConfig.seo.keywords],
   openGraph: {
-    title: 'VisionsAlign | Engineering Resonance in Every Interaction',
-    description: 'Generate AI-driven playbooks to understand stakeholders, tailor your message, and achieve your objectives in high-stakes meetings.',
-    url: process.env.NEXTAUTH_URL,
-    siteName: 'VisionsAlign',
+    title: appConfig.seo.title,
+    description: appConfig.seo.description,
+    url: appConfig.url,
+    siteName: appConfig.name,
     images: [
       {
-        url: `${process.env.NEXTAUTH_URL}/og-image.png`, // Replace with actual URL
+        url: appConfig.seo.ogImage,
         width: 1200,
         height: 630,
-        alt: 'VisionsAlign - AI-Powered Communication Strategy for Leaders',
+        alt: appConfig.seo.title,
       }
     ],
     locale: 'en_US',
@@ -25,12 +26,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VisionsAlign | Master Your Meetings with AI Strategy',
-    description: 'Stop guessing, start influencing. VisionsAlign gives you the AI-powered insights to win over any audience.',
-    images: [`${process.env.NEXTAUTH_URL}/twitter-image.png`], // Replace with actual URL
+    title: appConfig.seo.title,
+    description: appConfig.seo.description,
+    images: [appConfig.seo.twitterImage],
   },
   alternates: {
-    canonical: process.env.NEXTAUTH_URL,
+    canonical: appConfig.url,
   },
 };
 

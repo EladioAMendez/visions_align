@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { stripeConfig } from "./config";
 
 interface CreateCheckoutParams {
   priceId: string;
@@ -29,8 +30,8 @@ export const createCheckout = async ({
   couponId,
 }: CreateCheckoutParams): Promise<string> => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
+    const stripe = new Stripe(stripeConfig.secretKey, {
+      apiVersion: stripeConfig.apiVersion,
       typescript: true,
     });
 
@@ -108,8 +109,8 @@ export const createCustomerPortal = async ({
 // This is used to get the uesr checkout session and populate the data so we get the planId the user subscribed to
 export const findCheckoutSession = async (sessionId: string) => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
+    const stripe = new Stripe(stripeConfig.secretKey, {
+      apiVersion: stripeConfig.apiVersion,
       typescript: true,
     });
 

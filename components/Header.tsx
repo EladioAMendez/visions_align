@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import logo from "@/app/logo.svg";
-import config from "@/config";
+import { appConfig } from "@/libs/config";
 
 const links: {
   href: string;
@@ -59,18 +59,18 @@ const Header = () => {
           <Link
             className="flex items-center gap-2 shrink-0 "
             href="/"
-            title={`${config.appName} homepage`}
+            title={`${appConfig.name} homepage`}
           >
             <Image
               src={logo}
-              alt={`${config.appName} logo`}
+              alt={`${appConfig.name} logo`}
               className="w-8"
               placeholder="blur"
               priority={true}
               width={48}
               height={48}
             />
-            <span className="font-extrabold text-lg">{config.appName}</span>
+            <span className="font-extrabold text-lg">{appConfig.name}</span>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -125,19 +125,19 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               className="flex items-center gap-2 shrink-0 "
-              title={`${config.appName} homepage`}
+              title={`${appConfig.name} homepage`}
               href="/"
             >
               <Image
                 src={logo}
-                alt={`${config.appName} logo`}
+                alt={`${appConfig.name} logo`}
                 className="w-8"
                 placeholder="blur"
                 priority={true}
                 width={48}
                 height={48}
               />
-              <span className="font-extrabold text-lg">{config.appName}</span>
+              <span className="font-extrabold text-lg">{appConfig.name}</span>
             </Link>
             <button
               type="button"

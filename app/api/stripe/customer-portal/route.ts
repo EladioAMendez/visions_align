@@ -3,8 +3,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/libs/next-auth";
 import { prisma } from "@/libs/prisma";
 import Stripe from "stripe";
+import { stripeConfig, appConfig } from "@/libs/config";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(stripeConfig.secretKey, {
   apiVersion: "2023-08-16",
 });
 
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     // Create customer portal session
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: user.stripeCustomerId,
-      return_url: `${process.env.NEXTAUTH_URL}/dashboard/billing`,
+      return_url: `${appConfig.url}/dashboard/billing`,
     });
 
     return NextResponse.json({ url: portalSession.url });

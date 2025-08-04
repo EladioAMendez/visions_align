@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/libs/next-auth";
 import { prisma } from "../../../libs/prisma";
 import { Prisma } from "@/lib/generated/prisma";
+import { aiConfig } from "@/libs/config";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Trigger n8n webhook with comprehensive data
-    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL;
+    const n8nWebhookUrl = aiConfig.n8n.webhookUrl;
     if (n8nWebhookUrl) {
       // Fetch user data for webhook
       const userData = await prisma.user.findUnique({

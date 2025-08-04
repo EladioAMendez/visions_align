@@ -2,18 +2,20 @@
  * Utility functions for managing pre-beta mode and admin access
  */
 
+import { appConfig } from './config';
+
 /**
  * Check if the app is currently in pre-beta mode
  */
 export function isPreBetaMode(): boolean {
-  return process.env.NEXT_PUBLIC_PRE_BETA_MODE === 'true';
+  return appConfig.features.preBetaMode;
 }
 
 /**
  * Check if an email is in the admin whitelist
  */
 export function isAdminEmail(email: string): boolean {
-  const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim()) || [];
+  const adminEmails = appConfig.admin.emails;
   return adminEmails.includes(email);
 }
 

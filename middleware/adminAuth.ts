@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/libs/next-auth";
 import { redirect } from "next/navigation";
+import { appConfig } from '@/libs/config';
 
-// Admin email addresses - add your email here
-const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',').map(email => email.trim()) || [];
+// Get admin emails from centralized config
+const ADMIN_EMAILS = appConfig.admin.emails;
 
 export async function requireAdmin() {
   const session = await getServerSession(authOptions);

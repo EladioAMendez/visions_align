@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { prisma } from '@/libs/prisma';
+import { emailConfig } from '@/libs/config';
 
-// Initialize Resend only if API key is available
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const resend = emailConfig.apiKey ? new Resend(emailConfig.apiKey) : null;
 
 export async function POST(req: NextRequest) {
   try {
@@ -65,9 +66,9 @@ Next Steps: Review this request and send beta access details to the user within 
     `;
 
     // Send email notification
-    if (resend && process.env.RESEND_API_KEY) {
+    if (resend && emailConfig.apiKey) {
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'noreply@visionsalign.com',
+        from: emailConfig.from.noReply,
         to: ['beta-access@visionsalign.com'],
         subject: emailSubject,
         html: emailHtml,
@@ -82,7 +83,7 @@ Next Steps: Review this request and send beta access details to the user within 
     }
 
     // Send confirmation email to user
-    if (resend && process.env.RESEND_API_KEY) {
+    if (resend && emailConfig.apiKey) {
       const confirmationHtml = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #1e293b, #0f172a); padding: 2rem; border-radius: 12px; color: white;">
@@ -106,7 +107,7 @@ Next Steps: Review this request and send beta access details to the user within 
                 <strong>Questions about your beta access?</strong>
               </p>
               <p style="color: #cbd5e1; margin: 0;">
-                Email us directly at <a href="mailto:beta-access@visionsalign.com" style="color: #10b981;">beta-access@visionsalign.com</a>
+                Email us directly at <a href="mailto:${emailConfig.from.betaAccess}" style="color: #10b981;">${emailConfig.from.betaAccess}</a>
               </p>
             </div>
           </div>
@@ -114,7 +115,7 @@ Next Steps: Review this request and send beta access details to the user within 
       `;
 
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'noreply@visionsalign.com',
+        from: emailConfig.from.noReply,
         to: [email],
         subject: 'Welcome to VisionsAlign Beta - Request Received',
         html: confirmationHtml,
