@@ -24,7 +24,7 @@ export const sendOpenAi = async (
 
   const options = {
     headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      // Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, // Removed - not using OpenAI
       'Content-Type': 'application/json',
     },
   };

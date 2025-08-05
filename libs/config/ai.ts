@@ -1,23 +1,23 @@
-import { env } from '../env';
-
 /**
  * AI Services Configuration
  * Centralized AI and external service configuration
+ * Note: This config is safe for both client and server environments
  */
+
+// Helper to safely get server-side environment variables
+const getServerEnvVar = (key: string): string | null => {
+  if (typeof window !== 'undefined') {
+    // Client-side: return null for server-only variables
+    return null;
+  }
+  // Server-side: access process.env directly
+  return process.env[key] || null;
+};
+
 export const aiConfig = {
-  // OpenAI Configuration (optional - only if using direct OpenAI integration)
-  openai: {
-    apiKey: env.OPENAI_API_KEY || null,
-    baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-4-turbo-preview',
-    maxTokens: 4096,
-    temperature: 0.7,
-    enabled: !!env.OPENAI_API_KEY,
-  },
-  
   // n8n Webhook Configuration
   n8n: {
-    webhookUrl: env.N8N_WEBHOOK_URL,
+    webhookUrl: getServerEnvVar('N8N_WEBHOOK_URL'),
     timeout: 30000, // 30 seconds
     retries: 3,
   },

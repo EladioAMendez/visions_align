@@ -1,4 +1,23 @@
-import { env, isDevelopment } from '../env';
+/**
+ * Database Configuration
+ * Centralized database-related configuration
+ * Note: This config is safe for both client and server environments
+ */
+
+// Helper to safely get server-side environment variables
+const getServerEnvVar = (key: string): string | null => {
+  if (typeof window !== 'undefined') {
+    // Client-side: return null for server-only variables
+    return null;
+  }
+  // Server-side: access process.env directly
+  return process.env[key] || null;
+};
+
+// Helper to check if we're in development mode
+const isDevelopment = (): boolean => {
+  return process.env.NODE_ENV === 'development';
+};
 
 /**
  * Database Configuration
@@ -6,7 +25,7 @@ import { env, isDevelopment } from '../env';
  */
 export const databaseConfig = {
   // Connection
-  url: env.DATABASE_URL,
+  url: getServerEnvVar('DATABASE_URL'),
   
   // Prisma Configuration
   prisma: {

@@ -1,16 +1,26 @@
-import { env } from '../env';
-
 /**
  * Email Configuration
  * Centralized email service configuration
+ * Note: This config is safe for both client and server environments
  */
+
+// Helper to safely get server-side environment variables
+const getServerEnvVar = (key: string): string | null => {
+  if (typeof window !== 'undefined') {
+    // Client-side: return null for server-only variables
+    return null;
+  }
+  // Server-side: access process.env directly
+  return process.env[key] || null;
+};
+
 export const emailConfig = {
-  // Resend API
-  apiKey: env.RESEND_API_KEY,
+  // Resend API (server-side only)
+  apiKey: getServerEnvVar('RESEND_API_KEY'),
   
   // From addresses
   from: {
-    noReply: env.EMAIL_FROM || 'noreply@visionsalign.com',
+    noReply: getServerEnvVar('EMAIL_FROM') || 'noreply@visionsalign.com',
     admin: 'VisionsAlign Team <team@resend.visionsalign.com>',
     support: 'socrates.73@gmail.com',
     betaAccess: 'beta-access@visionsalign.com',
@@ -35,7 +45,7 @@ export const emailConfig = {
     port: 587,
     auth: {
       user: 'resend',
-      pass: env.RESEND_API_KEY,
+      pass: getServerEnvVar('RESEND_API_KEY'),
     },
   },
 } as const;

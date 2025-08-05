@@ -1,15 +1,16 @@
-import { env, isPreBetaMode, getAdminEmails } from '../env';
+import { isPreBetaMode, getAdminEmails, getBaseUrl } from '../env';
 
 /**
  * Application Configuration
  * Core app settings and feature flags
+ * Note: This config is safe for both client and server environments
  */
 export const appConfig = {
   // Basic App Info
   name: 'VisionsAlign',
   description: 'AI-powered microservice that decodes executive communication styles and generates personalized meeting playbooks for career advancement.',
   domain: 'visionsalign.com',
-  url: env.NEXTAUTH_URL,
+  url: getBaseUrl(), // Safe for both client and server
   
   // Feature Flags
   features: {
@@ -35,8 +36,8 @@ export const appConfig = {
     title: 'VisionsAlign - AI-Powered Meeting Playbooks',
     description: 'Transform your executive presence with AI-generated playbooks that decode stakeholder dynamics and communication styles.',
     keywords: ['executive presence', 'meeting preparation', 'stakeholder analysis', 'AI coaching'],
-    ogImage: `${env.NEXTAUTH_URL}/og-image.png`,
-    twitterImage: `${env.NEXTAUTH_URL}/twitter-image.png`,
+    ogImage: `${getBaseUrl()}/og-image.png`,
+    twitterImage: `${getBaseUrl()}/twitter-image.png`,
   },
   
   // Rate Limiting
