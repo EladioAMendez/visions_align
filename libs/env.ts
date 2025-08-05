@@ -63,7 +63,13 @@ try {
     error.errors.forEach((err) => {
       console.error(`  - ${err.path.join('.')}: ${err.message}`);
     });
-    process.exit(1);
+    // Only call process.exit in Node.js environment (server-side)
+    if (typeof process !== 'undefined' && process.exit) {
+      process.exit(1);
+    } else {
+      // In browser environment, throw error instead
+      throw new Error('Environment validation failed. Check console for details.');
+    }
   }
   throw error;
 }
