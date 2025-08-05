@@ -5,7 +5,8 @@
 [build.environment]
   # Omit legitimate environment variable names from secrets scanning
   # NEXTAUTH_URL is a standard NextAuth.js environment variable
-  SECRETS_SCAN_OMIT_KEYS = "NEXTAUTH_URL"
+  # Stripe Price IDs are meant to be public and safe to expose in client-side code
+  SECRETS_SCAN_OMIT_KEYS = "NEXTAUTH_URL,STRIPE_PRICE_ID_PRO,STRIPE_PRICE_ID_DIRECTOR"
 
 # Headers for static assets
 [[headers]]
