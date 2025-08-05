@@ -97,7 +97,7 @@ export default function PricingSection() {
       name: "Starter",
       price: "Free",
       period: null,
-      description: "Get your first stakeholder playbook to test the power of strategic preparation.",
+      description: "Prove the ROI on your most urgent stakeholder challenge. Perfect for that crucial 27-minute VP meeting.",
       features: [
         "1 Playbook Credit",
         "Analysis of 1 Stakeholder",
@@ -127,10 +127,10 @@ export default function PricingSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            Find the Plan That Aligns With Your Ambition
+            The Blueprint to Direct the Conversation
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            Start for free. Upgrade when you're ready to turn influence into your superpower.
+            From tactical meeting prep to strategic relationship mastery. Choose your path to executive alignment.
           </p>
         </motion.div>
 

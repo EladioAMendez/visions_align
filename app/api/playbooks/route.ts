@@ -108,14 +108,14 @@ export async function POST(req: NextRequest) {
         stakeholder: stakeholderData,
         playbookType: userData?.planTier === 'DIRECTOR' ? 'RELATIONSHIP' : 'STAKEHOLDER',
         aiPersonas: {
-          // Core 6 AI personas available to all tiers
+          // Core 6 AI personas for Stakeholder Playbook (content mastery)
           strategist: true,
           empath: true,
           operator: true,
           analyst: true,
           communicator: true,
           negotiator: true,
-          // The Connector - exclusive to Director tier
+          // The Connector - 7th persona for Relationship Playbook (context & connection mastery)
           connector: userData?.planTier === 'DIRECTOR' && userData?.linkedinUrl ? true : false
         },
         analysisScope: {

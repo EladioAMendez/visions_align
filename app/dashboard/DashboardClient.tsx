@@ -145,7 +145,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
               animate={headerInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
             >
-              Ready to turn your next meeting into a strategic win? Generate your personalized playbook below.
+              Master your stakeholder dynamics and turn every meeting into a career-defining moment.
             </motion.p>
           </div>
           <motion.div
@@ -189,8 +189,8 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
               value: stakeholders.length,
               color: 'text-white',
               subtitle: user?.planTier === 'STARTER' ? 'Upgrade for more analysis' : 
-                       user?.planTier === 'PRO' ? 'Stakeholder analysis only' : 
-                       'Relationship analysis included'
+                       user?.planTier === 'PRO' ? 'Content mastery focus' : 
+                       'Context & connection mastery'
             }
           ].map((stat, index) => (
             <motion.div 

@@ -19,39 +19,39 @@ const config = {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
     plans: [
       {
-        // PRO PLAN - STAKEHOLDER PLAYBOOK
+        // PRO PLAN - DYNAMIC MEETING PREP
         // The priceId is coming from your Stripe dashboard. You can get it by clicking on the product > pricing.
         // This is used to display the pricing table and to create the checkout session.
         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO,
         isFeatured: true,
         name: "Pro",
-        description: "Stakeholder Playbook: Deep-dive analysis to help you win the meeting.",
+        description: "Dynamic Meeting Prep: Master the content of your communication to win every meeting.",
         price: 29,
         priceAnchor: 49,
         features: [
-          { name: "6 AI Expert Personas" },
-          { name: "Stakeholder-focused analysis" },
+          { name: "The Stakeholder Playbook (6 AI Expert Personas)" },
+          { name: "The Agenda Coach (recurring meeting prep)" },
           { name: "Analyze up to 10 stakeholders/month" },
           { name: "Generate unlimited playbooks" },
-          { name: "Calendar Integration" },
+          { name: "Stop rehearsing at 2 a.m. - Start strategizing" },
         ],
       },
       {
-        // DIRECTOR PLAN - RELATIONSHIP PLAYBOOK
+        // DIRECTOR PLAN - RELATIONAL MASTERY
         // The priceId is coming from your Stripe dashboard. You can get it by clicking on the product > pricing.
         // This is used to display the pricing table and to create the checkout session.
         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_DIRECTOR,
         name: "Director",
-        description: "Relationship Playbook: Comparative analysis to help you win the promotion.",
+        description: "Relational Mastery: Master the context and connection to build career-defining relationships.",
         price: 49,
         priceAnchor: 99,
         features: [
           { name: "Everything in Pro, plus:" },
-          { name: "Exclusive 'The Connector' AI persona" },
-          { name: "User + Stakeholder comparative analysis" },
+          { name: "The Connector (7th AI Expert Persona)" },
+          { name: "Comparative analysis: You + Stakeholder" },
           { name: "Communication style synergy mapping" },
           { name: "Analyze unlimited stakeholders" },
-          { name: "Priority Support" },
+          { name: "Graduate from winning meetings to winning promotions" },
         ],
       },
     ],
