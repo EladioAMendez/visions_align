@@ -119,7 +119,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
             >
-              Turn your next high-stakes meeting into a career-defining win. Get the stakeholder insights and strategic playbook you need to walk into any executive conversation with calm confidence.
+              Turn your next meeting into a career-defining win. <br /> Get the stakeholder insights and strategic playbook you need to walk into any executive conversation with calm confidence.
             </motion.p>
 
             <motion.div 
