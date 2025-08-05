@@ -29,6 +29,15 @@ const faqList: FAQItemProps[] = [
     ),
   },
   {
+    question: "What is Strategic Empathy?",
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        <p>Strategic Empathy is our core principle—and a hallmark of modern leadership. The most effective executives have always invested time to understand their audience; VisionsAlign provides a more efficient, data-driven framework for that essential work.</p>
+        <p>Our platform enhances genuine understanding and respect, giving you the same relational intelligence that top performers use naturally. We operate exclusively on publicly available professional data, turning what used to be intuitive into systematic.</p>
+      </div>
+    ),
+  },
+  {
     question: "What kind of data do you connect to?",
     answer: (
       <div className="space-y-2 leading-relaxed">
@@ -49,14 +58,6 @@ const faqList: FAQItemProps[] = [
     answer: (
       <div className="space-y-2 leading-relaxed">
         <p>From connecting your data to a ready-to-use playbook takes about 90 seconds. Our goal is to make high-level strategic preparation accessible and efficient, eliminating hours of manual research and anxiety.</p>
-      </div>
-    ),
-  },
-  {
-    question: "What if I'm not satisfied?",
-    answer: (
-      <div className="space-y-2 leading-relaxed">
-        <p>We offer a 30-day, no-questions-asked money-back guarantee. We are confident that VisionsAlign will provide immense value, but if you're not satisfied for any reason, we'll issue a full refund.</p>
       </div>
     ),
   },
