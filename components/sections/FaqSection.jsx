@@ -11,28 +11,28 @@ import {
 
 const faqData = [
   {
-    question: "Is this ethical?",
-    answer: "We define this as Strategic Empathy—a core principle of modern leadership. Effective leaders have always invested time to understand their audience; VisionsAlign provides a more efficient, data-driven framework for that essential work. Our platform is designed to enhance genuine understanding and respect, not to enable manipulation. To ensure this, we operate exclusively on publicly available professional data."
+    question: "Is this just another personality test?",
+    answer: "No. Personality tests are static and generic. VisionsAlign provides dynamic, context-aware intelligence. The Insight Panel analyzes specific stakeholders for specific meetings, giving you actionable tactics, not just broad personality traits. It's the difference between a map and a GPS."
   },
   {
     question: "How is this different from ChatGPT?",
-        answer: <>While ChatGPT is a generalist, VisionsAlign is a specialist. <span className="text-slate-200">The Insight Panel</span> is composed of six distinct expert personas (e.g., a Strategist, a Data Scientist, a Psychologist) who collaborate to analyze your specific challenge from multiple angles, delivering a more nuanced and actionable playbook than any single AI can.</>
+    answer: <>ChatGPT is a general-purpose tool. VisionsAlign is a specialist. We've trained our AI on a proprietary dataset of executive communication patterns, negotiation strategies, and psychological drivers of influence. You get a team of six expert AI personas collaborating on your behalf—something a general model can't replicate.</>
   },
   {
-    question: "What's the ROI?",
-    answer: "The ROI is career velocity. It's the promotion you get six months early. It's the budget that gets approved. It's the startup that gets funded. Our users don't just win meetings; they build the influence needed to accelerate their careers."
+    question: "What is Strategic Empathy?",
+    answer: <>Strategic Empathy is our core principle—and a hallmark of modern leadership. The most effective executives have always invested time to understand their audience; VisionsAlign provides a more efficient, data-driven framework for that essential work. <br/><br/>Our platform enhances genuine understanding and respect, giving you the same relational intelligence that top performers use naturally. We operate exclusively on publicly available professional data, turning what used to be intuitive into systematic.</>
   },
   {
-    question: "How long does it take?",
-    answer: "What used to take 10+ hours of manual research, brainstorming, and slide-building now takes about 15 minutes. VisionsAlign automates the prep work so you can focus on the performance."
+    question: "What kind of data do you connect to?",
+    answer: "For stakeholder analysis, you can start with just a LinkedIn profile URL. To generate a meeting playbook, you can connect your calendar, upload meeting agendas, or simply describe the meeting's context and goals. The more context you provide, the more precise the playbook will be."
   },
   {
     question: "Is my data secure?",
-    answer: "Absolutely. We use enterprise-grade encryption for all data, both in transit and at rest. Your inputs are used exclusively to generate your private playbook and are never used for training our models."
+    answer: "Yes. We use enterprise-grade encryption and follow strict data privacy protocols. Your inputs are used solely to generate your private playbooks and are never used for training our models. Your career strategy is yours alone."
   },
   {
-    question: "Does this replace human connection?",
-    answer: "No. It enhances it. By handling the analytical heavy lifting, VisionsAlign frees you to focus on what humans do best: building rapport, showing genuine empathy, and making the personal connection that ultimately closes the deal or wins the room."
+    question: "How long does it take to get a playbook?",
+    answer: "From connecting your data to a ready-to-use playbook takes about 90 seconds. Our goal is to make high-level strategic preparation accessible and efficient, eliminating hours of manual research and anxiety."
   }
 ];
 
