@@ -65,6 +65,22 @@ enum PlaybookStatus {
   FAILED
 }
 
+enum PlaybookType {
+  STAKEHOLDER_ANALYSIS    // Basic stakeholder analysis (Starter/Pro)
+  GOAL_ORIENTED          // Meeting-specific playbook (Pro tier)
+  RELATIONSHIP_ANALYSIS  // Relationship playbook with The Connector (Director tier)
+}
+
+enum MeetingGoal {
+  PROJECT_UPDATE         // "Project Update" - status reports, progress reviews
+  BUDGET_ASK            // "Budget Ask" - resource requests, funding proposals
+  NEW_IDEA_PITCH        // "New Idea Pitch" - innovation proposals, new initiatives
+  PERFORMANCE_REVIEW    // Performance discussions, feedback sessions
+  STRATEGIC_ALIGNMENT   // Strategic planning, goal setting
+  PROBLEM_SOLVING       // Issue resolution, troubleshooting
+  STAKEHOLDER_ALIGNMENT // Getting buy-in, consensus building
+}
+
 model DropdownOption {
   id          String   @id @default(cuid())
   category    String   // "influence" or "relationship"
@@ -130,11 +146,13 @@ model Stakeholder {
 }
 
 model Playbook {
-  id        String         @id @default(cuid())
-  status    PlaybookStatus @default(PENDING)
-  content   Json?          // The AI-generated playbook content from n8n
-  createdAt DateTime       @default(now()) @map("created_at")
-  updatedAt DateTime       @updatedAt @map("updated_at")
+  id           String         @id @default(cuid())
+  status       PlaybookStatus @default(PENDING)
+  playbookType PlaybookType   @default(STAKEHOLDER_ANALYSIS) @map("playbook_type")
+  meetingGoal  MeetingGoal?   @map("meeting_goal") // Only for GOAL_ORIENTED playbooks
+  content      Json?          // The AI-generated playbook content from n8n
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

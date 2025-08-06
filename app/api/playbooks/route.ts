@@ -15,11 +15,29 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
 
   try {
-    const { stakeholderId } = await req.json();
+    const { stakeholderId, playbookType, meetingGoal } = await req.json();
 
     if (!stakeholderId) {
       return NextResponse.json(
         { error: "stakeholderId is required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate playbook type and meeting goal
+    const validPlaybookTypes = ['STAKEHOLDER_ANALYSIS', 'GOAL_ORIENTED', 'RELATIONSHIP_ANALYSIS'];
+    const validMeetingGoals = ['PROJECT_UPDATE', 'BUDGET_ASK', 'NEW_IDEA_PITCH', 'PERFORMANCE_REVIEW', 'STRATEGIC_ALIGNMENT', 'PROBLEM_SOLVING', 'STAKEHOLDER_ALIGNMENT'];
+    
+    if (playbookType && !validPlaybookTypes.includes(playbookType)) {
+      return NextResponse.json(
+        { error: "Invalid playbook type" },
+        { status: 400 }
+      );
+    }
+
+    if (playbookType === 'GOAL_ORIENTED' && (!meetingGoal || !validMeetingGoals.includes(meetingGoal))) {
+      return NextResponse.json(
+        { error: "Meeting goal is required for Goal-Oriented Playbooks" },
         { status: 400 }
       );
     }
@@ -40,8 +58,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // For Director tier users, LinkedIn profile is required for relationship analysis
-    if (user.planTier === 'DIRECTOR' && !user.linkedinUrl) {
+    // Determine playbook type based on user tier and request
+    let finalPlaybookType = playbookType || 'STAKEHOLDER_ANALYSIS';
+    
+    // Tier-based playbook type validation
+    if (user.planTier === 'STARTER' && finalPlaybookType !== 'STAKEHOLDER_ANALYSIS') {
+      finalPlaybookType = 'STAKEHOLDER_ANALYSIS'; // Starter tier only gets basic analysis
+    }
+    
+    if (user.planTier === 'PRO' && finalPlaybookType === 'RELATIONSHIP_ANALYSIS') {
+      return NextResponse.json(
+        { 
+          error: "Upgrade required",
+          message: "Relationship Analysis with The Connector is available for Director tier users only.",
+          upgradeRequired: true
+        },
+        { status: 402 }
+      );
+    }
+
+    // For Director tier users requesting relationship analysis, LinkedIn profile is required
+    if (user.planTier === 'DIRECTOR' && finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && !user.linkedinUrl) {
       return NextResponse.json(
         { 
           error: "LinkedIn profile required",
@@ -64,6 +101,8 @@ export async function POST(req: NextRequest) {
           userId,
           stakeholderId,
           status: "PENDING",
+          playbookType: finalPlaybookType,
+          meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
         },
       });
 
@@ -106,22 +145,35 @@ export async function POST(req: NextRequest) {
         playbookId: playbook.id,
         user: userData,
         stakeholder: stakeholderData,
-        playbookType: userData?.planTier === 'DIRECTOR' ? 'RELATIONSHIP' : 'STAKEHOLDER',
+        playbookType: finalPlaybookType,
+        meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
         aiPersonas: {
-          // Core 6 AI personas for Stakeholder Playbook (content mastery)
+          // Core 6 AI personas for all playbook types (The Insight Panel)
           strategist: true,
-          empath: true,
-          operator: true,
-          analyst: true,
-          communicator: true,
-          negotiator: true,
-          // The Connector - 7th persona for Relationship Playbook (context & connection mastery)
-          connector: userData?.planTier === 'DIRECTOR' && userData?.linkedinUrl ? true : false
+          psychologist: true,
+          diplomat: true,
+          dataAnalyst: true,
+          executiveCoach: true,
+          communicationsExpert: true,
+          // The Agenda Coach - for Goal-Oriented Playbooks (Pro tier retention feature)
+          agendaCoach: finalPlaybookType === 'GOAL_ORIENTED',
+          // The Connector - 7th persona for Relationship Analysis (Director tier)
+          connector: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl ? true : false
         },
         analysisScope: {
-          stakeholderOnly: userData?.planTier !== 'DIRECTOR',
-          relationshipAnalysis: userData?.planTier === 'DIRECTOR' && userData?.linkedinUrl,
-          userProfileRequired: userData?.planTier === 'DIRECTOR'
+          contentMastery: finalPlaybookType === 'STAKEHOLDER_ANALYSIS' || finalPlaybookType === 'GOAL_ORIENTED',
+          contextMastery: finalPlaybookType === 'RELATIONSHIP_ANALYSIS',
+          meetingSpecific: finalPlaybookType === 'GOAL_ORIENTED',
+          relationshipAnalysis: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl,
+          userProfileRequired: finalPlaybookType === 'RELATIONSHIP_ANALYSIS'
+        },
+        brandPositioning: {
+          tierFocus: userData?.planTier === 'PRO' ? 'Tactical Mastery - Master the content of communication' : 
+                    userData?.planTier === 'DIRECTOR' ? 'Relational Mastery - Master the context and connection' : 
+                    'Prove ROI on your most urgent stakeholder challenge',
+          valueProposition: finalPlaybookType === 'GOAL_ORIENTED' ? 'Win the Meeting' : 
+                           finalPlaybookType === 'RELATIONSHIP_ANALYSIS' ? 'Win the Promotion' : 
+                           'Decode stakeholder psychology'
         }
       };
 

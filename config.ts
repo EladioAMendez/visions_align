@@ -19,20 +19,20 @@ const config = {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
     plans: [
       {
-        // PRO PLAN - DYNAMIC MEETING PREP
+        // PRO PLAN - TACTICAL MASTERY
         // The priceId is coming from your Stripe dashboard. You can get it by clicking on the product > pricing.
         // This is used to display the pricing table and to create the checkout session.
         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO,
         isFeatured: true,
         name: "Pro",
-        description: "Dynamic Meeting Prep: Master the content of your communication to win every meeting.",
+        description: "Tactical Mastery: Master the content of your communication. Win every meeting with data-driven precision.",
         price: 29,
         priceAnchor: 49,
         features: [
           { name: "The Stakeholder Playbook (6 AI Expert Personas)" },
-          { name: "The Agenda Coach (recurring meeting prep)" },
+          { name: "Goal-Oriented Playbooks (The Agenda Coach)" },
+          { name: "Meeting-specific guidance (Project Updates, Budget Asks, Pitches)" },
           { name: "Analyze up to 10 stakeholders/month" },
-          { name: "Generate unlimited playbooks" },
           { name: "Stop rehearsing at 2 a.m. - Start strategizing" },
         ],
       },
@@ -42,14 +42,14 @@ const config = {
         // This is used to display the pricing table and to create the checkout session.
         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_DIRECTOR,
         name: "Director",
-        description: "Relational Mastery: Master the context and connection to build career-defining relationships.",
+        description: "Relational Mastery: Master the context and connection. Transform meetings into sponsorship relationships.",
         price: 49,
         priceAnchor: 99,
         features: [
           { name: "Everything in Pro, plus:" },
           { name: "The Connector (7th AI Expert Persona)" },
-          { name: "Comparative analysis: You + Stakeholder" },
-          { name: "Communication style synergy mapping" },
+          { name: "Your profile + stakeholder comparative analysis" },
+          { name: "Relationship-building blueprint & sponsorship strategy" },
           { name: "Analyze unlimited stakeholders" },
           { name: "Graduate from winning meetings to winning promotions" },
         ],

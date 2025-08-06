@@ -97,14 +97,14 @@ export default function PricingSection() {
       name: "Starter",
       price: "Free",
       period: null,
-      description: "Prove the ROI on your most urgent stakeholder challenge. Perfect for that crucial 27-minute VP meeting.",
+      description: "Decode your most urgent stakeholder challenge. Perfect for that crucial 27-minute VP meeting where you must make it count.",
       features: [
-        "1 Playbook Credit",
-        "Analysis of 1 Stakeholder",
-        "Access to 6 AI Expert Personas",
-        "Standard Email Support",
+        "1 Stakeholder Analysis",
+        "The Insight Panel (6 AI Expert Personas)",
+        "Immediate tactical guidance",
+        "Prove ROI before you invest",
       ],
-      cta: "Get Your Free Playbook",
+      cta: "Get Your Free Analysis",
       popular: false,
     },
     ...config.stripe.plans.map(plan => ({
@@ -127,10 +127,10 @@ export default function PricingSection() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-            The Blueprint to Direct the Conversation
+            Resolve Conversational Dissonance. Foster Executive Resonance.
           </h2>
           <p className="text-lg md:text-xl text-slate-300">
-            From tactical meeting prep to strategic relationship mastery. Choose your path to executive alignment.
+            Transform high-stakes interactions from anxiety into career acceleration. Master content, then context.
           </p>
         </motion.div>
 
