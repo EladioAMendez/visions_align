@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
+import crypto from "crypto";
+
+// Security configuration
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+const ALLOWED_IPS = process.env.WEBHOOK_ALLOWED_IPS?.split(',') || [];
+
+// Rate limiting (simple in-memory store - use Redis for production)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // 10 requests per minute per IP
 
 // Helper functions for enhanced logging
 function getPlaybookTypeLabel(playbookType: string): string {
@@ -26,7 +36,64 @@ function getMeetingGoalLabel(meetingGoal: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // Security Layer 1: API Key Authentication
+    const authHeader = req.headers.get('authorization');
+    const apiKey = authHeader?.replace('Bearer ', '');
+    
+    if (!WEBHOOK_SECRET || !apiKey || apiKey !== WEBHOOK_SECRET) {
+      console.warn('🚨 Unauthorized webhook attempt:', {
+        hasSecret: !!WEBHOOK_SECRET,
+        hasApiKey: !!apiKey,
+        ip: getClientIP(req)
+      });
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    // Security Layer 2: IP Whitelisting (if configured)
+    const clientIP = getClientIP(req);
+    if (ALLOWED_IPS.length > 0 && !ALLOWED_IPS.includes(clientIP)) {
+      console.warn('🚨 IP not whitelisted:', clientIP);
+      return NextResponse.json(
+        { error: "Forbidden" },
+        { status: 403 }
+      );
+    }
+
+    // Security Layer 3: Rate Limiting
+    const rateLimitKey = clientIP;
+    const now = Date.now();
+    const windowData = rateLimitStore.get(rateLimitKey);
+    
+    if (windowData && now < windowData.resetTime) {
+      if (windowData.count >= RATE_LIMIT_MAX_REQUESTS) {
+        console.warn('🚨 Rate limit exceeded:', { ip: clientIP, count: windowData.count });
+        return NextResponse.json(
+          { error: "Rate limit exceeded" },
+          { status: 429 }
+        );
+      }
+      windowData.count++;
+    } else {
+      rateLimitStore.set(rateLimitKey, {
+        count: 1,
+        resetTime: now + RATE_LIMIT_WINDOW
+      });
+    }
+
     const body = await req.json();
+    
+    // Security Layer 4: Request Signature Validation (optional)
+    const signature = req.headers.get('x-webhook-signature');
+    if (signature && !verifyWebhookSignature(JSON.stringify(body), signature, WEBHOOK_SECRET)) {
+      console.warn('🚨 Invalid webhook signature');
+      return NextResponse.json(
+        { error: "Invalid signature" },
+        { status: 401 }
+      );
+    }
     
     // Validate required fields
     if (!body.playbookId) {
@@ -140,6 +207,43 @@ export async function POST(req: NextRequest) {
       { error: "Internal server error" },
       { status: 500 }
     );
+  }
+}
+
+// Security helper functions
+function getClientIP(req: NextRequest): string {
+  // Check various headers for the real IP (useful behind proxies/CDNs)
+  const forwarded = req.headers.get('x-forwarded-for');
+  const realIP = req.headers.get('x-real-ip');
+  const cfConnectingIP = req.headers.get('cf-connecting-ip'); // Cloudflare
+  
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  if (realIP) {
+    return realIP;
+  }
+  if (cfConnectingIP) {
+    return cfConnectingIP;
+  }
+  
+  return req.ip || 'unknown';
+}
+
+function verifyWebhookSignature(payload: string, signature: string, secret: string): boolean {
+  try {
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(payload)
+      .digest('hex');
+    
+    const providedSignature = signature.replace('sha256=', '');
+    return crypto.timingSafeEqual(
+      Buffer.from(expectedSignature, 'hex'),
+      Buffer.from(providedSignature, 'hex')
+    );
+  } catch (error) {
+    return false;
   }
 }
 

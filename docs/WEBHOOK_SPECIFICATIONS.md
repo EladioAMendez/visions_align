@@ -14,6 +14,8 @@ This document defines the JSON specifications for the n8n webhook integration su
 **URL:** `{NEXTAUTH_URL}/api/playbooks/webhook` (from your .env file)
 **Method:** POST
 **Content-Type:** application/json
+**Authentication:** Bearer token required
+**Security:** Rate limited, IP whitelisting optional
 
 ---
 
@@ -94,7 +96,14 @@ This payload is sent when a user creates a playbook via `/api/playbooks/route.ts
 
 ## 2. Incoming JSON (n8n → VisionsAlign)
 
-This payload should be sent to complete the playbook processing:
+This payload should be sent to complete the playbook processing.
+
+### Security Headers Required:
+```http
+Authorization: Bearer YOUR_WEBHOOK_SECRET
+Content-Type: application/json
+X-Webhook-Signature: sha256=HMAC_SIGNATURE (optional)
+```
 
 ```json
 {
@@ -266,6 +275,8 @@ If processing fails, send this format:
 **Environment Variables Required:**
 - `NEXTAUTH_URL` - Your application's base URL
 - `N8N_WEBHOOK_URL` - Your n8n webhook endpoint URL
+- `WEBHOOK_SECRET` - Secret key for webhook authentication
+- `WEBHOOK_ALLOWED_IPS` - (Optional) Comma-separated list of allowed IP addresses
 
 ### Test Payload:
 Use the Goal-Oriented Playbook example above with a valid `playbookId` from your database.
@@ -291,13 +302,60 @@ Use the Goal-Oriented Playbook example above with a valid `playbookId` from your
 
 ---
 
-## Notes for n8n Development
+## 6. Security Implementation
 
-1. **Webhook Security**: Implement proper authentication/validation
+### Required Security Headers:
+```javascript
+// In your n8n HTTP Request node
+{
+  "method": "POST",
+  "url": "https://visionsalign.com/api/playbooks/webhook",
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_WEBHOOK_SECRET"
+  },
+  "body": {
+    "playbookId": "...",
+    "status": "COMPLETED",
+    "content": {...}
+  }
+}
+```
+
+### Environment Variables Setup:
+```bash
+# Generate secure webhook secret
+WEBHOOK_SECRET=bo8Vr+Olp7bliQ4QqaejPX/nsB1o7iu7VFDM2Z4C8kw=
+
+# Optional: Restrict to specific IPs
+WEBHOOK_ALLOWED_IPS=1.2.3.4,5.6.7.8
+
+# Your n8n webhook URL
+N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/visionsalign-playbooks
+```
+
+### Security Features:
+- **API Key Authentication**: Bearer token required
+- **Rate Limiting**: 10 requests per minute per IP
+- **IP Whitelisting**: Optional restriction to specific IPs
+- **Request Signature**: Optional HMAC-SHA256 validation
+- **Detailed Logging**: All security violations logged
+
+### Security Responses:
+- `401 Unauthorized` - Missing or invalid API key
+- `403 Forbidden` - IP not whitelisted
+- `429 Too Many Requests` - Rate limit exceeded
+
+---
+
+## 7. Notes for n8n Development
+
+1. **Authentication**: Always include `Authorization: Bearer YOUR_WEBHOOK_SECRET` header
 2. **Timeout Handling**: Set reasonable timeouts (30-60 seconds)
 3. **Error Handling**: Always send status updates, even for failures
 4. **Logging**: Log processing steps for debugging
 5. **Rate Limiting**: Respect API rate limits for external services
+6. **IP Whitelisting**: Consider restricting webhook to your n8n server's IP
 
 ---
 

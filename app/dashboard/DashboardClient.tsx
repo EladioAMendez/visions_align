@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -34,12 +34,43 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingStakeholder, setEditingStakeholder] = useState<Stakeholder | null>(null);
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
+  const [selectedStakeholder, setSelectedStakeholder] = useState<string>("");
+  const [selectedPlaybookType, setSelectedPlaybookType] = useState<string>("");
+  const [selectedMeetingGoal, setSelectedMeetingGoal] = useState<string>("");
+  const [meetingGoals, setMeetingGoals] = useState<Array<{value: string, label: string, description: string}>>([]);
   const router = useRouter();
   
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [statsRef, statsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [actionsRef, actionsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [stakeholdersRef, stakeholdersInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  // Fetch meeting goals and set default playbook type based on tier
+  useEffect(() => {
+    const fetchMeetingGoals = async () => {
+      try {
+        const response = await fetch('/api/meeting-goals');
+        if (response.ok) {
+          const goals = await response.json();
+          setMeetingGoals(goals);
+        }
+      } catch (error) {
+        console.error('Failed to fetch meeting goals:', error);
+      }
+    };
+
+    fetchMeetingGoals();
+
+    // Set default playbook type based on user tier
+    if (user?.planTier === 'STARTER') {
+      setSelectedPlaybookType('STAKEHOLDER_ANALYSIS');
+    } else if (user?.planTier === 'PRO') {
+      setSelectedPlaybookType('GOAL_ORIENTED');
+    } else if (user?.planTier === 'DIRECTOR') {
+      setSelectedPlaybookType('RELATIONSHIP_ANALYSIS');
+    }
+  }, [user?.planTier]);
 
   const handleStakeholderAdded = () => {
     router.refresh();
@@ -56,16 +87,51 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
     setEditingStakeholder(null);
   };
 
-  const generatePlaybook = async (stakeholderId: string) => {
-    setLoadingId(stakeholderId);
+  const openGenerateModal = (stakeholderId: string) => {
+    setSelectedStakeholder(stakeholderId);
+    setShowGenerateModal(true);
+  };
+
+  const handleGeneratePlaybook = async () => {
+    if (!selectedStakeholder) {
+      alert('Please select a stakeholder.');
+      return;
+    }
+
+    if (!selectedPlaybookType) {
+      alert('Please select a playbook type.');
+      return;
+    }
+
+    if (selectedPlaybookType === 'GOAL_ORIENTED' && !selectedMeetingGoal) {
+      alert('Please select a meeting goal for Goal-Oriented Playbooks.');
+      return;
+    }
+
+    if ((user?.playbookCredits || 0) <= 0 && user?.planTier === 'STARTER') {
+      alert('No playbook credits remaining. Upgrade your plan to continue.');
+      return;
+    }
+
+    setLoadingId(selectedStakeholder);
     setGeneratedPlaybook(null);
+    
     try {
+      const requestBody: any = {
+        stakeholderId: selectedStakeholder,
+        playbookType: selectedPlaybookType,
+      };
+
+      if (selectedPlaybookType === 'GOAL_ORIENTED') {
+        requestBody.meetingGoal = selectedMeetingGoal;
+      }
+
       const response = await fetch('/api/playbooks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ stakeholderId }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
@@ -80,9 +146,13 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
 
       const data = await response.json();
       setGeneratedPlaybook(data);
+      setShowGenerateModal(false);
+      setSelectedStakeholder('');
+      setSelectedMeetingGoal('');
+      router.refresh();
     } catch (error) {
-      console.error(error);
-      alert(`Error: ${(error as Error).message}`);
+      console.error('Error generating playbook:', error);
+      alert('Failed to generate playbook. Please try again.');
     } finally {
       setLoadingId(null);
     }
@@ -391,7 +461,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                     </div>
                   </div>
                   <motion.button 
-                    onClick={() => generatePlaybook(stakeholder.id)} 
+                    onClick={() => openGenerateModal(stakeholder.id)} 
                     disabled={!!loadingId || (user?.playbookCredits || 0) <= 0}
                     className="w-full btn btn-primary btn-sm disabled:bg-slate-600 disabled:cursor-not-allowed"
                     whileHover={!loadingId && (user?.playbookCredits || 0) > 0 ? { scale: 1.05 } : {}}
@@ -486,6 +556,202 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
           </div>
         )}
       </section>
+
+      {/* Enhanced Playbook Generation Modal */}
+      {showGenerateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-slate-900 rounded-lg p-6 max-w-md w-full border border-slate-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-white">Generate Strategic Playbook</h2>
+              <button
+                onClick={() => {
+                  setShowGenerateModal(false);
+                  setSelectedStakeholder('');
+                  setSelectedMeetingGoal('');
+                }}
+                className="text-slate-400 hover:text-white transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Stakeholder Display */}
+              {selectedStakeholder && (
+                <div className="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                  <p className="text-sm text-slate-400 mb-1">Selected Stakeholder</p>
+                  <p className="text-white font-medium">
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.name}
+                  </p>
+                  <p className="text-sm text-slate-400">
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.title} at{' '}
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.company}
+                  </p>
+                </div>
+              )}
+
+              {/* Playbook Type Selection */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Playbook Type
+                </label>
+                <div className="space-y-2">
+                  {user?.planTier === 'STARTER' && (
+                    <div className="p-3 bg-slate-800 rounded-lg border border-slate-600">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-white font-medium">Stakeholder Analysis</p>
+                          <p className="text-sm text-slate-400">Decode stakeholder psychology</p>
+                        </div>
+                        <div className="w-4 h-4 bg-brand-sea-green rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {(user?.planTier === 'PRO' || user?.planTier === 'DIRECTOR') && (
+                    <>
+                      <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                        <input
+                          type="radio"
+                          name="playbookType"
+                          value="STAKEHOLDER_ANALYSIS"
+                          checked={selectedPlaybookType === 'STAKEHOLDER_ANALYSIS'}
+                          onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-center justify-between w-full">
+                          <div>
+                            <p className="text-white font-medium">Stakeholder Analysis</p>
+                            <p className="text-sm text-slate-400">Decode stakeholder psychology</p>
+                          </div>
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            selectedPlaybookType === 'STAKEHOLDER_ANALYSIS' 
+                              ? 'bg-brand-sea-green border-brand-sea-green' 
+                              : 'border-slate-500'
+                          }`}>
+                            {selectedPlaybookType === 'STAKEHOLDER_ANALYSIS' && (
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            )}
+                          </div>
+                        </div>
+                      </label>
+                      
+                      <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                        <input
+                          type="radio"
+                          name="playbookType"
+                          value="GOAL_ORIENTED"
+                          checked={selectedPlaybookType === 'GOAL_ORIENTED'}
+                          onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-center justify-between w-full">
+                          <div>
+                            <p className="text-white font-medium">Goal-Oriented Playbook</p>
+                            <p className="text-sm text-slate-400">Win the Meeting - Tactical mastery</p>
+                          </div>
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            selectedPlaybookType === 'GOAL_ORIENTED' 
+                              ? 'bg-brand-sea-green border-brand-sea-green' 
+                              : 'border-slate-500'
+                          }`}>
+                            {selectedPlaybookType === 'GOAL_ORIENTED' && (
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            )}
+                          </div>
+                        </div>
+                      </label>
+                    </>
+                  )}
+                  
+                  {user?.planTier === 'DIRECTOR' && (
+                    <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                      <input
+                        type="radio"
+                        name="playbookType"
+                        value="RELATIONSHIP_ANALYSIS"
+                        checked={selectedPlaybookType === 'RELATIONSHIP_ANALYSIS'}
+                        onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center justify-between w-full">
+                        <div>
+                          <p className="text-white font-medium">Relationship Analysis</p>
+                          <p className="text-sm text-slate-400">Win the Promotion - Relational mastery</p>
+                        </div>
+                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                          selectedPlaybookType === 'RELATIONSHIP_ANALYSIS' 
+                            ? 'bg-brand-sea-green border-brand-sea-green' 
+                            : 'border-slate-500'
+                        }`}>
+                          {selectedPlaybookType === 'RELATIONSHIP_ANALYSIS' && (
+                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                          )}
+                        </div>
+                      </div>
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              {/* Meeting Goal Selection (only for Goal-Oriented Playbooks) */}
+              {selectedPlaybookType === 'GOAL_ORIENTED' && (
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Meeting Goal
+                  </label>
+                  <select
+                    value={selectedMeetingGoal}
+                    onChange={(e) => setSelectedMeetingGoal(e.target.value)}
+                    className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-brand-sea-green focus:outline-none"
+                  >
+                    <option value="">Select your meeting objective...</option>
+                    {meetingGoals.map((goal) => (
+                      <option key={goal.value} value={goal.value}>
+                        {goal.label}
+                      </option>
+                    ))}
+                  </select>
+                  {selectedMeetingGoal && (
+                    <p className="text-sm text-slate-400 mt-2">
+                      {meetingGoals.find(g => g.value === selectedMeetingGoal)?.description}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => {
+                    setShowGenerateModal(false);
+                    setSelectedStakeholder('');
+                    setSelectedMeetingGoal('');
+                  }}
+                  className="flex-1 px-4 py-2 text-slate-400 border border-slate-600 rounded-lg hover:bg-slate-800 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleGeneratePlaybook}
+                  disabled={loadingId !== null || !selectedPlaybookType || (selectedPlaybookType === 'GOAL_ORIENTED' && !selectedMeetingGoal)}
+                  className="flex-1 px-4 py-2 bg-brand-sea-green text-white rounded-lg hover:bg-brand-sea-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loadingId ? 'Generating...' : 'Generate Playbook'}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </main>
   );
 }

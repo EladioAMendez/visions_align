@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 interface Stakeholder {
   id: string;
   name: string;
-  role: string;
   title?: string;
   company?: string;
 }
@@ -18,22 +17,6 @@ interface PlaybookWithStakeholder {
   status: string;
   createdAt: Date;
   stakeholder: Stakeholder;
-}
-
-interface Playbook {
-  id: string;
-  title: string;
-  status: string;
-  content: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  stakeholder: {
-    id: string;
-    name: string;
-    role: string;
-    influence: string;
-    relationship: string;
-  };
 }
 
 interface User {
@@ -48,17 +31,47 @@ interface User {
 
 interface Props {
   user: User;
-  playbooks: Playbook[];
-  stakeholders: Stakeholder[];
 }
 
-export default function PlaybooksClient({ user, playbooks, stakeholders }: Props) {
+export default function PlaybooksClient({ user }: Props) {
+  const [selectedPlaybook, setSelectedPlaybook] = useState<PlaybookWithStakeholder | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string>("ALL");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isGenerating, setIsGenerating] = useState<string | null>(null);
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
+  const [selectedStakeholder, setSelectedStakeholder] = useState<string>("");
+  const [selectedPlaybookType, setSelectedPlaybookType] = useState<string>("");
+  const [selectedMeetingGoal, setSelectedMeetingGoal] = useState<string>("");
+  const [meetingGoals, setMeetingGoals] = useState<Array<{value: string, label: string, description: string}>>([]);
   const router = useRouter();
-  const [selectedPlaybook, setSelectedPlaybook] = useState<Playbook | null>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedStakeholder, setSelectedStakeholder] = useState("");
-  const [filterStatus, setFilterStatus] = useState("ALL");
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const { playbooks, stakeholders, playbookCredits, planTier } = user;
+
+  // Fetch meeting goals and set default playbook type based on tier
+  useEffect(() => {
+    const fetchMeetingGoals = async () => {
+      try {
+        const response = await fetch('/api/meeting-goals');
+        if (response.ok) {
+          const goals = await response.json();
+          setMeetingGoals(goals);
+        }
+      } catch (error) {
+        console.error('Failed to fetch meeting goals:', error);
+      }
+    };
+
+    fetchMeetingGoals();
+
+    // Set default playbook type based on user tier
+    if (planTier === 'STARTER') {
+      setSelectedPlaybookType('STAKEHOLDER_ANALYSIS');
+    } else if (planTier === 'PRO') {
+      setSelectedPlaybookType('GOAL_ORIENTED');
+    } else if (planTier === 'DIRECTOR') {
+      setSelectedPlaybookType('RELATIONSHIP_ANALYSIS');
+    }
+  }, [planTier]);
 
   // Poll for playbook updates if there are pending playbooks
   useEffect(() => {
@@ -77,8 +90,10 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
   useEffect(() => {
     const completedPlaybooks = playbooks.filter(p => p.status === 'COMPLETED');
     
+    // Check if there are newly completed playbooks (this is a simple approach)
+    // In a real app, you might want to track this more sophisticatedly
     completedPlaybooks.forEach(playbook => {
-      const timeSinceUpdate = Date.now() - new Date(playbook.updatedAt).getTime();
+      const timeSinceUpdate = Date.now() - new Date(playbook.createdAt).getTime();
       // Only show notification for recently completed playbooks (within last 30 seconds)
       if (timeSinceUpdate < 30000) {
         toast.success(`Playbook for ${playbook.stakeholder.name} is ready!`, {
@@ -90,38 +105,78 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
   }, [playbooks]);
 
   const filteredPlaybooks = playbooks.filter(playbook => {
-    const matchesSearch = playbook.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         playbook.stakeholder.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = playbook.stakeholder.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "ALL" || playbook.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'COMPLETED': return 'bg-green-100 text-green-800 border-green-200';
+      case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'FAILED': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const openGenerateModal = (stakeholderId: string) => {
+    setSelectedStakeholder(stakeholderId);
+    setShowGenerateModal(true);
+  };
+
   const handleGeneratePlaybook = async () => {
     if (!selectedStakeholder) {
-      toast.error("Please select a stakeholder");
+      toast.error('Please select a stakeholder.');
       return;
     }
 
-    setIsGenerating(true);
+    if (!selectedPlaybookType) {
+      toast.error('Please select a playbook type.');
+      return;
+    }
+
+    if (selectedPlaybookType === 'GOAL_ORIENTED' && !selectedMeetingGoal) {
+      toast.error('Please select a meeting goal for Goal-Oriented Playbooks.');
+      return;
+    }
+
+    if (playbookCredits <= 0 && planTier === 'STARTER') {
+      toast.error('No playbook credits remaining. Upgrade your plan to continue.');
+      return;
+    }
+
+    setIsGenerating(selectedStakeholder);
+    
     try {
+      const requestBody: any = {
+        stakeholderId: selectedStakeholder,
+        playbookType: selectedPlaybookType,
+      };
+
+      if (selectedPlaybookType === 'GOAL_ORIENTED') {
+        requestBody.meetingGoal = selectedMeetingGoal;
+      }
+
       const response = await fetch('/api/playbooks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ stakeholderId: selectedStakeholder }),
+        body: JSON.stringify(requestBody),
       });
 
       if (response.ok) {
-        const result = await response.json();
-        toast.success("Playbook generated successfully!");
-        setSelectedStakeholder("");
+        toast.success('Playbook generation started! Check back in a few minutes.');
+        setShowGenerateModal(false);
+        setSelectedStakeholder('');
+        setSelectedMeetingGoal('');
         router.refresh();
       } else {
-        throw new Error('Failed to generate playbook');
+        const errorData = await response.json();
+        toast.error(errorData.error || 'Failed to generate playbook. Please try again.');
       }
     } catch (error) {
-      toast.error("Failed to generate playbook");
+      toast.error('An error occurred. Please try again.');
     } finally {
-      setIsGenerating(false);
+      setIsGenerating(null);
     }
   };
 
@@ -141,345 +196,357 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
       });
 
       if (response.ok) {
-        toast.success("Playbook deleted successfully!");
+        toast.success('Playbook deleted successfully');
         router.refresh();
+        setSelectedPlaybook(null);
       } else {
-        throw new Error('Failed to delete playbook');
+        toast.error('Failed to delete playbook');
       }
     } catch (error) {
-      toast.error("Failed to delete playbook");
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'COMPLETED': return 'bg-slate-800 text-emerald-300 border-emerald-800/30';
-      case 'IN_PROGRESS': return 'bg-slate-800 text-amber-300 border-amber-800/30';
-      case 'DRAFT': return 'bg-slate-800 text-slate-300 border-slate-700';
-      default: return 'bg-slate-800 text-slate-300 border-slate-700';
-    }
-  };
-
-  const getInfluenceColor = (influence: string) => {
-    switch (influence) {
-      case 'HIGH': return 'bg-slate-800 text-red-300 border-red-800/30';
-      case 'MEDIUM': return 'bg-slate-800 text-amber-300 border-amber-800/30';
-      case 'LOW': return 'bg-slate-800 text-emerald-300 border-emerald-800/30';
-      default: return 'bg-slate-800 text-slate-300 border-slate-700';
+      toast.error('An error occurred');
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex justify-between items-center mb-8"
-      >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Playbooks</h1>
-          <p className="text-gray-600">Generate and manage your stakeholder engagement playbooks</p>
-        </div>
-      </motion.div>
-
-      {/* Generate New Playbook */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 mb-8"
-      >
-        <h2 className="text-lg font-semibold text-white mb-4">Generate New Playbook</h2>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <select
-              value={selectedStakeholder}
-              onChange={(e) => setSelectedStakeholder(e.target.value)}
-              className="bg-slate-800 border border-slate-600 text-white rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              disabled={isGenerating}
-            >
-              <option value="" className="bg-slate-800 text-white">Select a stakeholder...</option>
-              {stakeholders.map(stakeholder => (
-                <option key={stakeholder.id} value={stakeholder.id} className="bg-slate-800 text-white">
-                  {stakeholder.name} - {stakeholder.role}
-                </option>
-              ))}
-            </select>
+    <div className="min-h-screen bg-slate-900 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header with prominent Create Playbook CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Playbooks</h1>
+              <p className="text-slate-400">Generate strategic playbooks for your stakeholders</p>
+            </div>
+            
+            {/* Credits Display */}
+            <div className="text-right">
+              <p className="text-sm text-slate-400">Playbook Credits</p>
+              <p className="text-2xl font-bold text-brand-sea-green">
+                {planTier === 'STARTER' ? playbookCredits : '∞'}
+              </p>
+              <p className="text-xs text-slate-500">
+                {planTier === 'STARTER' ? 'remaining' : 'unlimited'}
+              </p>
+            </div>
           </div>
-          <button
-            onClick={handleGeneratePlaybook}
-            disabled={isGenerating || !selectedStakeholder}
-            className="btn btn-primary"
+
+          {/* Prominent Create New Playbook Section */}
+          <div className="bg-gradient-to-r from-brand-sea-green to-blue-600 rounded-xl p-6 text-white mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold mb-2">🚀 Ready to Create Your Next Strategic Playbook?</h2>
+                <p className="text-blue-100 mb-4">
+                  Turn your next meeting into a strategic win. Generate AI-powered playbooks for your stakeholders.
+                </p>
+                <div className="flex items-center gap-4">
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
+                    ⚡ AI-Powered Analysis
+                  </span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
+                    📊 Data-Driven Insights
+                  </span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
+                    🎯 Executive-Ready
+                  </span>
+                </div>
+              </div>
+              <div className="text-center">
+                <button
+                  onClick={() => router.push('/dashboard/stakeholders')}
+                  className="bg-slate-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-700 transition-colors shadow-lg border border-slate-600"
+                >
+                  Choose Stakeholder →
+                </button>
+                <p className="text-xs text-blue-100 mt-2">
+                  {stakeholders.length} stakeholders available
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Quick Generate from Existing Stakeholders */}
+        {stakeholders.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-8"
           >
-            {isGenerating ? (
-              <>
-                <span className="loading loading-spinner loading-sm"></span>
-                Generating...
-              </>
-            ) : (
-              'Generate Playbook'
-            )}
-          </button>
-        </div>
-        {stakeholders.length === 0 && (
-          <p className="text-slate-400 text-sm mt-2">
-            You need to add stakeholders first. 
-            <button
-              onClick={() => router.push('/dashboard/stakeholders')}
-              className="text-blue-400 hover:text-blue-300 ml-1 transition-colors"
-            >
-              Add stakeholders →
-            </button>
-          </p>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Generate for Existing Stakeholders</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {stakeholders.slice(0, 6).map((stakeholder) => (
+                <div key={stakeholder.id} className="bg-slate-800 rounded-lg p-4 border border-slate-700 hover:shadow-lg hover:bg-slate-750 transition-all">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-medium text-white">{stakeholder.name}</h4>
+                      <p className="text-sm text-slate-400">
+                        {stakeholder.title || stakeholder.company || 'Stakeholder'}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => openGenerateModal(stakeholder.id)}
+                      disabled={isGenerating === stakeholder.id || (playbookCredits <= 0 && planTier === 'STARTER')}
+                      className="bg-brand-sea-green text-white px-4 py-2 rounded-lg hover:bg-brand-sea-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isGenerating === stakeholder.id ? (
+                        <span className="flex items-center gap-2">
+                          <span className="loading loading-spinner loading-sm"></span>
+                          Generating...
+                        </span>
+                      ) : (
+                        'Generate'
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         )}
-      </motion.div>
 
-      {/* Filters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-6"
-      >
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder="Search playbooks..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="input input-bordered w-full"
-            />
+        {/* Stats Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+        >
+          <div className="bg-slate-800 rounded-lg p-6 shadow-sm border border-slate-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-400 text-sm font-medium">Total Playbooks</p>
+                <p className="text-2xl font-bold text-white mt-1">{playbooks.length}</p>
+              </div>
+              <div className="bg-blue-600 rounded-lg p-3">
+                <span className="text-2xl">📚</span>
+              </div>
+            </div>
           </div>
-          <div>
+
+          <div className="bg-slate-800 rounded-lg p-6 shadow-sm border border-slate-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-400 text-sm font-medium">Completed</p>
+                <p className="text-2xl font-bold text-white mt-1">
+                  {playbooks.filter(p => p.status === 'COMPLETED').length}
+                </p>
+              </div>
+              <div className="bg-green-600 rounded-lg p-3">
+                <span className="text-2xl">✅</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800 rounded-lg p-6 shadow-sm border border-slate-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-400 text-sm font-medium">In Progress</p>
+                <p className="text-2xl font-bold text-white mt-1">
+                  {playbooks.filter(p => p.status === 'PENDING').length}
+                </p>
+              </div>
+              <div className="bg-yellow-600 rounded-lg p-3">
+                <span className="text-2xl">⏳</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Filters and Search */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-slate-800 rounded-lg p-6 shadow-sm border border-slate-700 mb-8"
+        >
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search by stakeholder name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-sea-green focus:border-transparent"
+              />
+            </div>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="select select-bordered"
+              className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-sea-green focus:border-transparent"
             >
-              <option value="ALL">All Status</option>
-              <option value="DRAFT">Draft</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="COMPLETED">Completed</option>
+              <option value="ALL" className="bg-slate-700 text-white">All Status</option>
+              <option value="PENDING" className="bg-slate-700 text-white">Pending</option>
+              <option value="COMPLETED" className="bg-slate-700 text-white">Completed</option>
+              <option value="FAILED" className="bg-slate-700 text-white">Failed</option>
             </select>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Stats */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
-      >
-        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-slate-400 text-sm font-medium">Total Playbooks</p>
-              <p className="text-2xl font-bold text-white mt-1">{playbooks.length}</p>
-            </div>
-            <div className="bg-blue-900/30 rounded-lg p-3 border border-blue-800/30">
-              <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium">Completed</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {playbooks.filter(p => p.status === 'COMPLETED').length}
-              </p>
-            </div>
-            <div className="bg-green-100 rounded-lg p-3">
-              <span className="text-2xl">✅</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-slate-400 text-sm font-medium">In Progress</p>
-              <p className="text-2xl font-bold text-white mt-1">
-                {playbooks.filter(p => p.status === 'IN_PROGRESS').length}
-              </p>
-            </div>
-            <div className="bg-amber-900/30 rounded-lg p-3 border border-amber-800/30">
-              <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 transition-all duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-slate-400 text-sm font-medium">Completed</p>
-              <p className="text-2xl font-bold text-white mt-1">
-                {playbooks.filter(p => p.status === 'COMPLETED').length}
-              </p>
-            </div>
-            <div className="bg-emerald-900/30 rounded-lg p-3 border border-emerald-800/30">
-              <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Playbooks List */}
-      {filteredPlaybooks.length === 0 ? (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-center py-12 bg-slate-900 rounded-lg shadow-lg border border-slate-700"
-        >
-          <div className="bg-slate-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-white mb-2">
-            {playbooks.length === 0 ? "No playbooks yet" : "No playbooks match your search"}
-          </h3>
-          <p className="text-slate-400 mb-6">
-            {playbooks.length === 0 
-              ? "Generate your first playbook to start engaging with stakeholders"
-              : "Try adjusting your search or filters"
-            }
-          </p>
-          {playbooks.length === 0 && stakeholders.length > 0 && (
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <select
-                value={selectedStakeholder}
-                onChange={(e) => setSelectedStakeholder(e.target.value)}
-                className="bg-slate-800 border border-slate-600 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="" className="bg-slate-800 text-white">Select stakeholder...</option>
-                {stakeholders.map(stakeholder => (
-                  <option key={stakeholder.id} value={stakeholder.id} className="bg-slate-800 text-white">
-                    {stakeholder.name} - {stakeholder.role}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={handleGeneratePlaybook}
-                disabled={!selectedStakeholder}
-                className="btn btn-primary"
-              >
-                Generate First Playbook
-              </button>
-            </div>
-          )}
         </motion.div>
-      ) : (
+
+        {/* Playbooks List */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          className="bg-slate-800 rounded-lg shadow-sm border border-slate-700"
         >
-          {filteredPlaybooks.map((playbook, index) => (
+          <div className="p-6 border-b border-slate-700">
+            <h2 className="text-xl font-semibold text-white">Your Playbooks</h2>
+          </div>
+
+          <div className="p-6">
+            {filteredPlaybooks.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">📝</div>
+                <h3 className="text-lg font-medium text-white mb-2">No playbooks yet</h3>
+                <p className="text-slate-400 mb-6">Generate your first strategic playbook to get started</p>
+                <button
+                  onClick={() => router.push('/dashboard/stakeholders')}
+                  className="bg-brand-sea-green text-white px-6 py-3 rounded-lg hover:bg-brand-sea-green/90 transition-colors"
+                >
+                  Create Your First Playbook
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredPlaybooks.map((playbook) => (
+                  <motion.div
+                    key={playbook.id}
+                    whileHover={{ scale: 1.02 }}
+                    className="border border-slate-600 rounded-lg p-4 cursor-pointer hover:shadow-lg hover:bg-slate-750 transition-all bg-slate-700"
+                    onClick={() => setSelectedPlaybook(playbook)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-white mb-1">
+                          Playbook for {playbook.stakeholder.name}
+                        </h3>
+                        <p className="text-slate-400 text-sm">
+                          {playbook.stakeholder.title || playbook.stakeholder.company || 'Stakeholder'}
+                        </p>
+                        <p className="text-slate-500 text-xs mt-1">
+                          Created {new Date(playbook.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(playbook.status)}`}>
+                          {playbook.status}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeletePlaybook(playbook.id);
+                          }}
+                          className="text-red-500 hover:text-red-700 p-1"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Playbook Detail Modal */}
+        {selectedPlaybook && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            onClick={() => setSelectedPlaybook(null)}
+          >
             <motion.div
-              key={playbook.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 + index * 0.1 }}
-              whileHover={{ scale: 1.02, y: -2 }}
-              className="bg-slate-900 rounded-lg p-6 shadow-lg border border-slate-700 hover:border-slate-600 hover:shadow-xl transition-all duration-200 cursor-pointer group"
-              onClick={() => setSelectedPlaybook(playbook)}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors mb-1 line-clamp-2">
-                    {playbook.title}
-                  </h3>
-                  <p className="text-slate-300 text-sm mb-2">
-                    {playbook.stakeholder.name} • {playbook.stakeholder.role}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(playbook.status)}`}>
-                      {playbook.status.replace('_', ' ')}
-                    </span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getInfluenceColor(playbook.stakeholder.influence)}`}>
-                      {playbook.stakeholder.influence} Influence
-                    </span>
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      Playbook for {selectedPlaybook.stakeholder.name}
+                    </h2>
+                    <div className="flex items-center gap-4">
+                      <p className="text-gray-600">
+                        {selectedPlaybook.stakeholder.title || selectedPlaybook.stakeholder.company || 'Stakeholder'}
+                      </p>
+                      <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(selectedPlaybook.status)}`}>
+                        {selectedPlaybook.status}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex space-x-1 ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedPlaybook(playbook);
-                    }}
-                    className="text-slate-400 hover:text-blue-400 p-2 rounded-lg hover:bg-slate-800 transition-all"
-                    title="View playbook"
+                    onClick={() => setSelectedPlaybook(null)}
+                    className="text-gray-400 hover:text-gray-600"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeletePlaybook(playbook.id);
-                    }}
-                    className="text-slate-400 hover:text-red-400 p-2 rounded-lg hover:bg-slate-800 transition-all"
-                    title="Delete playbook"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    ✕
                   </button>
                 </div>
               </div>
 
-              <div className="border-t border-slate-700 pt-4">
-                <div className="flex justify-between items-center text-sm text-slate-400">
-                  <span className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Created {new Date(playbook.createdAt).toLocaleDateString()}
-                  </span>
-                  <span>Updated {new Date(playbook.updatedAt).toLocaleDateString()}</span>
-                </div>
+              <div className="p-6">
+                {selectedPlaybook.status === 'COMPLETED' ? (
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-4">Strategic Playbook Content</h3>
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <p className="text-gray-600">
+                        Playbook content would be displayed here when available from the AI generation process.
+                      </p>
+                    </div>
+                  </div>
+                ) : selectedPlaybook.status === 'PENDING' ? (
+                  <div className="text-center py-8">
+                    <div className="loading loading-spinner loading-lg text-brand-sea-green mb-4"></div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Generating Your Playbook</h3>
+                    <p className="text-gray-600">
+                      Our AI is analyzing your stakeholder and creating a strategic playbook. This usually takes 2-3 minutes.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Generation Failed</h3>
+                    <p className="text-gray-600 mb-4">
+                      There was an issue generating this playbook. Please try again.
+                    </p>
+                    <button
+                      onClick={() => openGenerateModal(selectedPlaybook.stakeholder.id)}
+                      className="bg-brand-sea-green text-white px-4 py-2 rounded-lg hover:bg-brand-sea-green/90 transition-colors"
+                    >
+                      Retry Generation
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.div>
-          ))}
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </div>
 
-      {/* Playbook Details Modal */}
-      {selectedPlaybook && (
+      {/* Enhanced Playbook Generation Modal */}
+      {showGenerateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-slate-900 rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto border border-slate-700"
+            className="bg-slate-900 rounded-lg p-6 max-w-md w-full border border-slate-700"
           >
             <div className="flex justify-between items-center mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-white mb-2">{selectedPlaybook.title}</h2>
-                <div className="flex items-center gap-4">
-                  <p className="text-slate-400 text-sm">Stakeholder • {selectedPlaybook.stakeholder.role}</p>
-                  <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(selectedPlaybook.status)}`}>
-                    {selectedPlaybook.status.replace('_', ' ')}
-                  </span>
-                </div>
-              </div>
+              <h2 className="text-xl font-bold text-white">Generate Strategic Playbook</h2>
               <button
-                onClick={() => setSelectedPlaybook(null)}
+                onClick={() => {
+                  setShowGenerateModal(false);
+                  setSelectedStakeholder('');
+                  setSelectedMeetingGoal('');
+                }}
                 className="text-slate-400 hover:text-white transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -487,27 +554,173 @@ export default function PlaybooksClient({ user, playbooks, stakeholders }: Props
                 </svg>
               </button>
             </div>
-            
-            <div className="prose max-w-none">
-              {selectedPlaybook.content ? (
-                <div 
-                  className="text-white leading-relaxed"
-                  dangerouslySetInnerHTML={{ 
-                    __html: selectedPlaybook.content.replace(/\n/g, '<br>') 
-                  }}
-                />
-              ) : (
-                <div className="text-center py-8 text-slate-400">
-                  <p>This playbook is still being generated...</p>
-                  <div className="loading loading-spinner loading-md mt-4"></div>
+
+            <div className="space-y-4">
+              {/* Stakeholder Display */}
+              {selectedStakeholder && (
+                <div className="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                  <p className="text-sm text-slate-400 mb-1">Selected Stakeholder</p>
+                  <p className="text-white font-medium">
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.name}
+                  </p>
+                  <p className="text-sm text-slate-400">
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.title} at{' '}
+                    {stakeholders.find(s => s.id === selectedStakeholder)?.company}
+                  </p>
                 </div>
               )}
-            </div>
 
-            <div className="border-t border-slate-700 pt-4 mt-6">
-              <div className="flex justify-between items-center text-sm text-slate-400">
-                <span>Created: {new Date(selectedPlaybook.createdAt).toLocaleString()}</span>
-                <span>Last updated: {new Date(selectedPlaybook.updatedAt).toLocaleString()}</span>
+              {/* Playbook Type Selection */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Playbook Type
+                </label>
+                <div className="space-y-2">
+                  {planTier === 'STARTER' && (
+                    <div className="p-3 bg-slate-800 rounded-lg border border-slate-600">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-white font-medium">Stakeholder Analysis</p>
+                          <p className="text-sm text-slate-400">Decode stakeholder psychology</p>
+                        </div>
+                        <div className="w-4 h-4 bg-brand-sea-green rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {(planTier === 'PRO' || planTier === 'DIRECTOR') && (
+                    <>
+                      <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                        <input
+                          type="radio"
+                          name="playbookType"
+                          value="STAKEHOLDER_ANALYSIS"
+                          checked={selectedPlaybookType === 'STAKEHOLDER_ANALYSIS'}
+                          onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-center justify-between w-full">
+                          <div>
+                            <p className="text-white font-medium">Stakeholder Analysis</p>
+                            <p className="text-sm text-slate-400">Decode stakeholder psychology</p>
+                          </div>
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            selectedPlaybookType === 'STAKEHOLDER_ANALYSIS' 
+                              ? 'bg-brand-sea-green border-brand-sea-green' 
+                              : 'border-slate-500'
+                          }`}>
+                            {selectedPlaybookType === 'STAKEHOLDER_ANALYSIS' && (
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            )}
+                          </div>
+                        </div>
+                      </label>
+                      
+                      <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                        <input
+                          type="radio"
+                          name="playbookType"
+                          value="GOAL_ORIENTED"
+                          checked={selectedPlaybookType === 'GOAL_ORIENTED'}
+                          onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-center justify-between w-full">
+                          <div>
+                            <p className="text-white font-medium">Goal-Oriented Playbook</p>
+                            <p className="text-sm text-slate-400">Win the Meeting - Tactical mastery</p>
+                          </div>
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                            selectedPlaybookType === 'GOAL_ORIENTED' 
+                              ? 'bg-brand-sea-green border-brand-sea-green' 
+                              : 'border-slate-500'
+                          }`}>
+                            {selectedPlaybookType === 'GOAL_ORIENTED' && (
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            )}
+                          </div>
+                        </div>
+                      </label>
+                    </>
+                  )}
+                  
+                  {planTier === 'DIRECTOR' && (
+                    <label className="flex items-center p-3 bg-slate-800 rounded-lg border border-slate-600 cursor-pointer hover:border-brand-sea-green transition-colors">
+                      <input
+                        type="radio"
+                        name="playbookType"
+                        value="RELATIONSHIP_ANALYSIS"
+                        checked={selectedPlaybookType === 'RELATIONSHIP_ANALYSIS'}
+                        onChange={(e) => setSelectedPlaybookType(e.target.value)}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center justify-between w-full">
+                        <div>
+                          <p className="text-white font-medium">Relationship Analysis</p>
+                          <p className="text-sm text-slate-400">Win the Promotion - Relational mastery</p>
+                        </div>
+                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                          selectedPlaybookType === 'RELATIONSHIP_ANALYSIS' 
+                            ? 'bg-brand-sea-green border-brand-sea-green' 
+                            : 'border-slate-500'
+                        }`}>
+                          {selectedPlaybookType === 'RELATIONSHIP_ANALYSIS' && (
+                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                          )}
+                        </div>
+                      </div>
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              {/* Meeting Goal Selection (only for Goal-Oriented Playbooks) */}
+              {selectedPlaybookType === 'GOAL_ORIENTED' && (
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Meeting Goal
+                  </label>
+                  <select
+                    value={selectedMeetingGoal}
+                    onChange={(e) => setSelectedMeetingGoal(e.target.value)}
+                    className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-brand-sea-green focus:outline-none"
+                  >
+                    <option value="">Select your meeting objective...</option>
+                    {meetingGoals.map((goal) => (
+                      <option key={goal.value} value={goal.value}>
+                        {goal.label}
+                      </option>
+                    ))}
+                  </select>
+                  {selectedMeetingGoal && (
+                    <p className="text-sm text-slate-400 mt-2">
+                      {meetingGoals.find(g => g.value === selectedMeetingGoal)?.description}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => {
+                    setShowGenerateModal(false);
+                    setSelectedStakeholder('');
+                    setSelectedMeetingGoal('');
+                  }}
+                  className="flex-1 px-4 py-2 text-slate-400 border border-slate-600 rounded-lg hover:bg-slate-800 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleGeneratePlaybook}
+                  disabled={isGenerating !== null || !selectedPlaybookType || (selectedPlaybookType === 'GOAL_ORIENTED' && !selectedMeetingGoal)}
+                  className="flex-1 px-4 py-2 bg-brand-sea-green text-white rounded-lg hover:bg-brand-sea-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isGenerating ? 'Generating...' : 'Generate Playbook'}
+                </button>
               </div>
             </div>
           </motion.div>

@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/libs/next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
-import PlaybooksClient from "./PlaybooksClientNew";
+import PlaybooksClient from "./PlaybooksClient";
 
 export default async function PlaybooksPage() {
   const session = await getServerSession(authOptions);
