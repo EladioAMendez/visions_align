@@ -1,6 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
+// Helper functions for enhanced logging
+function getPlaybookTypeLabel(playbookType: string): string {
+  const labels: Record<string, string> = {
+    STAKEHOLDER_ANALYSIS: 'Stakeholder Analysis',
+    GOAL_ORIENTED: 'Goal-Oriented Playbook',
+    RELATIONSHIP_ANALYSIS: 'Relationship Analysis'
+  };
+  return labels[playbookType] || playbookType;
+}
+
+function getMeetingGoalLabel(meetingGoal: string): string {
+  const labels: Record<string, string> = {
+    PROJECT_UPDATE: 'Project Update',
+    BUDGET_ASK: 'Budget Ask',
+    NEW_IDEA_PITCH: 'New Idea Pitch',
+    PERFORMANCE_REVIEW: 'Performance Review',
+    STRATEGIC_ALIGNMENT: 'Strategic Alignment',
+    PROBLEM_SOLVING: 'Problem Solving',
+    STAKEHOLDER_ALIGNMENT: 'Stakeholder Alignment'
+  };
+  return labels[meetingGoal] || meetingGoal;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -34,10 +57,10 @@ export async function POST(req: NextRequest) {
       where: { id: body.playbookId },
       include: {
         user: {
-          select: { id: true, email: true, name: true }
+          select: { id: true, email: true, name: true, planTier: true }
         },
         stakeholder: {
-          select: { id: true, name: true }
+          select: { id: true, name: true, title: true, company: true }
         }
       }
     });
@@ -67,19 +90,32 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // Log successful completion
-    console.log(`Playbook ${body.playbookId} updated to status: ${body.status}`);
+    // Enhanced logging with playbook type and meeting goal context
+    const playbookTypeLabel = getPlaybookTypeLabel(existingPlaybook.playbookType);
+    const meetingGoalLabel = existingPlaybook.meetingGoal ? getMeetingGoalLabel(existingPlaybook.meetingGoal) : null;
     
-    // If completed successfully, you could trigger additional actions here
+    console.log(`Playbook ${body.playbookId} (${playbookTypeLabel}${meetingGoalLabel ? ` - ${meetingGoalLabel}` : ''}) updated to status: ${body.status}`);
+    
+    // If completed successfully, trigger additional actions
     if (body.status === 'COMPLETED') {
-      console.log(`✅ Playbook completed for user ${updatedPlaybook.user.email} - stakeholder: ${updatedPlaybook.stakeholder.name}`);
+      const logMessage = `✅ ${playbookTypeLabel} completed for ${updatedPlaybook.user.planTier} user ${updatedPlaybook.user.email} - stakeholder: ${updatedPlaybook.stakeholder.name}`;
+      if (meetingGoalLabel) {
+        console.log(`${logMessage} (Meeting Goal: ${meetingGoalLabel})`);
+      } else {
+        console.log(logMessage);
+      }
       
       // Optional: Send notification email, update analytics, etc.
       // await sendCompletionNotification(updatedPlaybook);
     }
 
     if (body.status === 'FAILED') {
-      console.error(`❌ Playbook failed for user ${updatedPlaybook.user.email} - stakeholder: ${updatedPlaybook.stakeholder.name}`);
+      const errorMessage = `❌ ${playbookTypeLabel} failed for ${updatedPlaybook.user.planTier} user ${updatedPlaybook.user.email} - stakeholder: ${updatedPlaybook.stakeholder.name}`;
+      if (meetingGoalLabel) {
+        console.error(`${errorMessage} (Meeting Goal: ${meetingGoalLabel})`);
+      } else {
+        console.error(errorMessage);
+      }
       
       // Optional: Refund credits, send error notification, etc.
       // await handlePlaybookFailure(updatedPlaybook);
@@ -90,6 +126,8 @@ export async function POST(req: NextRequest) {
       playbook: {
         id: updatedPlaybook.id,
         status: updatedPlaybook.status,
+        playbookType: updatedPlaybook.playbookType,
+        meetingGoal: updatedPlaybook.meetingGoal,
         user: updatedPlaybook.user.name,
         stakeholder: updatedPlaybook.stakeholder.name,
         updatedAt: updatedPlaybook.updatedAt
