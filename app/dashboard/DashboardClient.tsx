@@ -53,10 +53,15 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
         const response = await fetch('/api/meeting-goals');
         if (response.ok) {
           const goals = await response.json();
-          setMeetingGoals(goals);
+          // Ensure goals is always an array
+          setMeetingGoals(Array.isArray(goals) ? goals : []);
+        } else {
+          console.error('Failed to fetch meeting goals: HTTP', response.status);
+          setMeetingGoals([]);
         }
       } catch (error) {
         console.error('Failed to fetch meeting goals:', error);
+        setMeetingGoals([]);
       }
     };
 
@@ -714,7 +719,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                     className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-brand-sea-green focus:outline-none"
                   >
                     <option value="">Select your meeting objective...</option>
-                    {meetingGoals.map((goal) => (
+                    {Array.isArray(meetingGoals) && meetingGoals.map((goal) => (
                       <option key={goal.value} value={goal.value}>
                         {goal.label}
                       </option>
@@ -722,7 +727,7 @@ export default function DashboardClient({ user, stakeholders, recentPlaybooks }:
                   </select>
                   {selectedMeetingGoal && (
                     <p className="text-sm text-slate-400 mt-2">
-                      {meetingGoals.find(g => g.value === selectedMeetingGoal)?.description}
+                      {Array.isArray(meetingGoals) && meetingGoals.find(g => g.value === selectedMeetingGoal)?.description}
                     </p>
                   )}
                 </div>
