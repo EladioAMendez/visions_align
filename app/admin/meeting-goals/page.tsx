@@ -1,14 +1,38 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/libs/next-auth";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import MeetingGoalsAdmin from "./MeetingGoalsAdmin";
 
-export default async function AdminMeetingGoalsPage() {
-  const session = await getServerSession(authOptions);
-  
-  // Basic admin check - enhance this with proper role-based access
+export default function AdminMeetingGoalsPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "loading") return; // Still loading
+    
+    // Basic admin check - enhance this with proper role-based access
+    if (!session?.user?.email || !session.user.email.includes('admin')) {
+      router.push("/dashboard");
+    }
+  }, [session, status, router]);
+
+  // Show loading while checking session
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-sea-green mx-auto mb-4"></div>
+          <p className="text-slate-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render admin content if not authorized
   if (!session?.user?.email || !session.user.email.includes('admin')) {
-    redirect("/dashboard");
+    return null;
   }
 
   return (
