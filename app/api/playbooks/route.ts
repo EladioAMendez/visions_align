@@ -111,77 +111,104 @@ export async function POST(req: NextRequest) {
 
     // Trigger n8n webhook with comprehensive data
     const n8nWebhookUrl = aiConfig.n8n.webhookUrl;
+    console.log('🔗 n8n Webhook URL:', n8nWebhookUrl ? 'SET' : 'NOT SET');
+    
     if (n8nWebhookUrl) {
-      // Fetch user data for webhook
-      const userData = await prisma.user.findUnique({
-        where: { id: userId },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          planTier: true,
-          linkedinUrl: true,
-        },
-      });
+      try {
+        // Fetch user data for webhook
+        const userData = await prisma.user.findUnique({
+          where: { id: userId },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            planTier: true,
+            linkedinUrl: true,
+          },
+        });
 
-      // Fetch stakeholder data for webhook
-      const stakeholderData = await prisma.stakeholder.findUnique({
-        where: { id: stakeholderId },
-        select: {
-          id: true,
-          name: true,
-          title: true,
-          company: true,
-          role: true,
-          department: true,
-          influence: true,
-          relationship: true,
-          notes: true,
-          linkedinUrl: true,
-        },
-      });
+        // Fetch stakeholder data for webhook
+        const stakeholderData = await prisma.stakeholder.findUnique({
+          where: { id: stakeholderId },
+          select: {
+            id: true,
+            name: true,
+            title: true,
+            company: true,
+            role: true,
+            department: true,
+            influence: true,
+            relationship: true,
+            notes: true,
+            linkedinUrl: true,
+          },
+        });
 
-      const webhookPayload = {
-        playbookId: playbook.id,
-        user: userData,
-        stakeholder: stakeholderData,
-        playbookType: finalPlaybookType,
-        meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
-        aiPersonas: {
-          // Core 6 AI personas for all playbook types (The Insight Panel)
-          strategist: true,
-          psychologist: true,
-          diplomat: true,
-          dataAnalyst: true,
-          executiveCoach: true,
-          communicationsExpert: true,
-          // The Agenda Coach - for Goal-Oriented Playbooks (Pro tier retention feature)
-          agendaCoach: finalPlaybookType === 'GOAL_ORIENTED',
-          // The Connector - 7th persona for Relationship Analysis (Director tier)
-          connector: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl ? true : false
-        },
-        analysisScope: {
-          contentMastery: finalPlaybookType === 'STAKEHOLDER_ANALYSIS' || finalPlaybookType === 'GOAL_ORIENTED',
-          contextMastery: finalPlaybookType === 'RELATIONSHIP_ANALYSIS',
-          meetingSpecific: finalPlaybookType === 'GOAL_ORIENTED',
-          relationshipAnalysis: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl,
-          userProfileRequired: finalPlaybookType === 'RELATIONSHIP_ANALYSIS'
-        },
-        brandPositioning: {
-          tierFocus: userData?.planTier === 'PRO' ? 'Tactical Mastery - Master the content of communication' : 
-                    userData?.planTier === 'DIRECTOR' ? 'Relational Mastery - Master the context and connection' : 
-                    'Prove ROI on your most urgent stakeholder challenge',
-          valueProposition: finalPlaybookType === 'GOAL_ORIENTED' ? 'Win the Meeting' : 
-                           finalPlaybookType === 'RELATIONSHIP_ANALYSIS' ? 'Win the Promotion' : 
-                           'Decode stakeholder psychology'
+        const webhookPayload = {
+          playbookId: playbook.id,
+          user: userData,
+          stakeholder: stakeholderData,
+          playbookType: finalPlaybookType,
+          meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
+          aiPersonas: {
+            // Core 6 AI personas for all playbook types (The Insight Panel)
+            strategist: true,
+            psychologist: true,
+            diplomat: true,
+            dataAnalyst: true,
+            executiveCoach: true,
+            communicationsExpert: true,
+            // The Agenda Coach - for Goal-Oriented Playbooks (Pro tier retention feature)
+            agendaCoach: finalPlaybookType === 'GOAL_ORIENTED',
+            // The Connector - 7th persona for Relationship Analysis (Director tier)
+            connector: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl ? true : false
+          },
+          analysisScope: {
+            contentMastery: finalPlaybookType === 'STAKEHOLDER_ANALYSIS' || finalPlaybookType === 'GOAL_ORIENTED',
+            contextMastery: finalPlaybookType === 'RELATIONSHIP_ANALYSIS',
+            meetingSpecific: finalPlaybookType === 'GOAL_ORIENTED',
+            relationshipAnalysis: finalPlaybookType === 'RELATIONSHIP_ANALYSIS' && userData?.linkedinUrl,
+            userProfileRequired: finalPlaybookType === 'RELATIONSHIP_ANALYSIS'
+          },
+          brandPositioning: {
+            tierFocus: userData?.planTier === 'PRO' ? 'Tactical Mastery - Master the content of communication' : 
+                      userData?.planTier === 'DIRECTOR' ? 'Relational Mastery - Master the context and connection' : 
+                      'Prove ROI on your most urgent stakeholder challenge',
+            valueProposition: finalPlaybookType === 'GOAL_ORIENTED' ? 'Win the Meeting' : 
+                             finalPlaybookType === 'RELATIONSHIP_ANALYSIS' ? 'Win the Promotion' : 
+                             'Decode stakeholder psychology'
+          }
+        };
+
+        console.log('📤 Sending webhook to n8n:', {
+          url: n8nWebhookUrl,
+          playbookId: playbook.id,
+          playbookType: finalPlaybookType,
+          meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
+          userTier: userData?.planTier
+        });
+
+        const webhookResponse = await fetch(n8nWebhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(webhookPayload),
+        });
+
+        if (webhookResponse.ok) {
+          console.log('✅ Webhook sent successfully to n8n');
+        } else {
+          console.error('❌ Webhook failed:', {
+            status: webhookResponse.status,
+            statusText: webhookResponse.statusText,
+            url: n8nWebhookUrl
+          });
         }
-      };
-
-      await fetch(n8nWebhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(webhookPayload),
-      });
+      } catch (webhookError) {
+        console.error('❌ Webhook error:', webhookError);
+        // Don't fail the entire request if webhook fails
+      }
+    } else {
+      console.warn('⚠️ N8N_WEBHOOK_URL not configured - skipping webhook');
     }
 
     return NextResponse.json(playbook, { status: 201 });
