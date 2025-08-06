@@ -78,57 +78,14 @@ This payload is sent when a user creates a playbook via `/api/playbooks/route.ts
 - `GOAL_ORIENTED` - Meeting-specific playbook (Pro tier)
 - `RELATIONSHIP_ANALYSIS` - Relationship playbook with The Connector (Director tier)
 
-#### meetingGoal Structure (only for GOAL_ORIENTED):
-The `meetingGoal` field now contains a complete object with admin-configurable details:
-
-```json
-{
-  "value": "PROJECT_UPDATE",
-  "label": "Project Update", 
-  "description": "Status reports, progress reviews, milestone check-ins"
-}
-```
-
-**Admin Configurable**: Meeting goals can be managed via the admin panel at `/admin/meeting-goals`
-
-**Admin Panel Features**:
-- Add new meeting goals with custom values, labels, and descriptions
-- Edit existing meeting goals (label, description, sort order)
-- Activate/deactivate meeting goals without deletion
-- Reorder meeting goals for UI display
-- Delete unused meeting goals
-
-**Flexible JSON Structure**: The webhook payload automatically adapts to any meeting goals configured in the admin panel. When new meeting goals are added, they immediately become available in the playbook generation modal and are included in webhook payloads with their full details.
-
-**Default Values Available**:
-- `PROJECT_UPDATE` - Project Update - Status reports, progress reviews, milestone check-ins
-- `BUDGET_ASK` - Budget Ask - Resource requests, funding proposals, investment pitches
-- `NEW_IDEA_PITCH` - New Idea Pitch - Innovation proposals, new initiatives, creative concepts
-- `PERFORMANCE_REVIEW` - Performance Review - Performance discussions, feedback sessions, career conversations
-- `STRATEGIC_ALIGNMENT` - Strategic Alignment - Strategic planning, goal setting, vision alignment
-- `PROBLEM_SOLVING` - Problem Solving - Issue resolution, troubleshooting, crisis management
-- `STAKEHOLDER_ALIGNMENT` - Stakeholder Alignment - Getting buy-in, consensus building, coalition formation
-
-### Admin Panel Access
-
-**URL**: `/admin/meeting-goals`
-
-**Authentication**: Basic admin check - user email must contain 'admin' (enhance with proper role-based access as needed)
-
-**API Endpoints**:
-- `GET /api/admin/meeting-goals` - Fetch all meeting goals (including inactive)
-- `POST /api/admin/meeting-goals` - Create new meeting goal
-- `PUT /api/admin/meeting-goals` - Update existing meeting goal
-- `DELETE /api/admin/meeting-goals?id={id}` - Delete meeting goal
-
-**Database Model**: `MeetingGoalOption` table with fields:
-- `id` (String, primary key)
-- `value` (String, unique) - Internal code (e.g., "PROJECT_UPDATE")
-- `label` (String) - Display name (e.g., "Project Update")
-- `description` (String) - Help text for users
-- `isActive` (Boolean) - Whether goal appears in dropdown
-- `sortOrder` (Int) - Display order in UI
-- `createdAt`, `updatedAt` (DateTime)
+#### meetingGoal Values (only for GOAL_ORIENTED):
+- `PROJECT_UPDATE` - Status reports, progress reviews
+- `BUDGET_ASK` - Resource requests, funding proposals
+- `NEW_IDEA_PITCH` - Innovation proposals, new initiatives
+- `PERFORMANCE_REVIEW` - Performance discussions, feedback sessions
+- `STRATEGIC_ALIGNMENT` - Strategic planning, goal setting
+- `PROBLEM_SOLVING` - Issue resolution, troubleshooting
+- `STAKEHOLDER_ALIGNMENT` - Getting buy-in, consensus building
 
 #### planTier Values:
 - `STARTER` - Free tier (basic analysis only)

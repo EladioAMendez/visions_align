@@ -1,70 +1,35 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/libs/prisma";
-
-// Default meeting goals (used as fallback when database is unavailable)
-const defaultGoals = [
-  {
-    value: 'PROJECT_UPDATE',
-    label: 'Project Update',
-    description: 'Status reports, progress reviews, milestone check-ins',
-  },
-  {
-    value: 'BUDGET_ASK',
-    label: 'Budget Ask',
-    description: 'Resource requests, funding proposals, investment pitches',
-  },
-  {
-    value: 'NEW_IDEA_PITCH',
-    label: 'New Idea Pitch',
-    description: 'Innovation proposals, new initiatives, creative concepts',
-  },
-  {
-    value: 'PERFORMANCE_REVIEW',
-    label: 'Performance Review',
-    description: 'Performance discussions, feedback sessions, career conversations',
-  },
-  {
-    value: 'STRATEGIC_ALIGNMENT',
-    label: 'Strategic Alignment',
-    description: 'Strategic planning, goal setting, vision alignment',
-  },
-  {
-    value: 'PROBLEM_SOLVING',
-    label: 'Problem Solving',
-    description: 'Issue resolution, troubleshooting, crisis management',
-  },
-  {
-    value: 'STAKEHOLDER_ALIGNMENT',
-    label: 'Stakeholder Alignment',
-    description: 'Getting buy-in, consensus building, coalition formation',
-  },
-];
+import { aiConfig } from "@/libs/config";
 
 export async function GET() {
   try {
-    // Try to fetch meeting goals from database
-    const meetingGoals = await prisma.meetingGoalOption.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: 'asc' },
-      select: {
-        value: true,
-        label: true,
-        description: true,
-      },
-    });
+    // Return meeting goals with labels for Goal-Oriented Playbooks
+    const meetingGoals = Object.entries(aiConfig.playbooks.meetingGoalLabels).map(([value, label]) => ({
+      value,
+      label,
+      description: getMeetingGoalDescription(value)
+    }));
 
-    // If we have meeting goals in database, return them
-    if (meetingGoals.length > 0) {
-      return NextResponse.json(meetingGoals);
-    }
-
-    // If no meeting goals in database, return default fallback
-    return NextResponse.json(defaultGoals);
+    return NextResponse.json(meetingGoals, { status: 200 });
   } catch (error) {
-    console.error('Error fetching meeting goals (falling back to defaults):', error);
-    // Return default goals if database is unavailable (e.g., during build time)
-    return NextResponse.json(defaultGoals);
+    console.error('Error fetching meeting goals:', error);
+    return NextResponse.json(
+      { error: "Failed to fetch meeting goals" },
+      { status: 500 }
+    );
   }
 }
 
-
+function getMeetingGoalDescription(goalType: string): string {
+  const descriptions: Record<string, string> = {
+    PROJECT_UPDATE: "Status reports, progress reviews, milestone check-ins",
+    BUDGET_ASK: "Resource requests, funding proposals, investment pitches",
+    NEW_IDEA_PITCH: "Innovation proposals, new initiatives, creative concepts",
+    PERFORMANCE_REVIEW: "Performance discussions, feedback sessions, career conversations",
+    STRATEGIC_ALIGNMENT: "Strategic planning, goal setting, vision alignment",
+    PROBLEM_SOLVING: "Issue resolution, troubleshooting, crisis management",
+    STAKEHOLDER_ALIGNMENT: "Getting buy-in, consensus building, coalition formation"
+  };
+  
+  return descriptions[goalType] || "Meeting-specific guidance and preparation";
+}
