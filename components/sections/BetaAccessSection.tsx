@@ -8,22 +8,22 @@ export default function BetaAccessSection() {
 
   const features = [
     {
-      icon: "🎯",
+      icon: "target",
       title: "The Insight Panel",
       description: "6 AI expert personas analyze your stakeholder's psychology and communication style"
     },
     {
-      icon: "🧠",
+      icon: "brain",
       title: "Executive Resonance",
       description: "Data-driven playbooks that turn high-stakes meetings into career acceleration opportunities"
     },
     {
-      icon: "📊",
+      icon: "chart",
       title: "Strategic Preparation",
       description: "Transform from reactive meeting participant to confident conversation director"
     },
     {
-      icon: "🚀",
+      icon: "trending",
       title: "Career Momentum",
       description: "Build predictable influence with the leaders who control your promotion timeline"
     }
@@ -73,7 +73,28 @@ export default function BetaAccessSection() {
               transition={{ duration: 0.6, delay: index * 0.1, ease: 'easeOut' }}
               className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 text-center"
             >
-              <div className="text-3xl mb-4">{feature.icon}</div>
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-brand-sea-green/20 flex items-center justify-center">
+                {feature.icon === 'target' && (
+                  <svg className="w-6 h-6 text-brand-sea-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                  </svg>
+                )}
+                {feature.icon === 'brain' && (
+                  <svg className="w-6 h-6 text-brand-sea-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                )}
+                {feature.icon === 'chart' && (
+                  <svg className="w-6 h-6 text-brand-sea-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                )}
+                {feature.icon === 'trending' && (
+                  <svg className="w-6 h-6 text-brand-sea-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                )}
+              </div>
               <h3 className="text-lg font-semibold text-white mb-3">{feature.title}</h3>
               <p className="text-slate-400 text-sm">{feature.description}</p>
             </motion.div>

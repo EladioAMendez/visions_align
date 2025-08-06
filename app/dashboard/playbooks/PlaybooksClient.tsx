@@ -103,7 +103,6 @@ export default function PlaybooksClient({ user }: Props) {
       if (timeSinceUpdate < 30000) {
         toast.success(`Playbook for ${playbook.stakeholder.name} is ready!`, {
           duration: 5000,
-          icon: '🎉',
         });
       }
     });
@@ -243,19 +242,19 @@ export default function PlaybooksClient({ user }: Props) {
           <div className="bg-gradient-to-r from-brand-sea-green to-blue-600 rounded-xl p-6 text-white mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold mb-2">🚀 Ready to Create Your Next Strategic Playbook?</h2>
+                <h2 className="text-xl font-bold mb-2">Generate Your Strategic Playbook</h2>
                 <p className="text-blue-100 mb-4">
-                  Turn your next meeting into a strategic win. Generate AI-powered playbooks for your stakeholders.
+                  Transform high-stakes interactions into career-defining moments. Deploy AI-powered stakeholder analysis.
                 </p>
                 <div className="flex items-center gap-4">
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
-                    ⚡ AI-Powered Analysis
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium border border-white/10">
+                    AI-Powered Analysis
                   </span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
-                    📊 Data-Driven Insights
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium border border-white/10">
+                    Data-Driven Insights
                   </span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
-                    🎯 Executive-Ready
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium border border-white/10">
+                    Executive-Ready
                   </span>
                 </div>
               </div>
@@ -406,7 +405,11 @@ export default function PlaybooksClient({ user }: Props) {
           <div className="p-6">
             {filteredPlaybooks.length === 0 ? (
               <div className="text-center py-12">
-                <div className="text-6xl mb-4">📝</div>
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
+                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
                 <h3 className="text-lg font-medium text-white mb-2">No playbooks yet</h3>
                 <p className="text-slate-400 mb-6">Generate your first strategic playbook to get started</p>
                 <button
@@ -446,9 +449,11 @@ export default function PlaybooksClient({ user }: Props) {
                             e.stopPropagation();
                             handleDeletePlaybook(playbook.id);
                           }}
-                          className="text-red-500 hover:text-red-700 p-1"
+                          className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50 transition-colors"
                         >
-                          🗑️
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                         </button>
                       </div>
                     </div>
@@ -490,9 +495,11 @@ export default function PlaybooksClient({ user }: Props) {
                   </div>
                   <button
                     onClick={() => setSelectedPlaybook(null)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-gray-100 transition-colors"
                   >
-                    ✕
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -517,7 +524,11 @@ export default function PlaybooksClient({ user }: Props) {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-50 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      </svg>
+                    </div>
                     <h3 className="font-semibold text-gray-900 mb-2">Generation Failed</h3>
                     <p className="text-gray-600 mb-4">
                       There was an issue generating this playbook. Please try again.
