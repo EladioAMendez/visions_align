@@ -145,11 +145,24 @@ model Stakeholder {
   @@map("stakeholders")
 }
 
+model MeetingGoalOption {
+  id          String   @id @default(cuid())
+  value       String   @unique // e.g., "PROJECT_UPDATE"
+  label       String   // e.g., "Project Update"
+  description String   // e.g., "Status reports, progress reviews, milestone check-ins"
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("meeting_goal_options")
+}
+
 model Playbook {
   id           String         @id @default(cuid())
   status       PlaybookStatus @default(PENDING)
   playbookType PlaybookType   @default(STAKEHOLDER_ANALYSIS) @map("playbook_type")
-  meetingGoal  MeetingGoal?   @map("meeting_goal") // Only for GOAL_ORIENTED playbooks
+  meetingGoal  String?        @map("meeting_goal") // Only for GOAL_ORIENTED playbooks - references MeetingGoal.value
   content      Json?          // The AI-generated playbook content from n8n
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")

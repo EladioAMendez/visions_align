@@ -144,12 +144,30 @@ export async function POST(req: NextRequest) {
           },
         });
 
+        // Fetch meeting goal details if applicable
+        let meetingGoalDetails = null;
+        if (finalPlaybookType === 'GOAL_ORIENTED' && meetingGoal) {
+          try {
+            const goalOption = await prisma.meetingGoalOption.findUnique({
+              where: { value: meetingGoal },
+              select: {
+                value: true,
+                label: true,
+                description: true,
+              },
+            });
+            meetingGoalDetails = goalOption;
+          } catch (error) {
+            console.error('Error fetching meeting goal details:', error);
+          }
+        }
+
         const webhookPayload = {
           playbookId: playbook.id,
           user: userData,
           stakeholder: stakeholderData,
           playbookType: finalPlaybookType,
-          meetingGoal: finalPlaybookType === 'GOAL_ORIENTED' ? meetingGoal : null,
+          meetingGoal: meetingGoalDetails,
           aiPersonas: {
             // Core 6 AI personas for all playbook types (The Insight Panel)
             strategist: true,
